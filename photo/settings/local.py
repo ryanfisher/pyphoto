@@ -10,7 +10,7 @@ DATABASES = {
     "NAME": "photodb",
     "USER": "",
     "PASSWORD": "",
-    "HOST": "localhost",
+    "HOST": "",
     "PORT": "",
   }
 }
