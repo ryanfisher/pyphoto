@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
@@ -13,6 +13,6 @@ def login_post(request):
 
 def login_view(request):
     if not request.GET:
-        return HttpResponse('<html><body>Login Page!</body></html>')
+        return render_to_response('profiles/login.html')
     elif request.POST:
         return login_post(request)
