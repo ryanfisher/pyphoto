@@ -11,6 +11,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-urlpatterns += patterns('',
-    url(r'^login/$', 'profiles.views.login_view'),
+urlpatterns += patterns('profiles.views',
+    url(r'^login/$', 'login_view'),
+)
+
+urlpatterns += patterns('core.views',
+    url(r'^$', 'root'),
 )
