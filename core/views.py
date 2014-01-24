@@ -1,7 +1,6 @@
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def root(request):
-    if request.user.is_authenticated():
-        return render_to_response('core/index.html')
-    else:
-        return redirect('/login')
+    return render_to_response('core/index.html')

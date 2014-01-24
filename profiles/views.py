@@ -12,7 +12,7 @@ def login_post(request):
             return redirect('/')
 
 def login_view(request):
-    if not request.GET:
+    if request.GET:
         return render_to_response('profiles/login.html')
     elif request.POST:
         return login_post(request)
