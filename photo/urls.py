@@ -19,3 +19,7 @@ urlpatterns += patterns('django.contrib.auth.views',
 urlpatterns += patterns('core.views',
     url(r'^$', 'root'),
 )
+
+urlpatterns += patterns('photos.views',
+    url(r'^upload/$', 'upload'),
+)
