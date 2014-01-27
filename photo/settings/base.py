@@ -86,3 +86,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
+
+import photo.settings.private as private
+
+AWS_ACCESS_KEY = private.AWS_ACCESS_KEY
+AWS_SECRET_KEY = private.AWS_SECRET_KEY
+AWS_IMAGE_BUCKET = private.AWS_IMAGE_BUCKET
