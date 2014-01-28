@@ -6,4 +6,10 @@
 
 <p>Upload photos here</p>
 
+<p>
+  <form action="" method="POST">{% csrf_token %}
+    <input type="file">
+    <input type="submit" value="Upload" />
+  </form>
+</p>
 {% endblock %}
