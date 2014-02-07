@@ -92,3 +92,5 @@ import photo.settings.private as private
 AWS_ACCESS_KEY = private.AWS_ACCESS_KEY
 AWS_SECRET_KEY = private.AWS_SECRET_KEY
 AWS_IMAGE_BUCKET = private.AWS_IMAGE_BUCKET
+
+LOG_PATH = os.path.join(BASE_DIR, 'tmp', 'log', 'debug.log')
