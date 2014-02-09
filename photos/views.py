@@ -14,7 +14,7 @@ class ImageUploader(object):
     @staticmethod
     def upload_image(file, folder):
         conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET)
+        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
         k = Key(bucket)
         k.key = 'images/'+folder+'/'+file.name
         k.set_contents_from_file(file)
