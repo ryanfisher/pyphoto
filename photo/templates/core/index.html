@@ -6,4 +6,10 @@
 <a href="logout/">logout</a>
 <a href="upload/">upload photos</a>
 
+<div id="photo-feed">
+  {% for photo in photos %}
+  <div class="photo"><img src="{{ photo.url }}"></div>
+  {% endfor %}
+</div>
+
 {% endblock %}
