@@ -1,0 +1,8 @@
+#photo-feed .photo {
+  display: inline-block;
+  height: 250px;
+}
+
+#photo-feed img {
+  height: 100%;
+}
