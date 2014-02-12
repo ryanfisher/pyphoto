@@ -7,7 +7,7 @@ class Photo(TimeStampedModel):
     """
     A user's photo
     """
-    url = models.URLField()
+    url = models.URLField(unique=True)
     iso = models.IntegerField()
     size = models.FloatField()
     user = models.ForeignKey(User)
