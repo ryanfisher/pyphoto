@@ -12,4 +12,4 @@ class PhotosViewsTests(TestCase):
 
     def test_upload(self):
         response = self.client.get('/upload/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
