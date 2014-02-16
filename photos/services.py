@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
