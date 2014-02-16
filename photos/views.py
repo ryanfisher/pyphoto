@@ -12,11 +12,12 @@ from boto.s3.key import Key
 
 class ImageUploader(object):
 
-    @staticmethod
-    def upload_image(file, folder):
+    def __init__(self):
         conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
-        k = Key(bucket)
+        self.bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
+
+    def upload_image(self, file, folder):
+        k = Key(self.bucket)
         k.key = 'images/'+folder+'/'+file.name
         k.set_contents_from_file(file)
         return '/' + k.key
