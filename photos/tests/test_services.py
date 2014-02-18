@@ -1,11 +1,11 @@
 from django.test import TestCase
 
-from photos import services
+from photos.services import PhotoService
 
-class ImageServiceTest(TestCase):
+class PhotoServiceTest(TestCase):
 
     def setUp(self):
-        self.image_service = services.ImageService()
+        self.photo_service = PhotoService()
 
     def test_instance(self):
-        self.assertIsInstance(self.image_service, services.ImageService)
+        self.assertIsInstance(self.photo_service, PhotoService)
