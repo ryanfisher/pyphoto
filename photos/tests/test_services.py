@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 from photos.services import PhotoService
 
 import os
@@ -8,8 +10,14 @@ class PhotoServiceTest(TestCase):
 
     def setUp(self):
         path = os.path.join(os.getcwd(), 'photos/tests/fixtures/blake-small.jpg')
+        upload_file = open(path, 'rb')
+        file = SimpleUploadedFile(upload_file.name, upload_file.read())
         self.maxDiff = None
-        self.photo_service = PhotoService(path)
+        class Object(object):
+            pass
+        user = Object()
+        user.username = 'Ryan'
+        self.photo_service = PhotoService(file, user)
 
     def test_instance(self):
         self.assertIsInstance(self.photo_service, PhotoService)

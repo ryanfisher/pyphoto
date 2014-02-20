@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, render_to_response
-from django.conf import settings
 from django.template import RequestContext
 
 from django.contrib.auth.decorators import login_required
@@ -21,12 +20,5 @@ def upload(request):
         form = PhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             request_file = request.FILES['file']
-            path = PhotoService().upload_photo(request_file, request.user.username)
-            path = settings.AWS_IMAGE_BUCKET + path
-            Photo.objects.create(
-                url='//s3.amazonaws.com/' + path,
-                size=request_file.size,
-                iso=100,
-                user=request.user
-            )
+            PhotoService(request_file, request.user).store_photo()
         return redirect('/')
