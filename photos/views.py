@@ -22,3 +22,7 @@ def upload(request):
             request_file = request.FILES['file']
             PhotoService(request_file, request.user).store_photo()
         return redirect('/')
+
+def show(request, id):
+    photo = Photo.objects.get(id=id)
+    return render_to_response('photos/show.html', {'photo': photo})

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<img src="{{ photo.url }}" style="max-width: 80%; max-height: 80%;">
+<div class="photo-description">
+  {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
+  {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
+  {% if photo.iso %}<div class="iso">ISO: {{ photo.iso }}</div>{% endif %}
+</div>
+
+{% endblock %}

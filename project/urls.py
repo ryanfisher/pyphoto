@@ -21,5 +21,6 @@ urlpatterns += patterns('core.views',
 )
 
 urlpatterns += patterns('photos.views',
-    url(r'^upload/$', 'upload'),
+    url(r'^upload$', 'upload'),
+    url(r'^photos/(?P<id>\d+)$', 'show'),
 )

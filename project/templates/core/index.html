@@ -8,7 +8,9 @@
 
 <div id="photo-feed">
   {% for photo in photos %}
-  <div class="photo"><img src="{{ photo.url }}"></div>
+  <a href="photos/{{ photo.id }}">
+    <div class="photo"><img src="{{ photo.url }}"></div>
+  </a>
   {% endfor %}
 </div>
 
