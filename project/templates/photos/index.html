@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="photo-feed">
+  {% for photo in photos %}
+  <a href="photos/{{ photo.id }}">
+    <div class="photo"><img src="{{ photo.url }}"></div>
+  </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

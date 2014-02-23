@@ -23,6 +23,11 @@ def upload(request):
             PhotoService(request_file, request.user).store_photo()
         return redirect('/')
 
+@login_required
+def index(request):
+    photos = Photo.objects.filter(user=request.user)
+    return render_to_response('photos/index.html', {'photos': photos})
+
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
     return render_to_response('photos/show.html', {'photo': photo})

@@ -26,3 +26,9 @@ class PhotosViewsTests(TestCase):
     def test_show_404(self):
         response = self.client.get('/photos/99')
         self.assertEquals(response.status_code, 404)
+
+class PhotosIndexViewsTests(TestCase):
+
+    def test_index(self):
+        response = self.client.get('/photos')
+        self.assertEquals(response.status_code, 302)
