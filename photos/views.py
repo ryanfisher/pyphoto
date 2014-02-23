@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render_to_response, get_object_or_404
 from django.template import RequestContext
 
 from django.contrib.auth.decorators import login_required
@@ -24,5 +24,5 @@ def upload(request):
         return redirect('/')
 
 def show(request, id):
-    photo = Photo.objects.get(id=id)
+    photo = get_object_or_404(Photo, id=id)
     return render_to_response('photos/show.html', {'photo': photo})

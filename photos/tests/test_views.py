@@ -22,3 +22,7 @@ class PhotosViewsTests(TestCase):
         response = self.client.get('/photos/1')
         self.assertEquals(response.status_code, 200)
         self.assertContains(response, 'photos/photo.jpg')
+
+    def test_show_404(self):
+        response = self.client.get('/photos/99')
+        self.assertEquals(response.status_code, 404)
