@@ -52,9 +52,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'photo.urls'
+ROOT_URLCONF = 'project.urls'
 
-WSGI_APPLICATION = 'photo.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
@@ -88,7 +88,7 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
 
-import photo.settings.private as private
+import project.settings.private as private
 
 AWS_ACCESS_KEY = private.AWS_ACCESS_KEY
 AWS_SECRET_KEY = private.AWS_SECRET_KEY
