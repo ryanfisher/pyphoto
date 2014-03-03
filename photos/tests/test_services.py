@@ -19,6 +19,9 @@ class PhotoServiceTest(TestCase):
         user.username = 'Ryan'
         self.photo_service = PhotoService(file, user)
 
+    def tearDown(self):
+        self.photo_service.rm_tmp_file()
+
     def test_instance(self):
         self.assertIsInstance(self.photo_service, PhotoService)
 
@@ -31,3 +34,11 @@ class PhotoServiceTest(TestCase):
         self.assertEqual(result['Make'], u'Canon')
         self.assertEqual(result['Model'], u'Canon EOS REBEL T3')
         self.assertEqual(result['LensModel'], u'EF-S15-85mm f/3.5-5.6 IS USM')
+
+class PhotoServiceUploadTest(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_upload_photo(self):
+        pass
