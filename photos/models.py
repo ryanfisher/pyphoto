@@ -8,6 +8,8 @@ class Photo(TimeStampedModel):
     A user's photo
     """
     url = models.URLField(unique=True)
+    thumbnail_url = models.URLField()
+    original_filename = models.CharField(max_length=255)
     iso = models.IntegerField(null=True)
     size = models.FloatField()
     user = models.ForeignKey(User)
@@ -16,5 +18,7 @@ class Photo(TimeStampedModel):
     lens_model = models.CharField(max_length=128, null=True)
     f_stop_denominator = models.IntegerField(null=True)
     f_stop_numerator = models.IntegerField(null=True)
+    exposure_denominator = models.IntegerField(null=True)
+    exposure_numerator = models.IntegerField(null=True)
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
