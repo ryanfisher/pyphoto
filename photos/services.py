@@ -13,27 +13,29 @@ class PhotoService(object):
 
     def __init__(self, uploaded_file, user):
         self.uploaded_file = uploaded_file
-        self.size = self.uploaded_file.size
         self.user = user
-        self.tmp_path = None
 
-    def tmp_write_to_system(self):
-        path = 'tmp/'+self.user.username+'/'
-        if not os.path.exists(path): os.makedirs(path)
-        self.tmp_path = path + self.uploaded_file.name
-        with open(self.tmp_path, 'wb+') as destination:
+    def store_and_save_photos(self):
+        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
+        k = Key(bucket)
+        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+self.uploaded_file.name
+        k.set_contents_from_file(self.uploaded_file)
+        original_file_path = settings.AWS_IMAGE_BUCKET + '/' + k.key
+
+        dirs_path = 'tmp/'+self.user.username+'/'
+        if not os.path.exists(dirs_path): os.makedirs(dirs_path)
+        tmp_path = dirs_path + self.uploaded_file.name
+        with open(tmp_path, 'wb+') as destination:
             for chunk in self.uploaded_file.chunks():
                 destination.write(chunk)
 
-    def rm_tmp_file(self):
-        if not self.tmp_path: return
-        os.remove(self.tmp_path)
-        self.tmp_path = None
+        img = Image.open(tmp_path)
 
-    def get_exif(self):
-        if not self.tmp_path: self.tmp_write_to_system()
-        img = Image.open(self.tmp_path)
         exifinfo = img._getexif()
+
+        os.remove(tmp_path)
+
         exif_dict = {
             'ISOSpeedRatings': None,
             'Make': None,
@@ -42,28 +44,15 @@ class PhotoService(object):
             'FNumber': (None, None),
             'FocalLength': (None, None),
         }
-        if not exifinfo: return exif_dict
-        for tag, value in exifinfo.items():
-            decoded = TAGS.get(tag, tag)
-            exif_dict[decoded] = value
-        return exif_dict
+        if exifinfo:
+            for tag, value in exifinfo.items():
+                decoded = TAGS.get(tag, tag)
+                exif_dict[decoded] = value
+        exif_info = exif_dict
 
-    def upload_photo(self, folder):
-        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
-        k = Key(bucket)
-        k.key = 'images/'+folder+'/'+self.uploaded_file.name
-        k.set_contents_from_file(self.uploaded_file)
-        return '/' + k.key
-
-    def store_photo(self):
-        path = self.upload_photo(self.user.username)
-        path = settings.AWS_IMAGE_BUCKET + path
-        exif_info = self.get_exif()
-        self.rm_tmp_file()
         return Photo.objects.create(
-            url='//s3.amazonaws.com/' + path,
-            size=self.size,
+            url='//s3.amazonaws.com/' + original_file_path,
+            size=self.uploaded_file.size,
             iso=exif_info['ISOSpeedRatings'],
             user=self.user,
             camera_make=exif_info['Make'],

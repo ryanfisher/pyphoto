@@ -20,7 +20,7 @@ def upload(request):
         form = PhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             request_file = request.FILES['file']
-            PhotoService(request_file, request.user).store_photo()
+            PhotoService(request_file, request.user).store_and_save_photos()
         return redirect('/')
 
 @login_required
