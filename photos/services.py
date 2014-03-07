@@ -34,6 +34,18 @@ class PhotoService(object):
 
         exifinfo = img._getexif()
 
+        width = 400 * img.size[0] / img.size[0]
+        img.thumbnail((width,400), Image.ANTIALIAS)
+
+        image_file = open('image.jpg', 'wb+')
+        img.save(image_file, 'JPEG')
+        image_file.seek(0)
+
+        k = Key(bucket)
+        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+'thumbnail_'+self.uploaded_file.name
+        k.set_contents_from_file(image_file)
+        thumbnail_url = settings.AWS_IMAGE_BUCKET + '/' + k.key
+
         os.remove(tmp_path)
 
         exif_dict = {
@@ -43,6 +55,7 @@ class PhotoService(object):
             'LensModel': None,
             'FNumber': (None, None),
             'FocalLength': (None, None),
+            'ExposureTime': (None, None),
         }
         if exifinfo:
             for tag, value in exifinfo.items():
@@ -51,7 +64,9 @@ class PhotoService(object):
         exif_info = exif_dict
 
         return Photo.objects.create(
+            original_filename=self.uploaded_file.name,
             url='//s3.amazonaws.com/' + original_file_path,
+            thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
             size=self.uploaded_file.size,
             iso=exif_info['ISOSpeedRatings'],
             user=self.user,
@@ -60,6 +75,8 @@ class PhotoService(object):
             lens_model=exif_info['LensModel'],
             f_stop_numerator=exif_info['FNumber'][0],
             f_stop_denominator=exif_info['FNumber'][1],
+            exposure_numerator=exif_info['ExposureTime'][0],
+            exposure_denominator=exif_info['ExposureTime'][1],
             focal_length_numerator=exif_info['FocalLength'][0],
             focal_length_denominator=exif_info['FocalLength'][1]
         )

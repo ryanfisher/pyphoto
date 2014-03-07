@@ -3,13 +3,13 @@
 {% block content %}
 
 <p>Welcome to the photo app</p>
-<a href="logout/">logout</a>
-<a href="upload/">upload photos</a>
+<a href="logout">logout</a>
+<a href="upload">upload photos</a>
 
 <div id="photo-feed">
   {% for photo in photos %}
   <a href="photos/{{ photo.id }}">
-    <div class="photo"><img src="{{ photo.url }}"></div>
+    <div class="photo"><img src="{{ photo.thumbnail_url }}"></div>
   </a>
   {% endfor %}
 </div>
