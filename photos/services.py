@@ -42,15 +42,7 @@ class PhotoService(object):
         k.set_contents_from_string(string_file, headers={"Content-Type": "image/jpeg"})
         return settings.AWS_IMAGE_BUCKET + '/' + k.key
 
-    def store_and_save_photos(self):
-        original_file_path = self.send_to_s3(self.uploaded_file)
-
-        tmp_image = TemporaryImageFile(self.uploaded_file)
-
-        img = Image.open(tmp_image.path)
-
-        exifinfo = img._getexif()
-
+    def create_and_store_thumbnail(self, img):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width,THUMBNAIL_SIZE), Image.ANTIALIAS)
 
@@ -60,8 +52,21 @@ class PhotoService(object):
 
         thumbnail_url = self.send_string_to_s3(image_string.getvalue())
 
-        tmp_image.delete()
         image_string.close()
+
+        return thumbnail_url
+
+    def store_and_save_photos(self):
+        original_file_path = self.send_to_s3(self.uploaded_file)
+
+        tmp_image = TemporaryImageFile(self.uploaded_file)
+        img = Image.open(tmp_image.path)
+
+        exifinfo = img._getexif()
+
+        thumbnail_url = self.create_and_store_thumbnail(img)
+
+        tmp_image.delete()
 
         exif_dict = {
             'ISOSpeedRatings': None,
