@@ -11,6 +11,19 @@ from photos.models import Photo
 
 THUMBNAIL_SIZE = 600
 
+class TemporaryImageFile(object):
+    def __init__(self, uploaded_file):
+        random_folder = 'random'
+        dirs_path = 'tmp/'+random_folder+'/'
+        if not os.path.exists(dirs_path): os.makedirs(dirs_path)
+        self.path = dirs_path + uploaded_file.name
+        with open(self.path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+
+    def delete(self):
+        os.remove(self.path)
+
 class PhotoService(object):
 
     def __init__(self, uploaded_file, user):
@@ -28,14 +41,9 @@ class PhotoService(object):
     def store_and_save_photos(self):
         original_file_path = self.send_to_s3(self.uploaded_file)
 
-        dirs_path = 'tmp/'+self.user.username+'/'
-        if not os.path.exists(dirs_path): os.makedirs(dirs_path)
-        tmp_path = dirs_path + self.uploaded_file.name
-        with open(tmp_path, 'wb+') as destination:
-            for chunk in self.uploaded_file.chunks():
-                destination.write(chunk)
+        tmp_image = TemporaryImageFile(self.uploaded_file)
 
-        img = Image.open(tmp_path)
+        img = Image.open(tmp_image.path)
 
         exifinfo = img._getexif()
 
@@ -48,7 +56,7 @@ class PhotoService(object):
 
         thumbnail_url = self.send_to_s3(image_file, "thumbnail_")
 
-        os.remove(tmp_path)
+        tmp_image.delete()
 
         exif_dict = {
             'ISOSpeedRatings': None,
