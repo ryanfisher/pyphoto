@@ -9,19 +9,24 @@ import os
 
 from photos.models import Photo
 
+THUMBNAIL_SIZE = 600
+
 class PhotoService(object):
 
     def __init__(self, uploaded_file, user):
         self.uploaded_file = uploaded_file
         self.user = user
+        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        self.bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
+
+    def send_to_s3(self, file, file_prefix=""):
+        k = Key(self.bucket)
+        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+file_prefix+self.uploaded_file.name
+        k.set_contents_from_file(file)
+        return settings.AWS_IMAGE_BUCKET + '/' + k.key
 
     def store_and_save_photos(self):
-        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
-        k = Key(bucket)
-        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+self.uploaded_file.name
-        k.set_contents_from_file(self.uploaded_file)
-        original_file_path = settings.AWS_IMAGE_BUCKET + '/' + k.key
+        original_file_path = self.send_to_s3(self.uploaded_file)
 
         dirs_path = 'tmp/'+self.user.username+'/'
         if not os.path.exists(dirs_path): os.makedirs(dirs_path)
@@ -34,17 +39,14 @@ class PhotoService(object):
 
         exifinfo = img._getexif()
 
-        width = 400 * img.size[0] / img.size[0]
-        img.thumbnail((width,400), Image.ANTIALIAS)
+        width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
+        img.thumbnail((width,THUMBNAIL_SIZE), Image.ANTIALIAS)
 
         image_file = open('image.jpg', 'wb+')
         img.save(image_file, 'JPEG')
         image_file.seek(0)
 
-        k = Key(bucket)
-        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+'thumbnail_'+self.uploaded_file.name
-        k.set_contents_from_file(image_file)
-        thumbnail_url = settings.AWS_IMAGE_BUCKET + '/' + k.key
+        thumbnail_url = self.send_to_s3(image_file, "thumbnail_")
 
         os.remove(tmp_path)
 
