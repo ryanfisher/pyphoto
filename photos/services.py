@@ -34,7 +34,7 @@ class PhotoService(object):
 
     def send_to_s3(self, file, file_prefix=""):
         k = self.bucket.new_key('images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+file_prefix+self.uploaded_file.name)
-        k.set_contents_from_file(file)
+        k.set_contents_from_file(file, replace=False)
         return settings.AWS_IMAGE_BUCKET + '/' + k.key
 
     def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
