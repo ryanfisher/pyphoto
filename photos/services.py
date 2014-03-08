@@ -33,9 +33,13 @@ class PhotoService(object):
         self.bucket = conn.get_bucket(settings.AWS_IMAGE_BUCKET, validate=False)
 
     def send_to_s3(self, file, file_prefix=""):
-        k = Key(self.bucket)
-        k.key = 'images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+file_prefix+self.uploaded_file.name
+        k = self.bucket.new_key('images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+file_prefix+self.uploaded_file.name)
         k.set_contents_from_file(file)
+        return settings.AWS_IMAGE_BUCKET + '/' + k.key
+
+    def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
+        k = self.bucket.new_key('images/'+self.user.username[0]+'/'+self.user.username[1:]+'/'+file_prefix+self.uploaded_file.name)
+        k.set_contents_from_string(string_file, headers={"Content-Type": "image/jpeg"})
         return settings.AWS_IMAGE_BUCKET + '/' + k.key
 
     def store_and_save_photos(self):
@@ -50,13 +54,14 @@ class PhotoService(object):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width,THUMBNAIL_SIZE), Image.ANTIALIAS)
 
-        image_file = open('image.jpg', 'wb+')
-        img.save(image_file, 'JPEG')
-        image_file.seek(0)
+        from cStringIO import StringIO
+        image_string = StringIO()
+        img.save(image_string, 'JPEG')
 
-        thumbnail_url = self.send_to_s3(image_file, "thumbnail_")
+        thumbnail_url = self.send_string_to_s3(image_string.getvalue())
 
         tmp_image.delete()
+        image_string.close()
 
         exif_dict = {
             'ISOSpeedRatings': None,
