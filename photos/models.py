@@ -22,3 +22,6 @@ class Photo(TimeStampedModel):
     exposure_numerator = models.IntegerField(null=True)
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
+
+    class Meta:
+        ordering = ['-created']
