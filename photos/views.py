@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render_to_response, get_object_or_404
+from django.http import HttpResponse
 from django.template import RequestContext
+from django.db import IntegrityError
 
 from django.contrib.auth.decorators import login_required
 
@@ -20,7 +22,11 @@ def upload(request):
         form = PhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             request_file = request.FILES['file']
-            PhotoService(request_file, request.user).store_and_save_photos()
+            try:
+                # TODO Check for key in model before trying to upload
+                PhotoService(request_file, request.user).store_and_save_photos()
+            except IntegrityError:
+                return HttpResponse(status=422)
         return redirect('/')
 
 @login_required
