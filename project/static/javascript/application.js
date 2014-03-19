@@ -14,6 +14,12 @@ var Uploader = Backbone.View.extend({
   }
 });
 
-jQuery('document').ready(function() {
-  new Uploader();
+var AppView = Backbone.View.extend({
+  initialize: function () {
+    new Uploader()
+  }
+});
+
+jQuery('document').ready(function () {
+  var App = new AppView()
 });
