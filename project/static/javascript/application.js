@@ -31,10 +31,26 @@ var Uploader = Backbone.View.extend({
       headers: { 'X-CSRFToken': csrf_token },
       success: function (data) {
         _this.uploading = false;
-        alert('Done Uploading');
+        form[0].reset();
       },
       processData: false,
-      contentType: false
+      contentType: false,
+      xhr: function() {
+        var myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload) {
+            myXhr.upload.addEventListener('progress',function(ev) {
+                if (ev.lengthComputable) {
+                    var percentUploaded = Math.floor(ev.loaded * 100 / ev.total);
+                    console.info('Uploaded '+percentUploaded+'%');
+                    // update UI to reflect percentUploaded
+                } else {
+                    console.info('Uploaded '+ev.loaded+' bytes');
+                    // update UI to reflect bytes uploaded
+                }
+           }, false);
+        }
+        return myXhr;
+      }
     });
   }
 });
