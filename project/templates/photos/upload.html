@@ -4,9 +4,8 @@
 
 <p>{{ user_name }}</p>
 
-<p>Upload photos here</p>
-
 <div id="uploader">
+  <h4>Upload photos here</h4>
   <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Upload" />
