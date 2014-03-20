@@ -6,6 +6,9 @@
 
 <div id="uploader">
   <h4>Upload photos here</h4>
+  <p class="message success">Hurrah!</p>
+  <p class="message failure">Horrible failure!</p>
+  <p class="message error422">Horrible failure! File already uploaded!</p>
   <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Upload" />

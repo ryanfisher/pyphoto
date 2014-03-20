@@ -30,6 +30,22 @@
   to    { background-position: 0 0; }
 }
 
+.message {
+  display: none;
+}
+
+.message.success {
+  color: green;
+}
+
+.message.failure {
+  color: red;
+}
+
+.message.error422 {
+  color: red;
+}
+
 #uploader .progress {
   display: none;
   margin-top: 20px;
