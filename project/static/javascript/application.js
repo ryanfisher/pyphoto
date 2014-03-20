@@ -16,6 +16,8 @@ var Uploader = Backbone.View.extend({
       console.log("currently uploading");
       return;
     };
+    progress_bar = this.$('.progress')
+    progress_bar.show()
     this.uploading = true;
     form = $(event.target);
     file_input = form.find('#id_file');
@@ -32,6 +34,8 @@ var Uploader = Backbone.View.extend({
       success: function (data) {
         _this.uploading = false;
         form[0].reset();
+        progress_bar.hide()
+        progress_bar.find('.bar').css('width', '0')
       },
       processData: false,
       contentType: false,
@@ -42,7 +46,7 @@ var Uploader = Backbone.View.extend({
                 if (ev.lengthComputable) {
                     var percentUploaded = Math.floor(ev.loaded * 100 / ev.total);
                     console.info('Uploaded '+percentUploaded+'%');
-                    // update UI to reflect percentUploaded
+                    progress_bar.find('.bar').css('width', percentUploaded+'%')
                 } else {
                     console.info('Uploaded '+ev.loaded+' bytes');
                     // update UI to reflect bytes uploaded
