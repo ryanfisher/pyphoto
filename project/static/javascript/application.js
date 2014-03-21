@@ -12,11 +12,8 @@ var Uploader = Backbone.View.extend({
 
   upload_photo: function () {
     event.preventDefault();
-    if (this.uploading) {
-      console.log("currently uploading");
-      return;
-    };
-    this.$('.message').hide()
+    if (this.uploading) { return; };
+    this.$('.message').hide();
     progress_bar = this.$('.progress')
     progress_bar.show()
     this.uploading = true;
