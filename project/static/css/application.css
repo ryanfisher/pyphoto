@@ -1,3 +1,25 @@
+nav {
+  position: fixed;
+  width: 100%;
+  background-color: black;
+  opacity: 0.85;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  padding-left: 20px;
+}
+
+nav a {
+  display: inline-block;
+  width: 10%;
+  color: white;
+  text-decoration: none;
+}
+
+#content {
+  padding-top: 40px;
+}
+
 #photo-feed .photo {
   display: inline-block;
   height: 250px;
@@ -42,7 +64,7 @@
   color: red;
 }
 
-.message.error422 {
+.message.error409 {
   color: red;
 }
 

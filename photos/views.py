@@ -28,7 +28,7 @@ def upload(request):
                 service = PhotoService(request_file, request.user)
                 service.store_and_save_photos()
             except IntegrityError:
-                return HttpResponse(status=422)
+                return HttpResponse(status=409)
         return HttpResponse(status=200)
 
 

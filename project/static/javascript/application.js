@@ -39,8 +39,8 @@ var Uploader = Backbone.View.extend({
         _this.$('.success').show()
       },
       error: function (jqXHR) {
-        if (jqXHR.status === 422) {
-          _this.$('.error422').show()
+        if (jqXHR.status === 409) {
+          _this.$('.error409').show()
         } else {
           _this.$('.failure').show()
         }
