@@ -6,13 +6,18 @@ from photos.services import PhotoService
 
 import os
 
+
 class PhotoServiceTest(TestCase):
 
     def setUp(self):
-        path = os.path.join(os.getcwd(), 'photos/tests/fixtures/blake-small.jpg')
+        path = os.path.join(
+            os.getcwd(),
+            'photos/tests/fixtures/blake-small.jpg'
+        )
         upload_file = open(path, 'rb')
         file = SimpleUploadedFile(upload_file.name, upload_file.read())
         self.maxDiff = None
+
         class Object(object):
             pass
         user = Object()
@@ -30,7 +35,9 @@ class PhotoServiceTest(TestCase):
     #     self.assertEqual(result['FocalLength'], (55, 1))
     #     self.assertEqual(result['Make'], u'Canon')
     #     self.assertEqual(result['Model'], u'Canon EOS REBEL T3')
-    #     self.assertEqual(result['LensModel'], u'EF-S15-85mm f/3.5-5.6 IS USM')
+    #     self.assertEqual(result['LensModel'],
+    #                      u'EF-S15-85mm f/3.5-5.6 IS USM')
+
 
 class PhotoServiceUploadTest(TestCase):
 
