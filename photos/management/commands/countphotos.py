@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from photos.models import Photo
+
 
 class Command(BaseCommand):
     help = "Counts the number of photos in the database"
