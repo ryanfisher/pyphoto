@@ -5,7 +5,7 @@
 <div id="photo-feed">
   {% for photo in photos %}
   <a href="photos/{{ photo.id }}">
-    <div class="photo"><img src="{{ photo.url }}"></div>
+    <div class="photo"><img src="{{ photo.thumbnail_url }}"></div>
   </a>
   {% endfor %}
 </div>
