@@ -9,6 +9,7 @@ class Photo(TimeStampedModel):
     A user's photo
     """
     url = models.URLField(unique=True)
+    optimized_url = models.URLField()
     thumbnail_url = models.URLField()
     original_filename = models.CharField(max_length=255)
     iso = models.IntegerField(null=True)
@@ -23,6 +24,15 @@ class Photo(TimeStampedModel):
     exposure_numerator = models.IntegerField(null=True)
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
+
+    def display_url(self):
+        """
+        The url of the main photo to display on a photo page
+        """
+        url = self.optimized_url
+        if not url:
+            url = self.url
+        return url
 
     def shutter_speed(self):
         numerator = self.exposure_numerator

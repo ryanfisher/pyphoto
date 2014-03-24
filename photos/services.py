@@ -3,12 +3,15 @@ from django.conf import settings
 from boto.s3.connection import S3Connection
 from PIL import Image
 from PIL.ExifTags import TAGS
+from cStringIO import StringIO
 
 import os
 
 from photos.models import Photo
 
 THUMBNAIL_SIZE = 600
+OPTIMIZED_WIDTH = 1800
+OPTIMIZED_HEIGHT = 1200
 
 
 class TemporaryImageFile(object):
@@ -58,7 +61,6 @@ class PhotoService(object):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
 
-        from cStringIO import StringIO
         image_string = StringIO()
         img.save(image_string, 'JPEG')
 
@@ -68,6 +70,24 @@ class PhotoService(object):
 
         return thumbnail_url
 
+    def create_and_store_optimized(self, img):
+        width = OPTIMIZED_HEIGHT * img.size[0] / img.size[0]
+        if width < OPTIMIZED_WIDTH:
+            height = OPTIMIZED_HEIGHT
+        else:
+            width = OPTIMIZED_WIDTH
+            height = OPTIMIZED_WIDTH * img.size[1] / img.size[1]
+        img.thumbnail((width, height), Image.ANTIALIAS)
+
+        image_string = StringIO()
+        img.save(image_string, 'JPEG')
+
+        url = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
+
+        image_string.close()
+
+        return url
+
     def store_and_save_photos(self):
         original_file_path = self.send_to_s3(self.uploaded_file)
 
@@ -76,6 +96,7 @@ class PhotoService(object):
 
         exifinfo = img._getexif()
 
+        optimized_url = self.create_and_store_optimized(img)
         thumbnail_url = self.create_and_store_thumbnail(img)
 
         tmp_image.delete()
@@ -98,6 +119,7 @@ class PhotoService(object):
         return Photo.objects.create(
             original_filename=self.uploaded_file.name,
             url='//s3.amazonaws.com/' + original_file_path,
+            optimized_url='//s3.amazonaws.com/' + optimized_url,
             thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
             size=self.uploaded_file.size,
             iso=exif_info['ISOSpeedRatings'],

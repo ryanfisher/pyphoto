@@ -42,6 +42,7 @@ def show(request, id):
     photo = get_object_or_404(Photo, id=id)
     photo_hash = {
         'photo': photo,
+        'display_url': photo.display_url(),
         'f_stop': photo.f_stop(),
         'shutter_speed': photo.shutter_speed(),
         'focal_length': photo.focal_length(),

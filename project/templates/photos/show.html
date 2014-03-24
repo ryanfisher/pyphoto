@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<img src="{{ photo.url }}" style="max-width: 80%; max-height: 80%;">
+<img src="{{ display_url }}" style="max-width: 100%; max-height: 100%;">
 <div class="photo-description">
   {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
   {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
