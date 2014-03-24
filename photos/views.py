@@ -27,7 +27,7 @@ def upload(request):
                 PhotoService(request_file, request.user).store_and_save_photos()
             except IntegrityError:
                 return HttpResponse(status=422)
-        return redirect('/')
+        return HttpResonse(status=200)
 
 @login_required
 def index(request):

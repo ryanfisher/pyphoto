@@ -1,3 +1,10 @@
+var Photo = Backbone.Model.extend({
+});
+
+var Photos = Backbone.Collection.extend({
+  model: Photo
+});
+
 var Uploader = Backbone.View.extend({
   el: "#uploader",
 
@@ -6,7 +13,6 @@ var Uploader = Backbone.View.extend({
   },
 
   initialize: function () {
-    console.log("Uploader initialized")
     this.uploading = false
   },
 
@@ -57,7 +63,6 @@ var Uploader = Backbone.View.extend({
                     progress_bar.find('.bar').css('width', percentUploaded+'%')
                 } else {
                     console.info('Uploaded '+ev.loaded+' bytes');
-                    // update UI to reflect bytes uploaded
                 }
            }, false);
         }
