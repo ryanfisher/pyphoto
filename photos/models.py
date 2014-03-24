@@ -26,14 +26,26 @@ class Photo(TimeStampedModel):
     def shutter_speed(self):
         numerator = self.exposure_numerator
         denominator = self.exposure_denominator
-        if denominator == 0:
+        if not numerator:
+            return None
+        elif denominator == 0:
             return str(numerator)
         else:
             return str(numerator) + '/' + str(denominator)
 
     def f_stop(self):
-        aperture = float(self.f_stop_numerator) / self.f_stop_denominator
+        numerator = self.f_stop_numerator
+        if not numerator:
+            return None
+        aperture = float(numerator) / self.f_stop_denominator
         return format(aperture, '.2f').rstrip('0').rstrip('.')
+
+    def focal_length(self):
+        numerator = self.focal_length_numerator
+        if not numerator:
+            return None
+        length = float(numerator) / self.focal_length_denominator
+        return format(length, '.2f').rstrip('0').rstrip('.')
 
     class Meta:
         ordering = ['-created']

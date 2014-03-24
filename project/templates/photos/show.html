@@ -11,7 +11,10 @@
     <div class="shutter-speed">Shutter Speed: {{ shutter_speed }}</div>
   {% endif %}
   {% if f_stop %}
-    <div class="f_stop">f/stop: {{ f_stop }}</div>
+    <div class="f-stop">Aperture: f/{{ f_stop }}</div>
+  {% endif %}
+  {% if focal_length %}
+    <div class="focal-length">Focal Length: {{ focal_length }}mm</div>
   {% endif %}
 </div>
 
