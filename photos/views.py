@@ -36,4 +36,9 @@ def index(request):
 
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
-    return render_to_response('photos/show.html', {'photo': photo})
+    photo_hash = {
+        'photo': photo,
+        'f_stop': photo.f_stop(),
+        'shutter_speed': photo.shutter_speed(),
+    }
+    return render_to_response('photos/show.html', photo_hash)

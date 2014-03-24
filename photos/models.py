@@ -23,5 +23,17 @@ class Photo(TimeStampedModel):
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
 
+    def shutter_speed(self):
+        numerator = self.exposure_numerator
+        denominator = self.exposure_denominator
+        if denominator == 0:
+            return str(numerator)
+        else:
+            return str(numerator) + '/' + str(denominator)
+
+    def f_stop(self):
+        aperture = float(self.f_stop_numerator) / self.f_stop_denominator
+        return format(aperture, '.2f').rstrip('0').rstrip('.')
+
     class Meta:
         ordering = ['-created']

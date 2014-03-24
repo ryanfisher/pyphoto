@@ -7,6 +7,12 @@
   {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
   {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
   {% if photo.iso %}<div class="iso">ISO: {{ photo.iso }}</div>{% endif %}
+  {% if shutter_speed %}
+    <div class="shutter-speed">Shutter Speed: {{ shutter_speed }}</div>
+  {% endif %}
+  {% if f_stop %}
+    <div class="f_stop">f/stop: {{ f_stop }}</div>
+  {% endif %}
 </div>
 
 {% endblock %}
