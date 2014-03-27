@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 
 import subprocess
+import os
 
 
 class Command(BaseCommand):
@@ -11,7 +12,8 @@ class Command(BaseCommand):
                                  " --settings=project.settings.test",
                                  shell=True)
         if result == 0:
-            subprocess.call('coverage html --include="$SITE_URL*"' +
-                            '--omit="admin.py"', shell=True)
+            cwd = os.getcwd()
+            subprocess.call('coverage html --include="'+cwd+'/*"' +
+                            ' --omit="admin.py"', shell=True)
         else:
             self.stdout.write("TEST FAILURES")
