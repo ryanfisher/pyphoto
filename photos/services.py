@@ -14,6 +14,26 @@ OPTIMIZED_WIDTH = 1800
 OPTIMIZED_HEIGHT = 1200
 
 
+class ExifInfo(object):
+    def __init__(self, img):
+        exifinfo = img._getexif()
+        exif_dict = {}
+        if exifinfo:
+            for tag, value in exifinfo.items():
+                decoded = TAGS.get(tag, tag)
+                exif_dict[decoded] = value
+        self.exif_info = exif_dict
+
+    def model(self):
+        try:
+            return self.exif_info['Model']
+        except KeyError:
+            return None
+
+    def get_dictionary(self):
+        return self.exif_info
+
+
 class TemporaryImageFile(object):
     def __init__(self, uploaded_file):
         random_folder = 'random'
@@ -94,14 +114,14 @@ class PhotoService(object):
         tmp_image = TemporaryImageFile(self.uploaded_file)
         img = Image.open(tmp_image.path)
 
-        exifinfo = img._getexif()
+        exifinfo = ExifInfo(img)
 
         optimized_url = self.create_and_store_optimized(img)
         thumbnail_url = self.create_and_store_thumbnail(img)
 
         tmp_image.delete()
 
-        exif_dict = {
+        exif_info = {
             'ISOSpeedRatings': None,
             'Make': None,
             'Model': None,
@@ -110,11 +130,7 @@ class PhotoService(object):
             'FocalLength': (None, None),
             'ExposureTime': (None, None),
         }
-        if exifinfo:
-            for tag, value in exifinfo.items():
-                decoded = TAGS.get(tag, tag)
-                exif_dict[decoded] = value
-        exif_info = exif_dict
+        exif_info.update(exifinfo.get_dictionary())
 
         return Photo.objects.create(
             original_filename=self.uploaded_file.name,
