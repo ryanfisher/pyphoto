@@ -21,16 +21,37 @@ class ExifInfoTest(TestCase):
     def test_model(self):
         self.assertEqual(self.exif_info.model(), u'Canon EOS REBEL T3')
 
+    def test_make(self):
+        self.assertEqual(self.exif_info.make(), u'Canon')
+
+    def test_f_stop_numerator(self):
+        self.assertEqual(self.exif_info.f_stop_numerator(), 5)
+
+    def test_f_stop_denominator(self):
+        self.assertEqual(self.exif_info.f_stop_denominator(), 1)
+
+    def test_exposure_numerator(self):
+        self.assertEqual(self.exif_info.exposure_numerator(), 1)
+
+    def test_exposure_denominator(self):
+        self.assertEqual(self.exif_info.exposure_denominator(), 100)
+
+    def test_iso(self):
+        self.assertEqual(self.exif_info.iso(), 800)
+
+    def test_focal_length_numerator(self):
+        self.assertEqual(self.exif_info.focal_length_numerator(), 55)
+
+    def test_focal_length_denominator(self):
+        self.assertEqual(self.exif_info.focal_length_denominator(), 1)
+
+    def test_lens_model(self):
+        self.assertEqual(self.exif_info.lens_model(),
+                         u'EF-S15-85mm f/3.5-5.6 IS USM')
+
     def test_exif(self):
         result = self.exif_info.get_dictionary()
-        self.assertEqual(result['ExposureTime'], (1, 100))
-        self.assertEqual(result['FNumber'], (5, 1))
         self.assertEqual(result['ISOSpeedRatings'], 800)
-        self.assertEqual(result['FocalLength'], (55, 1))
-        self.assertEqual(result['Make'], u'Canon')
-        self.assertEqual(result['Model'], u'Canon EOS REBEL T3')
-        self.assertEqual(result['LensModel'],
-                         u'EF-S15-85mm f/3.5-5.6 IS USM')
 
 
 class ExifInfoNoneTest(TestCase):
@@ -45,6 +66,34 @@ class ExifInfoNoneTest(TestCase):
 
     def test_model(self):
         self.assertEqual(self.exif_info.model(), None)
+
+    def test_make(self):
+        self.assertEqual(self.exif_info.make(), None)
+
+    def test_f_stop_numerator(self):
+        self.assertEqual(self.exif_info.f_stop_numerator(), None)
+
+    def test_f_stop_denominator(self):
+        self.assertEqual(self.exif_info.f_stop_denominator(), None)
+
+    def test_exposure_numerator(self):
+        self.assertEqual(self.exif_info.exposure_numerator(), None)
+
+    def test_exposure_denominator(self):
+        self.assertEqual(self.exif_info.exposure_denominator(), None)
+
+    def test_iso(self):
+        self.assertEqual(self.exif_info.iso(), None)
+
+    def test_focal_length_numerator(self):
+        self.assertEqual(self.exif_info.focal_length_numerator(), None)
+
+    def test_focal_length_denominator(self):
+        self.assertEqual(self.exif_info.focal_length_denominator(), None)
+
+    def test_lens_model(self):
+        self.assertEqual(self.exif_info.lens_model(), None)
+
 
 class PhotoServiceTest(TestCase):
 

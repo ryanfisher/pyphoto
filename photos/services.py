@@ -27,6 +27,51 @@ class ExifInfo(object):
     def model(self):
         return self.exif_info.get('Model')
 
+    def make(self):
+        return self.exif_info.get('Make')
+
+    def lens_model(self):
+        return self.exif_info.get('LensModel')
+
+    def iso(self):
+        return self.exif_info.get('ISOSpeedRatings')
+
+    def focal_length_numerator(self):
+        try:
+            return self.exif_info.get('FocalLength')[0]
+        except:
+            return None
+
+    def focal_length_denominator(self):
+        try:
+            return self.exif_info.get('FocalLength')[1]
+        except:
+            return None
+
+    def exposure_numerator(self):
+        try:
+            return self.exif_info.get('ExposureTime')[0]
+        except:
+            return None
+
+    def exposure_denominator(self):
+        try:
+            return self.exif_info.get('ExposureTime')[1]
+        except:
+            return None
+
+    def f_stop_numerator(self):
+        try:
+            return self.exif_info.get('FNumber')[0]
+        except:
+            return None
+
+    def f_stop_denominator(self):
+        try:
+            return self.exif_info.get('FNumber')[1]
+        except:
+            return None
+
     def get_dictionary(self):
         return self.exif_info
 
@@ -118,32 +163,21 @@ class PhotoService(object):
 
         tmp_image.delete()
 
-        exif_info = {
-            'ISOSpeedRatings': None,
-            'Make': None,
-            'Model': None,
-            'LensModel': None,
-            'FNumber': (None, None),
-            'FocalLength': (None, None),
-            'ExposureTime': (None, None),
-        }
-        exif_info.update(exifinfo.get_dictionary())
-
         return Photo.objects.create(
             original_filename=self.uploaded_file.name,
             url='//s3.amazonaws.com/' + original_file_path,
             optimized_url='//s3.amazonaws.com/' + optimized_url,
             thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
             size=self.uploaded_file.size,
-            iso=exif_info['ISOSpeedRatings'],
+            iso=exifinfo.iso(),
             user=self.user,
-            camera_make=exif_info['Make'],
-            camera_model=exif_info['Model'],
-            lens_model=exif_info['LensModel'],
-            f_stop_numerator=exif_info['FNumber'][0],
-            f_stop_denominator=exif_info['FNumber'][1],
-            exposure_numerator=exif_info['ExposureTime'][0],
-            exposure_denominator=exif_info['ExposureTime'][1],
-            focal_length_numerator=exif_info['FocalLength'][0],
-            focal_length_denominator=exif_info['FocalLength'][1]
+            camera_make=exifinfo.make(),
+            camera_model=exifinfo.model(),
+            lens_model=exifinfo.lens_model(),
+            f_stop_numerator=exifinfo.f_stop_numerator(),
+            f_stop_denominator=exifinfo.f_stop_denominator(),
+            exposure_numerator=exifinfo.exposure_numerator(),
+            exposure_denominator=exifinfo.exposure_denominator(),
+            focal_length_numerator=exifinfo.focal_length_numerator(),
+            focal_length_denominator=exifinfo.focal_length_denominator()
         )
