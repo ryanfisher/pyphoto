@@ -15,6 +15,11 @@ nav a {
   width: 10%;
   color: white;
   text-decoration: none;
+  padding-left: 20px;
+}
+
+nav a:hover {
+  background-color: blue;
 }
 
 nav a:before {
