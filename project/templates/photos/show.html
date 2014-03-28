@@ -2,20 +2,22 @@
 
 {% block content %}
 
-<img src="{{ display_url }}" style="max-width: 100%; max-height: 100%;">
-<div class="photo-description">
-  {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
-  {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
-  {% if photo.iso %}<div class="iso">ISO: {{ photo.iso }}</div>{% endif %}
-  {% if shutter_speed %}
-    <div class="shutter-speed">Shutter Speed: {{ shutter_speed }}</div>
-  {% endif %}
-  {% if f_stop %}
-    <div class="f-stop">Aperture: f/{{ f_stop }}</div>
-  {% endif %}
-  {% if focal_length %}
-    <div class="focal-length">Focal Length: {{ focal_length }}mm</div>
-  {% endif %}
+<div class="photo-container">
+  <img src="{{ display_url }}" style="max-width: 100%; max-height: 100%;" class="photo-page">
+  <div class="photo-description">
+    {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
+    {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
+    {% if photo.iso %}<div class="iso">ISO: {{ photo.iso }}</div>{% endif %}
+    {% if shutter_speed %}
+      <div class="shutter-speed">Shutter Speed: {{ shutter_speed }}</div>
+    {% endif %}
+    {% if f_stop %}
+      <div class="f-stop">Aperture: f/{{ f_stop }}</div>
+    {% endif %}
+    {% if focal_length %}
+      <div class="focal-length">Focal Length: {{ focal_length }}mm</div>
+    {% endif %}
+  </div>
 </div>
 
 {% endblock %}
