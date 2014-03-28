@@ -33,6 +33,19 @@ class ExifInfoTest(TestCase):
                          u'EF-S15-85mm f/3.5-5.6 IS USM')
 
 
+class ExifInfoNoneTest(TestCase):
+
+    def setUp(self):
+        path = os.path.join(
+            os.getcwd(),
+            'photos/tests/fixtures/cheesesteak.jpg'
+        )
+        img = Image.open(path)
+        self.exif_info = ExifInfo(img)
+
+    def test_model(self):
+        self.assertEqual(self.exif_info.model(), None)
+
 class PhotoServiceTest(TestCase):
 
     def setUp(self):

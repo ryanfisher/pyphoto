@@ -25,10 +25,7 @@ class ExifInfo(object):
         self.exif_info = exif_dict
 
     def model(self):
-        try:
-            return self.exif_info['Model']
-        except KeyError:
-            return None
+        return self.exif_info.get('Model')
 
     def get_dictionary(self):
         return self.exif_info
