@@ -12,14 +12,16 @@ nav {
 
 nav a {
   display: inline-block;
-  width: 10%;
   color: white;
   text-decoration: none;
-  padding-left: 20px;
+  padding: 0 20px;
+  -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
+  -moz-transition: -moz-transform 0.3s, background-color 0.3s;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
 nav a:hover {
-  background-color: blue;
+  background-color: red;
 }
 
 nav a:before {
