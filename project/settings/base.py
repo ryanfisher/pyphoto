@@ -16,6 +16,21 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
+
+COMPRESS_ENABLED = False
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/coffeescript', 'coffee --compile --stdio'),
+    ('text/less', 'lessc {infile} {outfile}'),
+    ('text/x-sass', 'sass {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+    ('text/stylus', 'stylus < {infile} > {outfile}'),
+    ('text/foobar', 'path.to.MyPrecompilerFilter'),
+)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -41,6 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'photos',
     'south',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES = (

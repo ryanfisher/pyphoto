@@ -54,3 +54,6 @@ private.py
 
 # Test coverage reports
 htmlcov
+
+# Compiled static files
+CACHE/
