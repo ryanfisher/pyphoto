@@ -1,3 +1,12 @@
+@accent-color: red;
+
+.background-size(@argument) {
+  -webkit-background-size: @argument;
+  -moz-background-size: @argument;
+  -o-background-size: @argument;
+  background-size: @argument;
+}
+
 nav {
   position: fixed;
   width: 100%;
@@ -21,7 +30,7 @@ nav a {
 }
 
 nav a:hover {
-  background-color: red;
+  background-color: @accent-color;
 }
 
 nav a:before {
@@ -34,36 +43,17 @@ nav a:before {
   margin-right: 5px;
 }
 
-nav a.upload:before {
-  background-image: url('/static/images/upload.png');
-  background-size: contain;
+.icon-background(@filename) {
+  background-image: url("/static/images/@{filename}");
+  .background-size(contain);
   background-repeat: no-repeat;
 }
 
-nav a.photos:before {
-  background-image: url('/static/images/slr-camera.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-nav a.home:before {
-  background-image: url('/static/images/home.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-nav a.albums:before {
-  background-image: url('/static/images/folder.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-nav a.logout:before {
-  background-image: url('/static/images/logout.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
+nav a.upload:before { .icon-background('upload.png'); }
+nav a.photos:before { .icon-background('slr-camera.png'); }
+nav a.home:before { .icon-background('home.png'); }
+nav a.albums:before { .icon-background('folder.png'); }
+nav a.logout:before { .icon-background('logout.png'); }
 
 body {
   font-family: "Open Sans", Helvetica, sans-serif;
@@ -194,8 +184,5 @@ img.photo-page {
   background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  -webkit-background-size: 40px 40px;
-  -moz-background-size: 40px 40px;
-  -o-background-size: 40px 40px;
-  background-size: 40px 40px;
+  .background-size(40px 40px);
 }
