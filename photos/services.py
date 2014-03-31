@@ -6,6 +6,7 @@ from PIL.ExifTags import TAGS
 from cStringIO import StringIO
 
 import os
+import binascii
 
 from photos.models import Photo
 
@@ -78,11 +79,8 @@ class ExifInfo(object):
 
 class TemporaryImageFile(object):
     def __init__(self, uploaded_file):
-        random_folder = 'random'
-        dirs_path = 'tmp/'+random_folder+'/'
-        if not os.path.exists(dirs_path):
-            os.makedirs(dirs_path)
-        self.path = dirs_path + uploaded_file.name
+        random_string = binascii.hexlify(os.urandom(10))
+        self.path = 'tmp/' + random_string + uploaded_file.name
         with open(self.path, 'wb+') as destination:
             for chunk in uploaded_file.chunks():
                 destination.write(chunk)

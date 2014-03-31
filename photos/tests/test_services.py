@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 from PIL import Image
 
-from photos.services import PhotoService, ExifInfo
+from photos.services import PhotoService, ExifInfo, TemporaryImageFile
 
 
 class ExifInfoTest(TestCase):
@@ -93,6 +93,24 @@ class ExifInfoNoneTest(TestCase):
 
     def test_lens_model(self):
         self.assertEqual(self.exif_info.lens_model(), None)
+
+
+class TemporaryImageFileTest(TestCase):
+
+    def setUp(self):
+        path = os.path.join(
+            os.getcwd(),
+            'photos/tests/fixtures/blake-small.jpg'
+        )
+        upload_file = open(path, 'rb')
+        file = SimpleUploadedFile(upload_file.name, upload_file.read())
+        self.tmp_file = TemporaryImageFile(file)
+
+    def tearDown(self):
+        self.tmp_file.delete()
+
+    def test_instance(self):
+        self.assertIsInstance(self.tmp_file, TemporaryImageFile)
 
 
 class PhotoServiceTest(TestCase):
