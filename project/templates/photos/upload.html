@@ -16,6 +16,7 @@
   <h4>Upload photos here</h4>
   <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
+    <p><input type="file" class="multiple-photos" multiple></p>
     <input type="submit" value="Upload" />
   </form>
 </div>

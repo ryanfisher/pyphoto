@@ -6,6 +6,7 @@ class Uploader extends Backbone.View
     'submit form' : "upload_photos"
 
   initialize: ->
+    $('#id_file').hide()
     @uploading = false
 
   send_request: (photo_file, progress_info)->
@@ -45,13 +46,13 @@ class Uploader extends Backbone.View
   upload_photos: ->
     event.preventDefault()
     return if @uploading
-    info = @$('.progress-info').first().clone()
-    @$el.append(info)
     @uploading = true
     form = $(event.target)
-    file_input = form.find('#id_file')
-    photo_file = file_input[0].files[0]
-    @send_request(photo_file, info)
+    file_input = form.find('[type="file"]:visible')
+    for photo_file in file_input[0].files
+      info = @$('.progress-info').first().clone()
+      @$el.append(info)
+      @send_request(photo_file, info)
 
 class AppView extends Backbone.View
 
