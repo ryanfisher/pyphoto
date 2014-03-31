@@ -26,6 +26,7 @@ class Uploader extends Backbone.View
         else
           info.find('.failure').show()
       complete: =>
+        info.find('.bar').removeClass('animated')
         @uploading = false;
         @$('form')[0].reset();
       processData: false,
