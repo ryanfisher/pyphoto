@@ -19,8 +19,9 @@ var Uploader = Backbone.View.extend({
   upload_photo: function () {
     event.preventDefault();
     if (this.uploading) { return; };
-    this.$('.message').hide();
-    progress_bar = this.$('.progress')
+    this.info = this.$('.progress-info').first().clone()
+    this.$el.append(this.info)
+    progress_bar = this.info.find('.progress')
     progress_bar.show()
     this.uploading = true;
     form = $(event.target);
@@ -36,20 +37,18 @@ var Uploader = Backbone.View.extend({
       data: form_data,
       headers: { 'X-CSRFToken': csrf_token },
       success: function (data) {
-        _this.$('.success').show()
+        _this.info.find('.success').show()
       },
       error: function (jqXHR) {
         if (jqXHR.status === 409) {
-          _this.$('.error409').show()
+          _this.info.find('.error409').show()
         } else {
-          _this.$('.failure').show()
+          _this.info.find('.failure').show()
         }
       },
       complete: function () {
         _this.uploading = false;
         form[0].reset();
-        progress_bar.hide();
-        progress_bar.find('.bar').css('width', '0');
       },
       processData: false,
       contentType: false,
