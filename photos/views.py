@@ -31,12 +31,15 @@ def upload(request):
                 return HttpResponse(status=409)
         return HttpResponse(status=200)
 
-
 @login_required
 def index(request):
     photos = Photo.objects.filter(user=request.user)
     return render_to_response('photos/index.html', {'photos': photos})
 
+@login_required
+def edit(request):
+    photos = Photo.objects.filter(user=request.user)
+    return render_to_response('photos/edit.html', {'photos': photos})
 
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
