@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'photos',
     'south',
     'compressor',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
