@@ -25,6 +25,7 @@ urlpatterns += patterns(
 
 urlpatterns += patterns(
     'photos.views',
+    url(r'^manage$', 'manage'),
     url(r'^upload$', 'upload'),
     url(r'^photos$', 'index'),
     url(r'^photos/edit$', 'edit'),
