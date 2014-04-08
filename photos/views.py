@@ -2,12 +2,14 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db import IntegrityError
-
 from django.contrib.auth.decorators import login_required
+
+from rest_framework.renderers import JSONRenderer
 
 from photos.forms import PhotoUploadForm
 from photos.models import Photo
 from photos.services import PhotoService
+from photos.serializers import PhotoSerializer
 
 
 @login_required
@@ -58,3 +60,26 @@ def show(request, id):
         'focal_length': photo.focal_length(),
     }
     return render_to_response('photos/show.html', photo_hash)
+
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its contents into JSON
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+
+@login_required
+def photo_list(request):
+    """
+    List all photos
+    """
+    if request.method == 'GET':
+        photos = Photo.objects.filter(user=request.user)
+        serializer = PhotoSerializer(photos, many=True)
+        return JSONResponse(serializer.data)
+    else:
+        raise Http404

@@ -30,4 +30,5 @@ urlpatterns += patterns(
     url(r'^photos$', 'index'),
     url(r'^photos/edit$', 'edit'),
     url(r'^photos/(?P<id>\d+)$', 'show'),
+    url(r'^api/photos$', 'photo_list'),
 )
