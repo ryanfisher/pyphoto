@@ -10,13 +10,14 @@ class PhotoFeed extends Backbone.View
     user_photos.fetch()
 
 class PhotoImg extends Backbone.View
-  className: 'photo'
+  tagName: 'img'
 
   initialize: ->
-    @$el.append($('<img>', src: @model.get('thumbnail_url')))
+    @$el.attr('src', @model.get('thumbnail_url'))
 
 class PhotoView extends Backbone.View
     tagName: 'a'
+    className: 'photo'
 
     initialize: ->
       @$el.attr('href', "/photos/#{@model.get('id')}")
