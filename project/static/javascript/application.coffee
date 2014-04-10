@@ -3,7 +3,11 @@ class PhotoFeed extends Backbone.View
   el: '#photo-feed'
 
   initialize: ->
-    console.log "Initialized photo feed"
+    user_photos = new UserPhotos
+    user_photos.on 'add', (model) =>
+      photo_view = new PhotoView({model})
+      @$el.append(photo_view.$el)
+    user_photos.fetch()
 
 class PhotoImg extends Backbone.View
   className: 'photo'
@@ -85,12 +89,7 @@ class AppView extends Backbone.View
 
   initialize: ->
     new Uploader()
-    user_photos = new UserPhotos
     photo_feed = new PhotoFeed
-    user_photos.on 'add', (model) ->
-      photo_view = new PhotoView({model})
-      photo_view.$el.appendTo(photo_feed.$el)
-    user_photos.fetch()
 
 jQuery('document').ready ->
   App = new AppView()
