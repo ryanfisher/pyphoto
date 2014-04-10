@@ -1,4 +1,30 @@
 
+class PhotoFeed extends Backbone.View
+  el: '#photo-feed'
+
+  initialize: ->
+    console.log "Initialized photo feed"
+
+class PhotoImg extends Backbone.View
+  className: 'photo'
+
+  initialize: ->
+    @$el.append($('<img>', src: @model.get('thumbnail_url')))
+
+class PhotoView extends Backbone.View
+    tagName: 'a'
+
+    initialize: ->
+      @$el.attr('href', "/photos/#{@model.get('id')}")
+      img = new PhotoImg({@model})
+      @$el.append(img.$el)
+
+class UserPhoto extends Backbone.Model
+
+class UserPhotos extends Backbone.Collection
+  url: '/api/photos'
+  model: UserPhoto
+
 class Uploader extends Backbone.View
   el: "#uploader"
 
@@ -57,7 +83,14 @@ class Uploader extends Backbone.View
 
 class AppView extends Backbone.View
 
-  initialize: -> new Uploader()
+  initialize: ->
+    new Uploader()
+    user_photos = new UserPhotos
+    photo_feed = new PhotoFeed
+    user_photos.on 'add', (model) ->
+      photo_view = new PhotoView({model})
+      photo_view.$el.appendTo(photo_feed.$el)
+    user_photos.fetch()
 
 jQuery('document').ready ->
   App = new AppView()
