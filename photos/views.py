@@ -22,10 +22,11 @@ def upload(request):
         try:
             # TODO Check for key in model before trying to upload
             service = PhotoService(request_file, request.user)
-            service.store_and_save_photos()
+            photo = service.store_and_save_photos()
         except IntegrityError:
             return HttpResponse(status=409)
-    return HttpResponse(status=200)
+    serializer = PhotoSerializer(photo)
+    return JSONResponse(serializer.data)
 
 
 @login_required
