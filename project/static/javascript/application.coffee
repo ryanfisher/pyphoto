@@ -1,3 +1,9 @@
+class PhotoManager extends Backbone.View
+  el: '#photo-manager'
+
+  initialize: ->
+    new Uploader()
+    new PhotoManagerFeed({@collection})
 
 class PhotoManagerEditView extends Backbone.View
   className: 'photo'
@@ -14,35 +20,6 @@ class PhotoManagerFeed extends Backbone.View
     @collection.on 'add', (model) =>
       photo_edit_view = new PhotoManagerEditView({model})
       @$el.append(photo_edit_view.$el)
-
-class PhotoFeed extends Backbone.View
-  el: '#photo-feed'
-
-  initialize: ->
-    @collection.on 'add', (model) =>
-      photo_view = new PhotoView({model})
-      @$el.append(photo_view.$el)
-
-class PhotoImg extends Backbone.View
-  tagName: 'img'
-
-  initialize: ->
-    @$el.attr('src', @model.get('thumbnail_url'))
-
-class PhotoView extends Backbone.View
-    tagName: 'a'
-    className: 'photo'
-
-    initialize: ->
-      @$el.attr('href', "/photos/#{@model.get('id')}")
-      img = new PhotoImg({@model})
-      @$el.append(img.$el)
-
-class UserPhoto extends Backbone.Model
-
-class UserPhotos extends Backbone.Collection
-  url: '/api/photos'
-  model: UserPhoto
 
 class Uploader extends Backbone.View
   el: "#uploader"
@@ -100,14 +77,42 @@ class Uploader extends Backbone.View
       @$el.append(info)
       @send_request(photo_file, info)
 
-class AppView extends Backbone.View
+class PhotoFeed extends Backbone.View
+  el: '#photo-feed'
 
   initialize: ->
-    new Uploader()
+    @collection.on 'add', (model) =>
+      photo_view = new PhotoView({model})
+      @$el.append(photo_view.$el)
+
+class PhotoImg extends Backbone.View
+  tagName: 'img'
+
+  initialize: ->
+    @$el.attr('src', @model.get('thumbnail_url'))
+
+class PhotoView extends Backbone.View
+    tagName: 'a'
+    className: 'photo'
+
+    initialize: ->
+      @$el.attr('href', "/photos/#{@model.get('id')}")
+      img = new PhotoImg({@model})
+      @$el.append(img.$el)
+
+class UserPhoto extends Backbone.Model
+
+class UserPhotos extends Backbone.Collection
+  url: '/api/photos'
+  model: UserPhoto
+
+class App extends Backbone.View
+
+  initialize: ->
     collection = new UserPhotos
-    new PhotoFeed({collection})
-    new PhotoManagerFeed({collection})
+    new PhotoFeed({collection}) if $('#photo-feed').length
+    new PhotoManager({collection}) if $('#photo-manager').length
     collection.fetch()
 
 jQuery('document').ready ->
-  App = new AppView()
+  App = new App()
