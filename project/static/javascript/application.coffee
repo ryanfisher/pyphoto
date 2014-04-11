@@ -1,4 +1,19 @@
 
+class PhotoManagerEditView extends Backbone.View
+  className: 'photo'
+
+  initialize: ->
+    thumbnail_url = "url(#{@model.get('thumbnail_url')})".replace /\s/, "%20"
+    @$el.css('background-image', thumbnail_url)
+
+class PhotoManagerFeed extends Backbone.View
+  el: '#photo-manager-feed'
+
+  initialize: ->
+    @collection.on 'add', (model) =>
+      photo_edit_view = new PhotoManagerEditView({model})
+      @$el.append(photo_edit_view.$el)
+
 class PhotoFeed extends Backbone.View
   el: '#photo-feed'
 
@@ -89,7 +104,8 @@ class AppView extends Backbone.View
   initialize: ->
     new Uploader()
     collection = new UserPhotos
-    photo_feed = new PhotoFeed({collection})
+    new PhotoFeed({collection})
+    new PhotoManagerFeed({collection})
     collection.fetch()
 
 jQuery('document').ready ->
