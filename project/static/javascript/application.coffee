@@ -5,6 +5,7 @@ class PhotoManagerEditView extends Backbone.View
   initialize: ->
     thumbnail_url = "url(#{@model.get('thumbnail_url')})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
+    @$el.append($('<input>', type: 'checkbox'))
 
 class PhotoManagerFeed extends Backbone.View
   el: '#photo-manager-feed'
