@@ -1,9 +1,16 @@
 class PhotoManager extends Backbone.View
   el: '#photo-manager'
 
+  events:
+    'click .delete-link': 'delete_photos'
+
   initialize: ->
     new Uploader()
-    new PhotoManagerFeed({@collection})
+    @photo_feed = new PhotoManagerFeed({@collection})
+
+  delete_photos: (event) ->
+    event.preventDefault()
+    @photo_feed.delete_selected_photos()
 
 class PhotoManagerEditView extends Backbone.View
   className: 'photo'
@@ -13,13 +20,27 @@ class PhotoManagerEditView extends Backbone.View
     @$el.css('background-image', thumbnail_url)
     @$el.append($('<input>', type: 'checkbox'))
 
+  # Checks if photo is selected
+  #
+  # @return [Boolean]
+  is_checked: ->
+    @$('input').is(':checked')
+
 class PhotoManagerFeed extends Backbone.View
   el: '#photo-manager-feed'
 
   initialize: ->
+    @photo_edit_views = []
     @collection.on 'add', (model) =>
       photo_edit_view = new PhotoManagerEditView({model})
+      @photo_edit_views.push photo_edit_view
       @$el.append(photo_edit_view.$el)
+
+  delete_selected_photos: ->
+    to_delete = []
+    _.each @photo_edit_views, (photo_view) =>
+      to_delete.push photo_view if photo_view.is_checked()
+    console.log to_delete
 
 class Uploader extends Backbone.View
   el: "#uploader"
