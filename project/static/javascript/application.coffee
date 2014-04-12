@@ -15,6 +15,9 @@ class PhotoManager extends Backbone.View
 class PhotoManagerEditView extends Backbone.View
   className: 'photo'
 
+  events:
+    'click': 'toggle_checked'
+
   initialize: ->
     thumbnail_url = "url(#{@model.get('thumbnail_url')})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
@@ -25,6 +28,9 @@ class PhotoManagerEditView extends Backbone.View
   # @return [Boolean]
   is_checked: ->
     @$('input').is(':checked') and @$el.is(':visible')
+
+  toggle_checked: ->
+    @$('input').prop 'checked', (i, val) -> !val
 
   delete_photo: ->
     @model.destroy()

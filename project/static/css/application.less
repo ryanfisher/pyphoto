@@ -13,6 +13,12 @@
   border-radius: @argument;
 }
 
+.opacity (@opacity: 0.5) {
+  -webkit-opacity:  @opacity;
+  -moz-opacity:     @opacity;
+  opacity:    @opacity;
+}
+
 nav {
   position: fixed;
   width: 100%;
@@ -122,6 +128,11 @@ img.photo-page {
       position: absolute;
       top: 5px;
       right: 5px;
+    }
+
+    &:hover {
+      .opacity;
+      cursor: pointer;
     }
   }
 }
