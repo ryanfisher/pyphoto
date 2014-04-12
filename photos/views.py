@@ -89,8 +89,8 @@ def photo_list(request):
 @csrf_exempt
 @login_required
 def photo_delete(request, id):
-    Photo.objects.filter(user=request.user).get(id=id)
-    if request.method == 'DELETE':
-        return HttpResponse(status=200)
-    else:
+    if request.method != 'DELETE':
         raise Http404
+    photo = Photo.objects.filter(user=request.user).get(id=id)
+    photo.delete()
+    return HttpResponse(status=200)
