@@ -65,6 +65,16 @@ class Uploader extends Backbone.View
     $('#id_file').hide()
     @uploading = false
 
+  upload_photos: ->
+    event.preventDefault()
+    return if @uploading
+    @uploading = true
+    form = $(event.target)
+    file_input = form.find('[type="file"]:visible')
+    for photo_file in file_input[0].files
+      info = new ProgressInfo
+      @send_request(photo_file, info)
+
   send_request: (photo_file, progress_info)->
     info = progress_info
     form_data = new FormData()
@@ -77,14 +87,10 @@ class Uploader extends Backbone.View
       headers: 'X-CSRFToken': csrf_token
       success: (data) =>
         @collection.add data
-        info.find('.success').show()
-      error: (jqXHR) ->
-        if jqXHR.status == 409
-          info.find('.error409').show()
-        else
-          info.find('.failure').show()
+        info.display_message(200)
+      error: (jqXHR) -> info.display_message(jqXHR.status)
       complete: =>
-        info.find('.bar').removeClass('animated')
+        info.stop_animation()
         @uploading = false;
         @$('form')[0].reset();
       processData: false,
@@ -95,23 +101,34 @@ class Uploader extends Backbone.View
           callback = (ev) ->
             if ev.lengthComputable
               percentUploaded = Math.floor(ev.loaded * 100 / ev.total)
-              console.info('Uploaded '+percentUploaded+'%')
-              info.find('.bar').css('width', percentUploaded+'%')
-            else
-              console.info('Uploaded '+ev.loaded+' bytes')
+              info.update_bar(percentUploaded)
           myXhr.upload.addEventListener 'progress', callback, false
         myXhr
 
-  upload_photos: ->
-    event.preventDefault()
-    return if @uploading
-    @uploading = true
-    form = $(event.target)
-    file_input = form.find('[type="file"]:visible')
-    for photo_file in file_input[0].files
-      info = @$('.progress-info').first().clone()
-      @$el.append(info)
-      @send_request(photo_file, info)
+class ProgressInfo extends Backbone.View
+  className: 'progress-info'
+
+  initialize: ->
+    @bar = $('<div>', class: 'bar animated')
+    progress = $('<div>', class: 'progress').append(@bar)
+    @$el.append(progress)
+    $('#progress-bars').prepend(@$el)
+
+  update_bar: (percent_uploaded) ->
+    @bar.css('width', "#{percent_uploaded}%")
+
+  display_message: (status) ->
+    bars = $('#progress-bars')
+    message = switch status
+      when 200
+        $('<p>', text: bars.data('success'), class: 'message success')
+      when 409
+        $('<p>', text: bars.data('error409'), class: 'message error409')
+      else $('<p>', text: bars.data('error'), class: 'message error')
+    @$el.append(message)
+
+  stop_animation: ->
+    @bar.removeClass('animated')
 
 class PhotoFeed extends Backbone.View
   el: '#photo-feed'

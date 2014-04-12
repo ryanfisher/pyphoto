@@ -10,20 +10,13 @@
 </ul>
 
 <div id="uploader">
-  <div class="progress-info">
-    <div class="progress">
-      <div class="bar animated"></div>
-    </div>
-    <p class="message success">Hurrah!</p>
-    <p class="message failure">Horrible failure!</p>
-    <p class="message error409">Horrible failure! File already uploaded!</p>
-  </div>
   <h4>Upload photos here</h4>
   <form action="/upload" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
     <p><input type="file" class="multiple-photos" multiple></p>
     <input type="submit" value="Upload" />
   </form>
+  <div id="progress-bars" data-success="Hurrah!" data-failure="Horrible failure!" data-error409="Horrible failure! File already uploaded!"></div>
 </div>
 <div id="photo-manager-feed">
 </div>
