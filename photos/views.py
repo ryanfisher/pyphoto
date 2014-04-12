@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.renderers import JSONRenderer
 
@@ -82,5 +83,14 @@ def photo_list(request):
         photos = Photo.objects.filter(user=request.user)
         serializer = PhotoSerializer(photos, many=True)
         return JSONResponse(serializer.data)
+    else:
+        raise Http404
+
+@csrf_exempt
+@login_required
+def photo_delete(request, id):
+    Photo.objects.filter(user=request.user).get(id=id)
+    if request.method == 'DELETE':
+        return HttpResponse(status=200)
     else:
         raise Http404
