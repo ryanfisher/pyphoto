@@ -5,7 +5,7 @@ class PhotoManager extends Backbone.View
     'click .delete-link': 'delete_photos'
 
   initialize: ->
-    new Uploader()
+    new Uploader({@collection})
     @photo_feed = new PhotoManagerFeed({@collection})
 
   delete_photos: (event) ->
@@ -39,6 +39,12 @@ class PhotoManagerFeed extends Backbone.View
       photo_edit_view = new PhotoManagerEditView({model})
       @photo_edit_views.push photo_edit_view
       @$el.append(photo_edit_view.$el)
+    @collection.once 'sync', =>
+      @collection.off 'add'
+      @collection.on 'add', (model) =>
+        photo_edit_view = new PhotoManagerEditView({model})
+        @photo_edit_views.push photo_edit_view
+        @$el.prepend(photo_edit_view.$el)
 
   delete_selected_photos: ->
     to_delete = _.filter @photo_edit_views, (view) -> view.is_checked()
@@ -69,7 +75,9 @@ class Uploader extends Backbone.View
       url: "/upload"
       data: form_data
       headers: 'X-CSRFToken': csrf_token
-      success: (data) -> info.find('.success').show()
+      success: (data) =>
+        @collection.add data
+        info.find('.success').show()
       error: (jqXHR) ->
         if jqXHR.status == 409
           info.find('.error409').show()
