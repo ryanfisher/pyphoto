@@ -24,7 +24,11 @@ class PhotoManagerEditView extends Backbone.View
   #
   # @return [Boolean]
   is_checked: ->
-    @$('input').is(':checked')
+    @$('input').is(':checked') and @$el.is(':visible')
+
+  delete_photo: ->
+    @model.destroy()
+    @remove()
 
 class PhotoManagerFeed extends Backbone.View
   el: '#photo-manager-feed'
@@ -37,10 +41,13 @@ class PhotoManagerFeed extends Backbone.View
       @$el.append(photo_edit_view.$el)
 
   delete_selected_photos: ->
-    to_delete = []
-    _.each @photo_edit_views, (photo_view) =>
-      to_delete.push photo_view if photo_view.is_checked()
-    console.log to_delete
+    to_delete = _.filter @photo_edit_views, (view) -> view.is_checked()
+    delete_count = to_delete.length
+    return if delete_count == 0
+    confirm_text = "Are you sure you want to delete the selected photo(s)?" +
+                   "\n\n#{delete_count} selected"
+    if window.confirm(confirm_text)
+      _.each to_delete, (view) -> view.delete_photo()
 
 class Uploader extends Backbone.View
   el: "#uploader"
