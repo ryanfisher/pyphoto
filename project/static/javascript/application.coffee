@@ -108,27 +108,33 @@ class Uploader extends Backbone.View
 class ProgressInfo extends Backbone.View
   className: 'progress-info'
 
+  events:
+    'click': 'remove_if_done'
+
   initialize: ->
     @bar = $('<div>', class: 'bar animated')
     progress = $('<div>', class: 'progress').append(@bar)
     @$el.append(progress)
+    @message = $('<p>', class: 'message')
+    @$el.append(@message)
     $('#progress-bars').prepend(@$el)
 
   update_bar: (percent_uploaded) ->
     @bar.css('width', "#{percent_uploaded}%")
 
   display_message: (status) ->
-    bars = $('#progress-bars')
     message = switch status
-      when 200
-        $('<p>', text: bars.data('success'), class: 'message success')
-      when 409
-        $('<p>', text: bars.data('error409'), class: 'message error409')
-      else $('<p>', text: bars.data('error'), class: 'message error')
-    @$el.append(message)
+      when 200 then 'success'
+      when 409 then 'error409'
+      else 'error'
+    @message.addClass(message).text($('#progress-bars').data(message))
 
   stop_animation: ->
     @bar.removeClass('animated')
+
+  remove_if_done: ->
+    return if @bar.hasClass('animated')
+    @remove()
 
 class PhotoFeed extends Backbone.View
   el: '#photo-feed'
