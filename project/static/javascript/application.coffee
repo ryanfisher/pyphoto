@@ -16,21 +16,20 @@ class PhotoManagerEditView extends Backbone.View
   className: 'photo'
 
   events:
-    'click': 'toggle_checked'
+    'click': 'toggle_selected'
 
   initialize: ->
     thumbnail_url = "url(#{@model.get('thumbnail_url')})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
-    @$el.append($('<input>', type: 'checkbox'))
 
   # Checks if photo is selected
   #
   # @return [Boolean]
-  is_checked: ->
-    @$('input').is(':checked') and @$el.is(':visible')
+  is_selected: ->
+    @$el.is(':visible') and @$el.hasClass('selected')
 
-  toggle_checked: ->
-    @$('input').prop 'checked', (i, val) -> !val
+  toggle_selected: ->
+    @$el.toggleClass('selected')
 
   delete_photo: ->
     @model.destroy()
@@ -53,7 +52,7 @@ class PhotoManagerFeed extends Backbone.View
         @$el.prepend(photo_edit_view.$el)
 
   delete_selected_photos: ->
-    to_delete = _.filter @photo_edit_views, (view) -> view.is_checked()
+    to_delete = _.filter @photo_edit_views, (view) -> view.is_selected()
     delete_count = to_delete.length
     return if delete_count == 0
     confirm_text = "Are you sure you want to delete the selected photo(s)?" +
