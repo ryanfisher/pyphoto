@@ -60,3 +60,27 @@ class Photo(TimeStampedModel):
 
     class Meta:
         ordering = ['-created']
+
+
+class Album(TimeStampedModel):
+    """
+    A user's photo album
+    """
+    title = models.CharField(max_length=255)
+    user = models.ForeignKey(User)
+    photos = models.ManyToManyField(Photo, through='SortedPhoto')
+
+    def __unicode__(self):
+        return 'Album: ' + self.title
+
+
+class SortedPhoto(models.Model):
+    """
+    A sorted photo in an album
+    """
+    photo = models.ForeignKey(Photo)
+    album = models.ForeignKey(Album)
+    position = models.PositiveSmallIntegerField(unique=True)
+
+    class Meta:
+        ordering = ('position',)
