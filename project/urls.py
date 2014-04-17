@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
-
 from django.contrib import admin
+
+from photos.views import PhotoList
+
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -26,10 +28,13 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     'photos.views',
     url(r'^manage$', 'manage'),
-    url(r'^upload$', 'upload'),
     url(r'^photos$', 'index'),
     url(r'^photos/edit$', 'edit'),
     url(r'^photos/(?P<id>\d+)$', 'show'),
-    url(r'^api/photos$', 'photo_list'),
     url(r'^api/photos/(?P<id>\d+)$', 'photo_delete'),
+)
+
+urlpatterns += patterns(
+    '',
+    url(r'^api/photos$', PhotoList.as_view()),
 )

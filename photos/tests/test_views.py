@@ -5,8 +5,8 @@ from photos.models import Photo
 
 class PhotosViewsNotLoggedInTests(TestCase):
 
-    def test_upload(self):
-        response = self.client.get('/upload')
+    def test_edit(self):
+        response = self.client.get('/manage')
         self.assertEquals(response.status_code, 302)
 
 class PhotosViewsTests(TestCase):

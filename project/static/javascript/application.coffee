@@ -87,7 +87,7 @@ class Uploader extends Backbone.View
     csrf_token = @$('input[name="csrfmiddlewaretoken"]').val()
     $.ajax
       type: "POST"
-      url: "/upload"
+      url: "/api/photos"
       data: form_data
       headers: 'X-CSRFToken': csrf_token
       success: (data) =>

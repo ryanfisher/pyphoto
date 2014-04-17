@@ -5,30 +5,13 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from photos.forms import PhotoUploadForm
 from photos.models import Photo
 from photos.services import PhotoService
 from photos.serializers import PhotoSerializer
-
-
-@login_required
-def upload(request):
-    if request.method != 'POST':
-        raise Http404
-    form = PhotoUploadForm(request.POST, request.FILES)
-    if form.is_valid():
-        request_file = request.FILES['file']
-        try:
-            # TODO Check for key in model before trying to upload
-            service = PhotoService(request_file, request.user)
-            photo = service.store_and_save_photos()
-        except IntegrityError:
-            return HttpResponse(status=409)
-    serializer = PhotoSerializer(photo)
-    return JSONResponse(serializer.data)
 
 
 @login_required
@@ -65,18 +48,28 @@ def show(request, id):
     return render_to_response('photos/show.html', photo_hash)
 
 
-@login_required
-@api_view(['GET'])
-def photo_list(request):
-    """
-    List all photos
-    """
-    if request.method == 'GET':
+# TODO Make sure login is required for these methods
+class PhotoList(APIView):
+    def get(self, request, format=None):
+        """
+        List all photos
+        """
         photos = Photo.objects.filter(user=request.user)
         serializer = PhotoSerializer(photos, many=True)
         return Response(serializer.data)
-    else:
-        raise Http404
+
+    def post(self, request, format=None):
+        form = PhotoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            request_file = request.FILES['file']
+            try:
+                # TODO Check for key in model before trying to upload
+                service = PhotoService(request_file, request.user)
+                photo = service.store_and_save_photos()
+            except IntegrityError:
+                return HttpResponse(status=409)
+        serializer = PhotoSerializer(photo)
+        return Response(serializer.data)
 
 
 @csrf_exempt
