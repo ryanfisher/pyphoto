@@ -5,7 +5,8 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from photos.forms import PhotoUploadForm
 from photos.models import Photo
@@ -64,17 +65,8 @@ def show(request, id):
     return render_to_response('photos/show.html', photo_hash)
 
 
-class JSONResponse(HttpResponse):
-    """
-    An HttpResponse that renders its contents into JSON
-    """
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
-
-
 @login_required
+@api_view(['GET'])
 def photo_list(request):
     """
     List all photos
@@ -82,9 +74,10 @@ def photo_list(request):
     if request.method == 'GET':
         photos = Photo.objects.filter(user=request.user)
         serializer = PhotoSerializer(photos, many=True)
-        return JSONResponse(serializer.data)
+        return Response(serializer.data)
     else:
         raise Http404
+
 
 @csrf_exempt
 @login_required
