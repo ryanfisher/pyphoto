@@ -3,14 +3,25 @@ class PhotoManager extends Backbone.View
 
   events:
     'click .delete-link': 'delete_photos'
+    'click .upload': 'show_uploader'
+    'click .edit-albums': 'show_edit_albums'
 
   initialize: ->
-    new Uploader({@collection})
+    @uploader = new Uploader({@collection})
     @photo_feed = new PhotoManagerFeed({@collection})
 
   delete_photos: (event) ->
     event.preventDefault()
     @photo_feed.delete_selected_photos()
+
+  show_uploader: (event) ->
+    event.preventDefault()
+    @uploader.show()
+
+  show_edit_albums: (event) ->
+    event.preventDefault()
+    @uploader.hide()
+    # TODO set up album editing
 
 class PhotoManagerEditView extends Backbone.View
   className: 'photo'
@@ -69,6 +80,12 @@ class Uploader extends Backbone.View
   initialize: ->
     $('#id_file').hide()
     @uploading = false
+
+  show: ->
+    @$el.removeClass('hidden')
+
+  hide: ->
+    @$el.addClass('hidden')
 
   upload_photos: ->
     event.preventDefault()

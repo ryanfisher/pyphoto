@@ -11,12 +11,23 @@
   -webkit-border-radius: @argument;
   -moz-border-radius: @argument;
   border-radius: @argument;
+
+  -moz-background-clip:    padding;
+  -webkit-background-clip: padding-box;
+  background-clip:         padding-box;
 }
 
 .opacity (@opacity: 0.5) {
   -webkit-opacity:  @opacity;
   -moz-opacity:     @opacity;
   opacity:    @opacity;
+}
+
+.transition (@transition) {
+  -webkit-transition: @transition;
+  -moz-transition:    @transition;
+  -ms-transition:     @transition;
+  -o-transition:      @transition;
 }
 
 nav {
@@ -148,9 +159,18 @@ img.photo-page {
 }
 
 #uploader {
+  position: relative;
+  left: 0;
   float: left;
   width: 300px;
   margin-left: 20px;
+
+  .transition(all 0.3s ease-in-out);
+
+  &.hidden {
+    width: 0px;
+    left: -400px;
+  }
 }
 
 #uploader label {
