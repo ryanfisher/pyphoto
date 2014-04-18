@@ -1,3 +1,14 @@
+class AlbumEditor extends Backbone.View
+  el: '#album-editor'
+
+  initialize: ->
+
+  show: ->
+    @$el.removeClass('hidden')
+
+  hide: ->
+    @$el.addClass('hidden')
+
 class PhotoManager extends Backbone.View
   el: '#photo-manager'
 
@@ -8,6 +19,7 @@ class PhotoManager extends Backbone.View
 
   initialize: ->
     @uploader = new Uploader({@collection})
+    @album_editor = new AlbumEditor
     @photo_feed = new PhotoManagerFeed({@collection})
 
   delete_photos: (event) ->
@@ -17,11 +29,12 @@ class PhotoManager extends Backbone.View
   show_uploader: (event) ->
     event.preventDefault()
     @uploader.show()
+    @album_editor.hide()
 
   show_edit_albums: (event) ->
     event.preventDefault()
     @uploader.hide()
-    # TODO set up album editing
+    @album_editor.show()
 
 class PhotoManagerEditView extends Backbone.View
   className: 'photo'
