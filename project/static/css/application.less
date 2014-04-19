@@ -158,6 +158,12 @@ img.photo-page {
     background-size: cover;
     display: inline-block;
     position: relative;
+    overflow: hidden;
+    .transition(opacity 0.3s ease-in-out);
+
+    &.hidden {
+      .opacity(0);
+    }
 
     &.selected {
       margin: 5px;

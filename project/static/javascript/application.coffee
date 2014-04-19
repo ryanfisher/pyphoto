@@ -37,13 +37,16 @@ class PhotoManager extends Backbone.View
     @album_editor.show()
 
 class PhotoManagerEditView extends Backbone.View
-  className: 'photo'
+  className: 'photo hidden'
 
   events:
     'click': 'toggle_selected'
 
   initialize: ->
-    thumbnail_url = "url(#{@model.get('thumbnail_url')})".replace /\s/, "%20"
+    img_url = @model.get('thumbnail_url')
+    # Load image before showing it in view
+    $('<img>', src: img_url).on 'load', => @$el.removeClass('hidden')
+    thumbnail_url = "url(#{img_url})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
 
   # Checks if photo is selected
