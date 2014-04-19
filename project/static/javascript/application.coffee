@@ -181,8 +181,10 @@ class PhotoFeed extends Backbone.View
 
 class PhotoImg extends Backbone.View
   tagName: 'img'
+  className: 'hidden'
 
   initialize: ->
+    @$el.on 'load', => @$el.removeClass('hidden')
     @$el.attr('src', @model.get('thumbnail_url'))
 
 class PhotoView extends Backbone.View

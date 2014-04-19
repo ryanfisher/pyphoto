@@ -115,12 +115,19 @@ img.photo-page {
   .photo {
     display: inline-block;
     height: 250px;
+    width: 375px;
     cursor: pointer;
     margin-right: 4px;
   }
 
   img {
     height: 100%;
+    .opacity(1);
+    .transition(opacity 0.3s ease-in-out);
+
+    &.hidden {
+      .opacity(0);
+    }
   }
 }
 
@@ -132,6 +139,12 @@ img.photo-page {
   li {
     display: inline-block;
     margin-right: 10px;
+  }
+
+  .photo {
+    &.hidden {
+      opacity: 0;
+    }
   }
 }
 
