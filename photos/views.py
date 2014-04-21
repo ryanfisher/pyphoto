@@ -9,9 +9,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from photos.forms import PhotoUploadForm
-from photos.models import Photo
+from photos.models import Photo, Album
 from photos.services import PhotoService
-from photos.serializers import PhotoSerializer
+from photos.serializers import PhotoSerializer, AlbumSerializer
 
 
 @login_required
@@ -69,6 +69,16 @@ class PhotoList(APIView):
             except IntegrityError:
                 return HttpResponse(status=409)
         serializer = PhotoSerializer(photo)
+        return Response(serializer.data)
+
+
+class AlbumList(APIView):
+    def get(self, request, format=None):
+        """
+        List all albums
+        """
+        albums = Album.objects.filter(user=request.user)
+        serializer = AlbumSerializer(albums, many=True)
         return Response(serializer.data)
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from photos.models import Photo
+from photos.models import Photo, Album
 
 
 class PhotoSerializer(serializers.ModelSerializer):
@@ -14,3 +14,8 @@ class PhotoSerializer(serializers.ModelSerializer):
             'camera_model',
             'lens_model',
         )
+
+class AlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ('id', 'title', 'photos')

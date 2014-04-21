@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from photos.views import PhotoList
+from photos.views import PhotoList, AlbumList
 
 admin.autodiscover()
 
@@ -37,4 +37,9 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^api/photos$', PhotoList.as_view()),
+)
+
+urlpatterns += patterns(
+    '',
+    url(r'^api/albums$', AlbumList.as_view()),
 )
