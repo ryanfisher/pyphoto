@@ -148,8 +148,13 @@ img.photo-page {
   }
 }
 
+#side-bar {
+  float: left;
+  width: 320px;
+}
+
 #photo-manager-feed {
-  margin-left: 320px;
+  width: auto;
 
   .photo {
     height: 180px;
@@ -178,17 +183,15 @@ img.photo-page {
 }
 
 #uploader, #album-editor {
-  position: relative;
-  left: 0;
-  float: left;
-  width: 290px;
-  margin-left: 20px;
+  width: auto;
+  height: 400px;
+  overflow: hidden;
+  min-height: 100%;
 
   .transition(all 0.3s ease-in-out);
 
   &.hidden {
-    width: 0px;
-    left: -400px;
+    height: 0;
   }
 }
 
