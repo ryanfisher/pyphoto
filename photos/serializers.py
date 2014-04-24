@@ -9,6 +9,8 @@ class PhotoSerializer(serializers.ModelSerializer):
             'id',
             'optimized_url',
             'thumbnail_url',
+            'height',
+            'width',
             'iso',
             'camera_make',
             'camera_model',

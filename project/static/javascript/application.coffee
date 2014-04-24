@@ -191,13 +191,26 @@ class PhotoImg extends Backbone.View
     @$el.attr('src', @model.get('thumbnail_url'))
 
 class PhotoView extends Backbone.View
-    tagName: 'a'
-    className: 'photo'
+  tagName: 'a'
+  className: 'photo'
 
-    initialize: ->
-      @$el.attr('href', "/photos/#{@model.get('id')}")
-      img = new PhotoImg({@model})
-      @$el.append(img.$el)
+  HEIGHT = 250
+
+  initialize: ->
+    @$el.attr('href', "/photos/#{@model.get('id')}")
+    img = new PhotoImg({@model})
+    @set_dimensions()
+    @$el.append(img.$el)
+
+  set_dimensions: ->
+    @set_height()
+    @set_width()
+
+  set_height: ->
+    @$el.height(HEIGHT)
+
+  set_width: ->
+    @$el.width(HEIGHT*@model.get('width')/@model.get('height'))
 
 class UserPhoto extends Backbone.Model
 
