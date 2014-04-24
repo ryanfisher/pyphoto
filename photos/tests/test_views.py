@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from photos import views
 from photos.models import Photo
+
 
 class PhotosViewsNotLoggedInTests(TestCase):
 
@@ -9,13 +9,17 @@ class PhotosViewsNotLoggedInTests(TestCase):
         response = self.client.get('/manage')
         self.assertEquals(response.status_code, 302)
 
+
 class PhotosViewsTests(TestCase):
 
     def setUp(self):
-        photo = Photo.objects.create(
+        self.photo = Photo.objects.create(
             url="photos/photo.jpg",
             size=23423,
-            user_id=1
+            user_id=1,
+            height=800,
+            width=1200,
+            id=1
         )
 
     def test_show(self):
@@ -26,6 +30,7 @@ class PhotosViewsTests(TestCase):
     def test_show_404(self):
         response = self.client.get('/photos/99')
         self.assertEquals(response.status_code, 404)
+
 
 class PhotosIndexViewsTests(TestCase):
 
