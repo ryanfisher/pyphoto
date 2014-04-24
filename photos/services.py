@@ -166,6 +166,8 @@ class PhotoService(object):
             url='//s3.amazonaws.com/' + original_file_path,
             optimized_url='//s3.amazonaws.com/' + optimized_url,
             thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
+            width=img.size[0],
+            height=img.size[1],
             size=self.uploaded_file.size,
             iso=exifinfo.iso(),
             user=self.user,

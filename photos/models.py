@@ -13,6 +13,8 @@ class Photo(TimeStampedModel):
     thumbnail_url = models.URLField()
     original_filename = models.CharField(max_length=255)
     iso = models.IntegerField(null=True)
+    width = models.PositiveSmallIntegerField()
+    height = models.PositiveSmallIntegerField()
     size = models.FloatField()
     user = models.ForeignKey(User)
     camera_make = models.CharField(max_length=32, null=True)
