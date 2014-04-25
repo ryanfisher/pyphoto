@@ -14,6 +14,7 @@ class Command(BaseCommand):
         if result == 0:
             cwd = os.getcwd()
             subprocess.call('coverage html --include="'+cwd+'/*"' +
-                            ' --omit="admin.py"', shell=True)
+                            ' --omit="admin.py,'+cwd+'/photos/migrations/*"',
+                            shell=True)
         else:
             self.stdout.write("TEST FAILURES")
