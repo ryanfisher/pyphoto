@@ -178,15 +178,43 @@ class PhotoFeed extends Backbone.View
   el: '#photo-feed'
 
   PHOTO_HEIGHT = 250
+  USE_COLUMNS = false
 
   initialize: ->
+    @set_up_columns() if USE_COLUMNS
     @collection.on 'add', (model) =>
       photo_view = new PhotoView({model})
-      photo_view.set_height(PHOTO_HEIGHT)
-      @$el.append(photo_view.$el)
+      if USE_COLUMNS
+        photo_view.set_width(@columns[0].get_width())
+        @columns[@current_col].append(photo_view)
+        @current_col++
+        @current_col = 0 if @current_col == @columns.length
+      else
+        photo_view.set_height(PHOTO_HEIGHT)
+        @$el.append(photo_view.$el)
+
+  set_up_columns: ->
+    @current_col = 0
+    column_count = 5
+    width = $(window).width() / column_count
+    @columns = []
+    for i in [0..column_count]
+      col = new PhotoColumn
+      col.set_width(width)
+      @columns.push(col)
+      @$el.append(col.$el)
 
 class PhotoColumn extends Backbone.View
-  class: 'column'
+  className: 'column'
+
+  set_width: (width) ->
+    console.log width
+    @$el.width(width)
+    @width = width
+
+  get_width: -> @width
+
+  append: (view) -> @$el.append(view.$el)
 
 class PhotoImg extends Backbone.View
   tagName: 'img'
