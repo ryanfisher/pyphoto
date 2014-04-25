@@ -177,10 +177,16 @@ class ProgressInfo extends Backbone.View
 class PhotoFeed extends Backbone.View
   el: '#photo-feed'
 
+  PHOTO_HEIGHT = 250
+
   initialize: ->
     @collection.on 'add', (model) =>
       photo_view = new PhotoView({model})
+      photo_view.set_height(PHOTO_HEIGHT)
       @$el.append(photo_view.$el)
+
+class PhotoColumn extends Backbone.View
+  class: 'column'
 
 class PhotoImg extends Backbone.View
   tagName: 'img'
@@ -194,25 +200,25 @@ class PhotoView extends Backbone.View
   tagName: 'a'
   className: 'photo'
 
-  HEIGHT = 250
-
   initialize: ->
     @$el.attr('href', "/photos/#{@model.get('id')}")
     img = new PhotoImg({@model})
-    @set_dimensions()
     @$el.append(img.$el)
 
-  set_dimensions: ->
-    @set_height()
-    @set_width()
+  set_height: (height) ->
+    @$el.height(height)
+    @$el.width(@model.width_from(height))
 
-  set_height: ->
-    @$el.height(HEIGHT)
-
-  set_width: ->
-    @$el.width(HEIGHT*@model.get('width')/@model.get('height'))
+  set_width: (width) ->
+    @$el.width(width)
+    @$el.height(@model.height_from(width))
 
 class UserPhoto extends Backbone.Model
+  height_from: (width) ->
+    width * @get('height') / @get('width')
+
+  width_from: (height) ->
+    height * @get('width') / @get('height')
 
 class UserPhotos extends Backbone.Collection
   url: '/api/photos'
