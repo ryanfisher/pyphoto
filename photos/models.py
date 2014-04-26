@@ -9,13 +9,14 @@ class Photo(TimeStampedModel):
     A user's photo
     """
     url = models.URLField(unique=True)
+    key = models.CharField(max_length=128)
     optimized_url = models.URLField()
     thumbnail_url = models.URLField()
     original_filename = models.CharField(max_length=255)
     iso = models.IntegerField(null=True)
     width = models.PositiveSmallIntegerField()
     height = models.PositiveSmallIntegerField()
-    size = models.FloatField()
+    size = models.PositiveIntegerField()
     user = models.ForeignKey(User)
     camera_make = models.CharField(max_length=32, null=True)
     camera_model = models.CharField(max_length=128, null=True)
