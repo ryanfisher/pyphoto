@@ -178,7 +178,7 @@ class PhotoFeed extends Backbone.View
   el: '#photo-feed'
 
   PHOTO_HEIGHT = 250
-  USE_COLUMNS = false
+  USE_COLUMNS = true
 
   initialize: ->
     @set_up_columns() if USE_COLUMNS
@@ -195,12 +195,12 @@ class PhotoFeed extends Backbone.View
 
   set_up_columns: ->
     @current_col = 0
-    column_count = 5
+    column_count = 4
     width = $(window).width() / column_count
     @columns = []
-    for i in [0..column_count]
+    for i in [1..column_count]
       col = new PhotoColumn
-      col.set_width(width)
+      col.set_width(width-8)
       @columns.push(col)
       @$el.append(col.$el)
 
