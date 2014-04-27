@@ -63,8 +63,9 @@ class PhotoList(APIView):
         if form.is_valid():
             request_file = request.FILES['file']
             try:
-                # TODO Check for key in model before trying to upload
                 service = PhotoService(request_file, request.user)
+                if service.photo_exists():
+                    raise IntegrityError
                 photo = service.store_and_save_photos()
             except IntegrityError:
                 return HttpResponse(status=409)

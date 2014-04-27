@@ -94,23 +94,44 @@ class PhotoService(object):
     def __init__(self, uploaded_file, user):
         self.uploaded_file = uploaded_file
         self.user = user
+        self.set_random_folder()
         conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
         self.bucket = conn.get_bucket(
             settings.AWS_IMAGE_BUCKET,
             validate=False
         )
 
+    def get_key(self, file_prefix=''):
+        return os.path.join(
+            'images',
+            self.user.username[0],
+            self.user.username[1:],
+            self.random_folder_name,
+            file_prefix + self.uploaded_file.name
+        )
+
+    def set_random_folder(self):
+        '''Creates a unique folder name for the new photo. Only call once.
+        '''
+        while True:
+            self.random_folder_name = binascii.hexlify(os.urandom(10))
+            if Photo.objects.filter(key=self.get_key()).count() == 0:
+                break
+
+    def photo_exists(self):
+        '''Checks to see if a file exists. Currently only uses file size
+        '''
+        count = Photo.objects.filter(user=self.user,
+                                     size=self.uploaded_file.size).count()
+        return count > 0
+
     def send_to_s3(self, file, file_prefix=""):
-        hashed_dirs = self.user.username[0]+'/'+self.user.username[1:]+'/'
-        file_key = 'images/'+hashed_dirs+file_prefix+self.uploaded_file.name
-        k = self.bucket.new_key(file_key)
+        k = self.bucket.new_key(self.get_key(file_prefix))
         k.set_contents_from_file(file, replace=False)
-        return settings.AWS_IMAGE_BUCKET + '/' + k.key
+        return k.key
 
     def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
-        hashed_dirs = self.user.username[0]+'/'+self.user.username[1:]+'/'
-        file_key = 'images/'+hashed_dirs+file_prefix+self.uploaded_file.name
-        k = self.bucket.new_key(file_key)
+        k = self.bucket.new_key(self.get_key(file_prefix))
         k.set_contents_from_string(
             string_file,
             headers={"Content-Type": "image/jpeg"}
@@ -149,7 +170,8 @@ class PhotoService(object):
         return url
 
     def store_and_save_photos(self):
-        original_file_path = self.send_to_s3(self.uploaded_file)
+        key = self.send_to_s3(self.uploaded_file)
+        original_file_path = os.path.join(settings.AWS_IMAGE_BUCKET, key)
 
         tmp_image = TemporaryImageFile(self.uploaded_file)
         img = Image.open(tmp_image.path)
@@ -163,6 +185,7 @@ class PhotoService(object):
 
         return Photo.objects.create(
             original_filename=self.uploaded_file.name,
+            key=key,
             url='//s3.amazonaws.com/' + original_file_path,
             optimized_url='//s3.amazonaws.com/' + optimized_url,
             thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
