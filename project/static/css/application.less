@@ -30,13 +30,15 @@
   -o-transition:      @transition;
 }
 
+@main-nav-height: 40px;
+
 nav {
   position: fixed;
   width: 100%;
   background-color: black;
   opacity: 0.85;
-  height: 40px;
-  line-height: 40px;
+  height: @main-nav-height;
+  line-height: @main-nav-height;
   overflow: hidden;
   padding-left: 20px;
   text-align: left;
@@ -106,7 +108,7 @@ img.photo-page {
 }
 
 #content {
-  padding-top: 40px;
+  padding-top: @main-nav-height;
 }
 
 #photo-feed {
@@ -149,21 +151,25 @@ img.photo-page {
     display: inline-block;
     margin-right: 10px;
   }
-
-  .photo {
-    &.hidden {
-      opacity: 0;
-    }
-  }
 }
 
+@manager-side-bar-width: 320px;
+
 #side-bar {
-  float: left;
-  width: 320px;
+  position: fixed;
+  width: @manager-side-bar-width;
+  top: @main-nav-height;
+  left: 0;
+  bottom: 0;
 }
 
 #photo-manager-feed {
   width: auto;
+  position: fixed;
+  top: @main-nav-height;
+  left: @manager-side-bar-width;
+  bottom: 0;
+  overflow-y: auto;
 
   .photo {
     height: 180px;
@@ -179,14 +185,15 @@ img.photo-page {
       .opacity(0);
     }
 
+    &:hover {
+      margin: 5px;
+      border: 5px solid gray;
+      cursor: pointer;
+    }
+
     &.selected {
       margin: 5px;
       border: 5px solid yellow;
-    }
-
-    &:hover {
-      .opacity;
-      cursor: pointer;
     }
   }
 }
@@ -195,7 +202,6 @@ img.photo-page {
   width: auto;
   height: 400px;
   overflow: hidden;
-  min-height: 100%;
 
   .transition(all 0.3s ease-in-out);
 
