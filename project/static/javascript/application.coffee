@@ -78,7 +78,7 @@ class Uploader extends Backbone.View
 
   events:
     'click h4': 'toggle_open'
-    'submit form': 'upload_photos'
+    'change input': 'upload_photos'
 
   initialize: ->
     $('#id_file').hide()
@@ -88,13 +88,10 @@ class Uploader extends Backbone.View
     @$('form').toggleClass('hidden')
 
   upload_photos: ->
-    event.preventDefault()
     return if @uploading
     @uploading = true
-    form = $(event.target)
-    file_input = form.find('[type="file"]:visible')
-    for photo_file in file_input[0].files
-      info = new ProgressInfo
+    for photo_file in @$('.multiple-photos')[0].files
+      info = new ProgressInfo(photo_file)
       @send_request(photo_file, info)
 
   send_request: (photo_file, progress_info)->
@@ -133,12 +130,12 @@ class ProgressInfo extends Backbone.View
   events:
     'click': 'remove_if_done'
 
-  initialize: ->
+  initialize: (@file) ->
     @bar = $('<div>', class: 'bar animated')
     progress = $('<div>', class: 'progress').append(@bar)
     @$el.append(progress)
     uploading_text = $('#progress-bars').data('uploading-message')
-    @message = $('<p>', class: 'message', text: uploading_text)
+    @message = $('<p>', class: 'message', text: uploading_text + @file.name)
     @$el.prepend(@message)
     $('#progress-bars').prepend(@$el)
 
@@ -150,7 +147,8 @@ class ProgressInfo extends Backbone.View
       when 200 then 'success'
       when 409 then 'error409'
       else 'error'
-    @message.addClass(message).text($('#progress-bars').data(message))
+    display_text = $('#progress-bars').data(message)
+    @message.addClass(message).text(display_text + @file.name)
 
   stop_animation: ->
     @bar.removeClass('animated')

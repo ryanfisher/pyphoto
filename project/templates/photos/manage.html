@@ -8,8 +8,7 @@
     <h4 class="upload">uploader</h4>
     <form class="hidden" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
       {{ form.as_p }}
-      <p><input type="file" class="multiple-photos" multiple></p>
-      <input type="submit" value="Upload" />
+      <input type="file" class="multiple-photos" multiple>
       <div id="progress-bars" data-success="Successfully uploaded " data-failure="Failed to upload " data-error409="Duplicate file: " data-uploading-message="Uploading file "></div>
     </form>
   </div>
