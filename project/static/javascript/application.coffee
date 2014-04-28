@@ -137,8 +137,9 @@ class ProgressInfo extends Backbone.View
     @bar = $('<div>', class: 'bar animated')
     progress = $('<div>', class: 'progress').append(@bar)
     @$el.append(progress)
-    @message = $('<p>', class: 'message')
-    @$el.append(@message)
+    uploading_text = $('#progress-bars').data('uploading-message')
+    @message = $('<p>', class: 'message', text: uploading_text)
+    @$el.prepend(@message)
     $('#progress-bars').prepend(@$el)
 
   update_bar: (percent_uploaded) ->
