@@ -1,21 +1,17 @@
 class AlbumEditor extends Backbone.View
   el: '#album-editor'
 
-  initialize: ->
+  events:
+    'click h4': 'toggle_open'
 
-  show: ->
-    @$el.removeClass('hidden')
-
-  hide: ->
-    @$el.addClass('hidden')
+  toggle_open: ->
+    @$('.albums').toggleClass('hidden')
 
 class PhotoManager extends Backbone.View
   el: '#photo-manager'
 
   events:
     'click .delete-link': 'delete_photos'
-    'click .upload': 'show_uploader'
-    'click .edit-albums': 'show_edit_albums'
 
   initialize: ->
     @uploader = new Uploader({@collection})
@@ -25,16 +21,6 @@ class PhotoManager extends Backbone.View
   delete_photos: (event) ->
     event.preventDefault()
     @photo_feed.delete_selected_photos()
-
-  show_uploader: (event) ->
-    event.preventDefault()
-    @uploader.show()
-    @album_editor.hide()
-
-  show_edit_albums: (event) ->
-    event.preventDefault()
-    @uploader.hide()
-    @album_editor.show()
 
 class PhotoManagerEditView extends Backbone.View
   className: 'photo hidden'
@@ -91,17 +77,15 @@ class Uploader extends Backbone.View
   el: "#uploader"
 
   events:
-    'submit form' : "upload_photos"
+    'click h4': 'toggle_open'
+    'submit form': 'upload_photos'
 
   initialize: ->
     $('#id_file').hide()
     @uploading = false
 
-  show: ->
-    @$el.removeClass('hidden')
-
-  hide: ->
-    @$el.addClass('hidden')
+  toggle_open: ->
+    @$('form').toggleClass('hidden')
 
   upload_photos: ->
     event.preventDefault()

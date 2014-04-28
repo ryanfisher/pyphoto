@@ -4,18 +4,20 @@
 <div id="photo-manager">
 
 <div id="side-bar">
-  <p><a href="" class="upload">upload</a></p>
   <div id="uploader">
-    <h4>Upload photos here</h4>
-    <form action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <h4 class="upload">uploader</h4>
+    <form class="hidden" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
       {{ form.as_p }}
       <p><input type="file" class="multiple-photos" multiple></p>
       <input type="submit" value="Upload" />
+      <div id="progress-bars" data-success="Hurrah!" data-failure="Horrible failure!" data-error409="Horrible failure! File already uploaded!"></div>
     </form>
-    <div id="progress-bars" data-success="Hurrah!" data-failure="Horrible failure!" data-error409="Horrible failure! File already uploaded!"></div>
   </div>
-  <p><a href="" class="edit-albums">edit albums</a></p>
-  <div id="album-editor" class="hidden">Albums</div>
+
+  <div id="album-editor">
+    <h4 class="edit-albums">album editor</h4>
+    <div class="albums hidden"></div>
+  </div>
   <p><a href="" class="delete-link">delete selected</a></p>
 </div>
 

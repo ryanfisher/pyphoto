@@ -161,6 +161,11 @@ img.photo-page {
   top: @main-nav-height;
   left: 0;
   bottom: 0;
+  overflow-y: auto;
+
+  h4 {
+    cursor: pointer;
+  }
 }
 
 #photo-manager-feed {
@@ -200,13 +205,16 @@ img.photo-page {
 
 #uploader, #album-editor {
   width: auto;
-  height: 400px;
-  overflow: hidden;
 
-  .transition(all 0.3s ease-in-out);
+  .albums, form {
+    height: 400px;
+    overflow: hidden;
 
-  &.hidden {
-    height: 0;
+    .transition(height 0.3s ease-in-out);
+
+    &.hidden {
+      height: 0;
+    }
   }
 }
 
