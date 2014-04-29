@@ -9,7 +9,9 @@ class Photo(TimeStampedModel):
     A user's photo
     """
     url = models.URLField(unique=True)
-    key = models.CharField(max_length=128)
+    key = models.CharField(max_length=255)
+    optimized_key = models.CharField(max_length=255)
+    thumbnail_key = models.CharField(max_length=255)
     optimized_url = models.URLField()
     thumbnail_url = models.URLField()
     original_filename = models.CharField(max_length=255)

@@ -134,9 +134,10 @@ class PhotoService(object):
         k = self.bucket.new_key(self.get_key(file_prefix))
         k.set_contents_from_string(
             string_file,
-            headers={"Content-Type": "image/jpeg"}
+            headers={"Content-Type": "image/jpeg"},
+            replace=False
         )
-        return settings.AWS_IMAGE_BUCKET + '/' + k.key
+        return k.key
 
     def create_and_store_thumbnail(self, img):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
@@ -163,11 +164,11 @@ class PhotoService(object):
         image_string = StringIO()
         img.save(image_string, 'JPEG')
 
-        url = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
+        key = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
 
         image_string.close()
 
-        return url
+        return key
 
     def store_and_save_photos(self):
         key = self.send_to_s3(self.uploaded_file)
@@ -178,8 +179,10 @@ class PhotoService(object):
 
         exifinfo = ExifInfo(img)
 
-        optimized_url = self.create_and_store_optimized(img)
-        thumbnail_url = self.create_and_store_thumbnail(img)
+        optimized_key = self.create_and_store_optimized(img)
+        optimized_url = os.path.join(settings.AWS_IMAGE_BUCKET, optimized_key)
+        thumbnail_key = self.create_and_store_thumbnail(img)
+        thumbnail_url = os.path.join(settings.AWS_IMAGE_BUCKET, thumbnail_key)
 
         tmp_image.delete()
 
