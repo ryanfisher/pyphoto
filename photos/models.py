@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
+
+from boto.s3.connection import S3Connection, Key
 
 from core.models import TimeStampedModel
 
@@ -62,6 +65,21 @@ class Photo(TimeStampedModel):
             return None
         length = float(numerator) / self.focal_length_denominator
         return format(length, '.2f').rstrip('0').rstrip('.')
+
+    def delete(self):
+        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        bucket = conn.get_bucket(
+            settings.AWS_IMAGE_BUCKET,
+            validate=False
+        )
+        key = Key(bucket)
+        key.key = self.key
+        optimized_key = Key(bucket)
+        optimized_key.key = self.optimized_key
+        thumbnail_key = Key(bucket)
+        thumbnail_key.key = self.thumbnail_key
+        super(Photo, self).delete()
+        bucket.delete_keys([key, optimized_key, thumbnail_key])
 
     class Meta:
         ordering = ['-created']

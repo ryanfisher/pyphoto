@@ -189,6 +189,8 @@ class PhotoService(object):
         return Photo.objects.create(
             original_filename=self.uploaded_file.name,
             key=key,
+            optimized_key=optimized_key,
+            thumbnail_key=thumbnail_key,
             url='//s3.amazonaws.com/' + original_file_path,
             optimized_url='//s3.amazonaws.com/' + optimized_url,
             thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
