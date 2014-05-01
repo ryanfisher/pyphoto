@@ -207,12 +207,26 @@ img.photo-page {
 #uploader, #album-editor {
   width: auto;
 
-  .albums, form {
+  .album-editor, form {
     overflow: hidden;
 
     &.hidden {
       height: 0;
     }
+
+    form, button {
+      height: 30px;
+      .transition(all 0.2s ease-in-out);
+
+      &.hidden {
+        border: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .albums {}
   }
 }
 

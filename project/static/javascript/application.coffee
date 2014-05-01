@@ -1,17 +1,52 @@
+(->
+  _sync = Backbone.sync
+  Backbone.sync = (method, model, options) ->
+    options.beforeSend = (xhr) ->
+      token = $('meta[name="csrf-token"]').attr("content")
+      xhr.setRequestHeader "X-CSRFToken", token
+      return
+    _sync method, model, options
+)()
+
 class AlbumEditor extends Backbone.View
   el: '#album-editor'
 
   events:
     'click h4': 'toggle_open'
+    'click #new-album': 'open_new_album_form'
+    'submit form': 'save_album'
+
+  initialize: ->
+    @collection.fetch success: => @render()
+
+  set_up_albums: ->
+
+  render: ->
+    @collection.each (album) ->
+      console.log album.get('title')
+    @collection.on 'add', (album) =>
+      @$('.albums').prepend($('a', text: album.get('title')))
+
+  open_new_album_form: ->
+    @$('form').removeClass('hidden')
+    @$('button').addClass('hidden')
+
+  save_album: ->
+    event.preventDefault()
+    input = @$('input[name=title]')
+    @$('form').addClass('hidden')
+    @$('button').removeClass('hidden')
+    @collection.create title: input.val()
+    input.val('')
 
   toggle_open: ->
-    @$('.albums').toggleClass('hidden')
+    @$('.album-editor').toggleClass('hidden')
+
+class UserAlbum extends Backbone.Model
 
 class UserAlbums extends Backbone.Collection
   url: '/api/albums'
   model: UserAlbum
-
-class UserAlbum extends Backbone.Model
 
 class PhotoManager extends Backbone.View
   el: '#photo-manager'
@@ -21,7 +56,8 @@ class PhotoManager extends Backbone.View
 
   initialize: ->
     @uploader = new Uploader({@collection})
-    @album_editor = new AlbumEditor
+    collection = new UserAlbums
+    @album_editor = new AlbumEditor({collection})
     @photo_feed = new PhotoManagerFeed({@collection})
 
   delete_photos: (event) ->

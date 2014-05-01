@@ -15,7 +15,14 @@
 
   <div id="album-editor">
     <h4 class="edit-albums">album editor</h4>
-    <div class="albums hidden"></div>
+    <div class="album-editor hidden">
+      <button id="new-album">Create new album</button>
+      <form class="hidden">
+        <input type="text" name="title" autocomplete="off">
+        <input type="submit" value="Save">
+      </form>
+      <div class="albums"></div>
+    </div>
   </div>
   <p><a href="" class="delete-link">delete selected</a></p>
 </div>
