@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -83,11 +84,13 @@ class AlbumList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = AlbumSerializer(data=request.DATA)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # TODO Handle errors, use rest_framework
+        album = Album.objects.create(
+            user=request.user,
+            title=request.DATA['title']
+        )
+        serializer = AlbumSerializer(album)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @csrf_exempt
