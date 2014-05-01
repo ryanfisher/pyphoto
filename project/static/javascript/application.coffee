@@ -7,6 +7,12 @@ class AlbumEditor extends Backbone.View
   toggle_open: ->
     @$('.albums').toggleClass('hidden')
 
+class UserAlbums extends Backbone.Collection
+  url: '/api/albums'
+  model: UserAlbum
+
+class UserAlbum extends Backbone.Model
+
 class PhotoManager extends Backbone.View
   el: '#photo-manager'
 
