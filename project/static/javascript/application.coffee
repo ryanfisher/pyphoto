@@ -23,9 +23,9 @@ class AlbumEditor extends Backbone.View
 
   render: ->
     @collection.each (album) ->
-      console.log album.get('title')
+      @$('.albums').prepend($('<a>', text: album.get('title')))
     @collection.on 'add', (album) =>
-      @$('.albums').prepend($('a', text: album.get('title')))
+      @$('.albums').prepend($('<a>', text: album.get('title')))
 
   open_new_album_form: ->
     @$('form').removeClass('hidden')
