@@ -20,7 +20,7 @@ class AlbumEditor extends Backbone.View
     @collection.fetch success: => @render()
 
   render: ->
-    @collection.each (album) ->
+    @collection.each (album) =>
       @$('.albums').prepend($('<a>', text: album.get('title')))
     @collection.on 'add', (album) =>
       @$('.albums').prepend($('<a>', text: album.get('title')))
