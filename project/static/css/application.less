@@ -157,13 +157,16 @@ img.photo-page {
 
 #side-bar {
   position: fixed;
-  width: @manager-side-bar-width;
+  width: @manager-side-bar-width - 20px;
   top: @main-nav-height;
   left: 0;
   bottom: 0;
   overflow-y: auto;
+  text-align: left;
+  margin-left: 20px;
 
   h4 {
+    margin-bottom: 5px;
     cursor: pointer;
   }
 }
@@ -209,6 +212,7 @@ img.photo-page {
 
   .album-editor, form {
     overflow: hidden;
+    .transition(height 0.3s ease-in-out);
 
     &.hidden {
       height: 0;
@@ -226,7 +230,12 @@ img.photo-page {
       }
     }
 
-    .albums {}
+    .albums {
+      a {
+        margin: 5px 0;
+        display: block;
+      }
+    }
   }
 }
 
