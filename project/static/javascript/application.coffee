@@ -26,14 +26,12 @@ class AlbumEditor extends Backbone.View
       @$('.albums').prepend($('<a>', text: album.get('title')))
 
   open_new_album_form: ->
-    @$('form').removeClass('hidden')
-    @$('button').addClass('hidden')
+    @$('form').toggleClass('hidden')
 
   save_album: ->
     event.preventDefault()
     input = @$('input[name=title]')
     @$('form').addClass('hidden')
-    @$('button').removeClass('hidden')
     @collection.create title: input.val()
     input.val('')
 
