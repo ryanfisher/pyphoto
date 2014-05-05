@@ -32,7 +32,7 @@
 
 @main-nav-height: 40px;
 
-nav {
+#main-nav {
   position: fixed;
   width: 100%;
   background-color: black;
@@ -179,6 +179,22 @@ img.photo-page {
   bottom: 0;
   overflow-y: auto;
   text-align: left;
+
+  nav {
+    position: static;
+    background-color: transparent;
+    margin: 10px;
+
+    a {
+      color: black;
+      text-decoration: none;
+
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
+  }
 
   .photo {
     height: 180px;

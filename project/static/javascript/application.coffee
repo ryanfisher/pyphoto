@@ -94,13 +94,13 @@ class PhotoManagerFeed extends Backbone.View
     @collection.on 'add', (model) =>
       photo_edit_view = new PhotoManagerEditView({model})
       @photo_edit_views.push photo_edit_view
-      @$el.append(photo_edit_view.$el)
+      @$('.feed').append(photo_edit_view.$el)
     @collection.once 'sync', =>
       @collection.off 'add'
       @collection.on 'add', (model) =>
         photo_edit_view = new PhotoManagerEditView({model})
         @photo_edit_views.push photo_edit_view
-        @$el.prepend(photo_edit_view.$el)
+        @$('.feed').prepend(photo_edit_view.$el)
 
   delete_selected_photos: ->
     to_delete = _.filter @photo_edit_views, (view) -> view.is_selected()
