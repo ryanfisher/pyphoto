@@ -22,6 +22,8 @@ COMPRESS_ENABLED = False
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
+STATICFILES_STORAGE = 'require.storage.OptimizedCachedStaticFilesStorage'
+
 COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
     ('text/less', 'lessc {infile} {outfile}'),
@@ -58,6 +60,7 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     'rest_framework',
+    'require',
 )
 
 MIDDLEWARE_CLASSES = (
