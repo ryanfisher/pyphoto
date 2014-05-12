@@ -1,4 +1,7 @@
-define [], ->
+define [
+  'cs!views/photo_column'
+  'cs!views/photo_view'
+], (PhotoColumn, PhotoView) ->
   class PhotoFeed extends Backbone.View
     el: '#photo-feed'
 
@@ -28,42 +31,3 @@ define [], ->
         col.set_width(width-8)
         @columns.push(col)
         @$el.append(col.$el)
-
-  class PhotoColumn extends Backbone.View
-    className: 'column'
-
-    set_width: (width) ->
-      console.log width
-      @$el.width(width)
-      @width = width
-
-    get_width: -> @width
-
-    append: (view) -> @$el.append(view.$el)
-
-  class PhotoImg extends Backbone.View
-    tagName: 'img'
-    className: 'hidden'
-
-    initialize: ->
-      @$el.on 'load', => @$el.removeClass('hidden')
-      @$el.attr('src', @model.get('thumbnail_url'))
-
-  class PhotoView extends Backbone.View
-    tagName: 'a'
-    className: 'photo'
-
-    initialize: ->
-      @$el.attr('href', "/photos/#{@model.get('id')}")
-      img = new PhotoImg({@model})
-      @$el.append(img.$el)
-
-    set_height: (height) ->
-      @$el.height(height)
-      @$el.width(@model.width_from(height))
-
-    set_width: (width) ->
-      @$el.width(width)
-      @$el.height(@model.height_from(width))
-
-  PhotoFeed
