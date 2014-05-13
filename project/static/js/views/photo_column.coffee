@@ -3,8 +3,10 @@ define [], ->
     className: 'column'
 
     set_width: (width) ->
-      @$el.width(width)
-      @width = width
+      # TODO Get the margin widths before appending to photo feed
+      margin_widths = 4
+      @width = width - margin_widths
+      @$el.width(@width)
 
     get_width: -> @width
 

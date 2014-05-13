@@ -24,10 +24,10 @@ define [
     set_up_columns: ->
       @current_col = 0
       column_count = 4
-      width = $(window).width() / column_count
+      width = @$el.width() / column_count
       @columns = []
       for i in [1..column_count]
         col = new PhotoColumn
-        col.set_width(width-8)
+        col.set_width(width)
         @columns.push(col)
         @$el.append(col.$el)
