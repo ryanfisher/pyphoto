@@ -1,0 +1,50 @@
+#main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 10px;
+  width: @main-nav-width;
+  background-color: black;
+  overflow: hidden;
+  text-align: center;
+  z-index: 2;
+
+  a {
+    display: block;
+    width: auto;
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+  }
+
+  a:hover {
+    background-color: @accent-color;
+  }
+
+  a:before {
+    display: block;
+    content: '';
+    height: 20px;
+    width: @main-nav-width;
+    margin-right: 5px;
+  }
+}
+
+.icon-background(@filename) {
+  background-image: url("/static/images/@{filename}");
+  .background-size(contain);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+nav a.logout {
+  position: absolute;
+  bottom: 20px;
+}
+
+nav a.upload:before { .icon-background('upload.png'); }
+nav a.photos:before { .icon-background('slr-camera.png'); }
+nav a.home:before { .icon-background('home.png'); }
+nav a.albums:before { .icon-background('folder.png'); }
+nav a.logout:before { .icon-background('logout.png'); }
