@@ -28,6 +28,13 @@
   -o-transition:      @transition;
 }
 
+.icon-background(@filename) {
+  background-image: url("/static/images/@{filename}");
+  .background-size(contain);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @accent-color: red;
 @main-nav-width: 80px;
 

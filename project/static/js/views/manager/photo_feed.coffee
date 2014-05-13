@@ -27,8 +27,7 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
     last_photo_view_el: ->
       @photo_edit_views[@photo_edit_views.length - 1].$el
 
-    delete_photos: (event) ->
-      event.preventDefault()
+    delete_photos: ->
       @delete_selected_photos()
       @update_selected_count()
 
