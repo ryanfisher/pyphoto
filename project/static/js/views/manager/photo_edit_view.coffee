@@ -2,6 +2,9 @@ define [], ->
   class PhotoEditView extends Backbone.View
     className: 'photo hidden'
 
+    attributes:
+      'draggable': true
+
     events:
       'click': 'toggle_selected'
 
