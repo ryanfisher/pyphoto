@@ -9,6 +9,8 @@ define [
 
     events:
       'click .delete-link': 'delete_photos'
+      'open_uploader': 'open_uploader'
+      'open_album_editor': 'open_album_editor'
 
     initialize: ->
       @uploader = new Uploader({@collection})
@@ -19,3 +21,9 @@ define [
     delete_photos: (event) ->
       event.preventDefault()
       @photo_feed.delete_selected_photos()
+
+    open_uploader: ->
+      console.log "OPENING UPLOADER"
+
+    open_album_editor: ->
+      console.log "OPENING ALBUM EDITOR"

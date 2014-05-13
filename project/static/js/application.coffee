@@ -11,15 +11,19 @@
 define [
   'cs!collections/user_photos'
   'cs!views/photo_manager'
+  'cs!routers/manager_router'
   'cs!views/photo_feed'
-], (UserPhotos, PhotoManager, PhotoFeed) ->
+], (UserPhotos, PhotoManager, ManagerRouter, PhotoFeed) ->
 
   class App extends Backbone.View
 
     initialize: ->
       collection = new UserPhotos
       new PhotoFeed({collection}) if $('#photo-feed').length
-      new PhotoManager({collection}) if $('#photo-manager').length
+      if $('#photo-manager').length
+        new PhotoManager({collection})
+        router = new ManagerRouter
+        Backbone.history.start()
       collection.fetch()
 
   jQuery('document').ready ->
