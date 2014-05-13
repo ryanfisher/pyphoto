@@ -4,6 +4,7 @@ define [], ->
 
     events:
       'submit form': 'save_album'
+      'click #new-album': 'open_new_album_form'
 
     initialize: ->
       @collection.fetch success: => @render()
@@ -13,6 +14,9 @@ define [], ->
         @$('.albums').prepend($('<a>', text: album.get('title')))
       @collection.on 'add', (album) =>
         @$('.albums').prepend($('<a>', text: album.get('title')))
+
+    open_new_album_form: ->
+      @$('form').toggleClass('hidden')
 
     save_album: ->
       event.preventDefault()
