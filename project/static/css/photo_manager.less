@@ -23,7 +23,9 @@
   nav {
     position: static;
     background-color: transparent;
+    height: 20px;
     margin: 10px;
+    line-height: 20px;
 
     a {
       color: black;
@@ -34,7 +36,19 @@
         text-decoration: underline;
       }
     }
+
+    p {
+      float: left;
+      margin: 0;
+    }
+    .photos-selected {
+      text-align: center;
+
+      &.hidden { display: none; }
+    }
   }
+
+  .feed { clear: both; }
 
   .photo {
     height: 180px;

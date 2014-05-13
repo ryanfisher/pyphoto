@@ -23,6 +23,7 @@ define [], ->
 
     toggle_selected: ->
       @$el.toggleClass('selected')
+      @trigger 'selected_toggle'
 
     delete_photo: ->
       @model.destroy()
