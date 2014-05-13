@@ -11,22 +11,6 @@
 
 @manager-side-bar-width: 320px;
 
-#side-bar {
-  position: fixed;
-  width: @manager-side-bar-width - 20px;
-  left: @main-nav-width;
-  top: 0;
-  bottom: 0;
-  overflow-y: auto;
-  text-align: left;
-  margin-left: 20px;
-
-  h4 {
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-}
-
 #photo-manager-feed {
   width: auto;
   position: fixed;
@@ -80,7 +64,25 @@
 }
 
 #uploader, #album-editor {
-  width: auto;
+  position: fixed;
+  width: @manager-side-bar-width - 20px;
+  left: -(@manager-side-bar-width);
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  text-align: left;
+  margin-left: 20px;
+  background-color: white;
+  .transition(left 0.3s ease-in-out);
+
+  &.open {
+    left: @main-nav-width;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
 
   .album-editor, form {
     overflow: hidden;
@@ -113,10 +115,6 @@
       }
     }
   }
-}
-
-#album-editor {
-  margin-left: 0px;
 }
 
 #uploader label {

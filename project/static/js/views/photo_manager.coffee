@@ -23,7 +23,9 @@ define [
       @photo_feed.delete_selected_photos()
 
     open_uploader: ->
-      console.log "OPENING UPLOADER"
+      @album_editor.$el.removeClass('open')
+      @uploader.$el.addClass('open')
 
     open_album_editor: ->
-      console.log "OPENING ALBUM EDITOR"
+      @uploader.$el.removeClass('open')
+      @album_editor.$el.addClass('open')

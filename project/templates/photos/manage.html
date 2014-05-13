@@ -3,26 +3,24 @@
 {% block content %}
 <div id="photo-manager">
 
-<div id="side-bar">
-  <div id="uploader">
-    <h4 class="upload">uploader</h4>
-    <form class="" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
-      {{ form }}
-      <input type="file" class="multiple-photos" multiple>
-      <div id="progress-bars" data-success="Successfully uploaded " data-failure="Failed to upload " data-error409="Duplicate file: " data-uploading-message="Uploading file "></div>
-    </form>
-  </div>
+<div id="uploader">
+  <h4 class="upload">uploader</h4>
+  <form class="" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {{ form }}
+    <input type="file" class="multiple-photos" multiple>
+    <div id="progress-bars" data-success="Successfully uploaded " data-failure="Failed to upload " data-error409="Duplicate file: " data-uploading-message="Uploading file "></div>
+  </form>
+</div>
 
-  <div id="album-editor">
-    <h4 class="edit-albums">album editor</h4>
-    <div class="album-editor">
-      <button id="new-album">Create new album</button>
-      <form class="hidden">
-        <input type="text" name="title" autocomplete="off">
-        <input type="submit" value="Save">
-      </form>
-      <div class="albums"></div>
-    </div>
+<div id="album-editor">
+  <h4 class="edit-albums">album editor</h4>
+  <div class="album-editor">
+    <button id="new-album">Create new album</button>
+    <form class="hidden">
+      <input type="text" name="title" autocomplete="off">
+      <input type="submit" value="Save">
+    </form>
+    <div class="albums"></div>
   </div>
 </div>
 
