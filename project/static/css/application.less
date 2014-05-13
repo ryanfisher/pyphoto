@@ -50,9 +50,6 @@
     color: white;
     text-decoration: none;
     padding: 10px 0;
-    -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
-    -moz-transition: -moz-transform 0.3s, background-color 0.3s;
-    transition: transform 0.3s, background-color 0.3s;
   }
 
   a:hover {
@@ -73,6 +70,11 @@
   .background-size(contain);
   background-position: center;
   background-repeat: no-repeat;
+}
+
+nav a.logout {
+  position: absolute;
+  bottom: 20px;
 }
 
 nav a.upload:before { .icon-background('upload.png'); }
