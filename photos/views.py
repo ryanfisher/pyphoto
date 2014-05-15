@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from photos.forms import PhotoUploadForm
 from photos.models import Photo, Album
@@ -91,6 +92,11 @@ class AlbumList(APIView):
         )
         serializer = AlbumSerializer(album)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, pk, format=None):
+        album = get_object_or_404(Album, id=pk)
+        serializer = AlbumSerializer(album)
+        return Response(serializer.data)
 
 
 @login_required

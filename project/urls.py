@@ -42,4 +42,5 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^api/albums$', AlbumList.as_view()),
+    url(r'^api/albums/(?P<pk>[0-9]+)$', AlbumList.as_view())
 )
