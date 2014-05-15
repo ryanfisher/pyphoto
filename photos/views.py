@@ -93,7 +93,6 @@ class AlbumList(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@csrf_exempt
 @login_required
 def photo_delete(request, id):
     if request.method != 'DELETE':
