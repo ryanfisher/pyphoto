@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from photos.forms import PhotoUploadForm
-from photos.models import Photo, Album
+from photos.models import Photo, Album, SortedPhoto
 from photos.services import PhotoService
 from photos.serializers import PhotoSerializer, AlbumSerializer
 
@@ -95,6 +95,15 @@ class AlbumList(APIView):
 
     def put(self, request, pk, format=None):
         album = get_object_or_404(Album, id=pk)
+        position = album.photos.count() + 1
+        for photo in request.DATA['photos']:
+            photo = Photo.objects.filter(user=request.user, id=photo['id'])[0]
+            SortedPhoto.objects.create(
+                album=album,
+                photo=photo,
+                position=position
+            )
+            position += 1
         serializer = AlbumSerializer(album)
         return Response(serializer.data)
 
