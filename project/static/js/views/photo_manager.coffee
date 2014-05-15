@@ -32,6 +32,7 @@ define [
 
     add_photos_to_album: (event) ->
       option = $(event.target).find('option:selected')
+      $('#album-dropdown')[0].selectedIndex = 0
       album = @user_albums.get(option.val())
       _.each @photo_feed.selected_photos(), (view) ->
         photos = album.get('photos') or []
