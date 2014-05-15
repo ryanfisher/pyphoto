@@ -97,6 +97,8 @@ class AlbumList(APIView):
         album = get_object_or_404(Album, id=pk)
         position = album.photos.count() + 1
         for photo in request.DATA['photos']:
+            if type(photo) is int:
+                continue
             photo = Photo.objects.filter(user=request.user, id=photo['id'])[0]
             SortedPhoto.objects.create(
                 album=album,
