@@ -14,9 +14,12 @@ Albums edit needs to have a drag and drop ability to drop photos into an album, 
 
 Users need a lot of work. We want a username that will be used in the url of users' photo pages. We also want to add an email. Users will be able to log in with their username or email. Eventually we'll add a subscription object. Users without a subscription will be limited in what they can upload. We may limit it to 5 photos or something small, just so they can get a taste of the features. Most other functionality will likely be available.
 
-Other Photo Web Apps
+Other Photo Web Apps and Relevant Links
 --------------------
 - SmugMug http://www.smugmug.com
 - Koken http://koken.me self hosted photo publishing platform
 - 500px http://500px.com
 - Flickr http://flickr.com
+- Pics.io http://pics.io
+
+- https://news.ycombinator.com/item?id=7744554 In-browser RAW Processing: How We Did It pics.io
