@@ -10,6 +10,7 @@ define [
     events:
       'open_uploader': 'open_uploader'
       'open_album_editor': 'open_album_editor'
+      'change #album-dropdown': 'add_photos_to_album'
 
     initialize: ->
       @uploader = new Uploader({@collection})
@@ -17,6 +18,7 @@ define [
       collection.on 'add', (model) ->
         select = $('<option>', val: model.get('id'), text: model.get('title'))
         $('#album-dropdown').append(select)
+      @user_albums = collection
       @album_editor = new AlbumEditor({collection})
       @photo_feed = new PhotoManagerFeed({@collection})
 
@@ -27,3 +29,12 @@ define [
     open_album_editor: ->
       @uploader.$el.removeClass('open')
       @album_editor.$el.addClass('open')
+
+    add_photos_to_album: (event) ->
+      option = $(event.target).find('option:selected')
+      album = @user_albums.get(option.val())
+      _.each @photo_feed.selected_photos(), (view) ->
+        photos = album.get('photos') or []
+        photos.push view.model
+        album.set('photos', photos)
+      album.save()

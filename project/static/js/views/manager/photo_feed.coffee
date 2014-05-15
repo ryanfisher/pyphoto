@@ -39,8 +39,11 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
         @$('.photos-selected').addClass('hidden')
       @$('.selected-count').text selected_count
 
+    selected_photos: ->
+      _.filter @photo_edit_views, (view) -> view.is_selected()
+
     delete_selected_photos: ->
-      to_delete = _.filter @photo_edit_views, (view) -> view.is_selected()
+      to_delete = selected_photos()
       delete_count = to_delete.length
       return if delete_count == 0
       confirm_text = "Are you sure you want to delete the selected photo(s)?" +
