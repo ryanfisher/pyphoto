@@ -103,7 +103,9 @@ class SortedPhoto(models.Model):
     """
     photo = models.ForeignKey(Photo)
     album = models.ForeignKey(Album)
-    position = models.PositiveSmallIntegerField(unique=True)
+    position = models.PositiveSmallIntegerField()
+
+    unique_together = ('photo', 'album', 'position')
 
     class Meta:
         ordering = ('position',)
