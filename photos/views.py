@@ -50,6 +50,12 @@ def show(request, id):
     return render_to_response('photos/show.html', photo_hash)
 
 
+def album_show(request, id):
+    album = get_object_or_404(Album, id=id)
+    serializer = AlbumSerializer(album)
+    return render_to_response('photos/album_show.html', serializer.data)
+
+
 # TODO Make sure login is required for these methods
 class PhotoList(APIView):
     def get(self, request, format=None):
