@@ -1,4 +1,4 @@
-define [], ->
+define ['cs!views/manager/album_editor'], (AlbumEditor) ->
   class AlbumsEditor extends Backbone.View
     el: '#albums-editor'
 
@@ -18,8 +18,8 @@ define [], ->
       title.on 'click', => @edit_album(album)
       @$('.albums').prepend(title)
 
-    edit_album: (album) ->
-      console.log "edit album #{album.get('title')}"
+    edit_album: (model) ->
+      new AlbumEditor({model})
 
     open_new_album_form: ->
       @$('form').toggleClass('hidden')

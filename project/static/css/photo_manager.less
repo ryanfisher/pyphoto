@@ -90,6 +90,21 @@
   }
 }
 
+#album-editor {
+  position: fixed;
+  top: -800px;
+  left: @manager-side-bar-width + @main-nav-width;
+  right: 0;
+  min-height: 800px;
+  z-index: 2;
+  background-color: white;
+  .transition(top 0.3s ease-in-out);
+
+  &.open {
+    top: 0px;
+  }
+}
+
 #uploader, #albums-editor {
   position: fixed;
   width: @manager-side-bar-width - 20px;
