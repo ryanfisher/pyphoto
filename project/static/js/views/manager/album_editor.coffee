@@ -7,6 +7,7 @@ define [], ->
 
     initialize: ->
       @$('.title').text @model.get('title')
+      @$('.photos').text @model.get('photos')
       @$el.addClass('open')
 
     close_editor: ->
