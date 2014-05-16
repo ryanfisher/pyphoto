@@ -6,10 +6,10 @@ define [
 
     routes:
       'upload': 'open_uploader'
-      'albums': 'open_album_editor'
+      'albums': 'open_albums_editor'
 
     open_uploader: ->
       $('#photo-manager').trigger('open_uploader')
 
-    open_album_editor: ->
-      $('#photo-manager').trigger('open_album_editor')
+    open_albums_editor: ->
+      $('#photo-manager').trigger('open_albums_editor')

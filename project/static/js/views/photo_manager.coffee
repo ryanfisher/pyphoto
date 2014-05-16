@@ -9,7 +9,7 @@ define [
 
     events:
       'open_uploader': 'open_uploader'
-      'open_album_editor': 'open_album_editor'
+      'open_albums_editor': 'open_albums_editor'
       'change #album-dropdown': 'add_photos_to_album'
 
     initialize: ->
@@ -23,12 +23,12 @@ define [
       @photo_feed = new PhotoManagerFeed({@collection})
 
     open_uploader: ->
-      @album_editor.$el.removeClass('open')
+      @albums_editor.$el.removeClass('open')
       @uploader.$el.addClass('open')
 
-    open_album_editor: ->
+    open_albums_editor: ->
       @uploader.$el.removeClass('open')
-      @album_editor.$el.addClass('open')
+      @albums_editor.$el.addClass('open')
 
     add_photos_to_album: (event) ->
       option = $(event.target).find('option:selected')

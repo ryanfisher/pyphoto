@@ -1,6 +1,6 @@
 define [], ->
   class AlbumsEditor extends Backbone.View
-    el: '#album-editor'
+    el: '#albums-editor'
 
     events:
       'submit form': 'save_album'
