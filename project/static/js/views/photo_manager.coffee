@@ -1,9 +1,9 @@
 define [
-  'cs!views/manager/album_editor'
+  'cs!views/manager/albums_editor'
   'cs!views/manager/photo_feed'
   'cs!collections/user_albums'
   'cs!views/manager/uploader'
-], (AlbumEditor, PhotoManagerFeed, UserAlbums, Uploader) ->
+], (AlbumsEditor, PhotoManagerFeed, UserAlbums, Uploader) ->
   class PhotoManager extends Backbone.View
     el: '#photo-manager'
 
@@ -19,7 +19,7 @@ define [
         select = $('<option>', val: model.get('id'), text: model.get('title'))
         $('#album-dropdown').append(select)
       @user_albums = collection
-      @album_editor = new AlbumEditor({collection})
+      @albums_editor = new AlbumsEditor({collection})
       @photo_feed = new PhotoManagerFeed({@collection})
 
     open_uploader: ->
