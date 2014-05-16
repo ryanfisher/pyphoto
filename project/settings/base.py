@@ -22,7 +22,7 @@ COMPRESS_ENABLED = False
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
-STATICFILES_STORAGE = 'require.storage.OptimizedCachedStaticFilesStorage'
+STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
 COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
