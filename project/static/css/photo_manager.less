@@ -100,8 +100,16 @@
   background-color: white;
   .transition(top 0.3s ease-in-out);
 
-  &.open {
-    top: 0px;
+  &.open { top: 0px; }
+
+  .photos {
+    .photo {
+      display: inline-block;
+      height: 200px;
+      width: 200px;
+      margin: 10px;
+      background-size: cover;
+    }
   }
 }
 

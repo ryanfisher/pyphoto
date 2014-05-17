@@ -14,6 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
+STATIC_ROOT = os.path.join('home', 'ryan', 'Dev', 'photosstatic')
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
