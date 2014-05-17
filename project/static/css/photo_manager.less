@@ -92,12 +92,13 @@
 
 #album-editor {
   position: fixed;
-  top: -800px;
-  left: @manager-side-bar-width + @main-nav-width;
+  top: -100%;
+  left: @main-nav-width;
   right: 0;
-  min-height: 800px;
+  min-height: 100%;
   z-index: 2;
   background-color: white;
+  overflow-y: auto;
   .transition(top 0.3s ease-in-out);
 
   &.open { top: 0px; }
