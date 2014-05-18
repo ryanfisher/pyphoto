@@ -99,17 +99,46 @@
   z-index: 2;
   background-color: white;
   overflow-y: auto;
+  text-align: left;
   .transition(top 0.3s ease-in-out);
 
   &.open { top: 0px; }
 
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    .icon-background('x-mark-close.png');
+  }
+
   .photos {
+    padding: 10px;
+
     .photo {
       display: inline-block;
       height: 200px;
       width: 200px;
       margin: 10px;
       background-size: cover;
+    }
+  }
+
+  .album-info {
+    padding: 20px;
+
+    .cover-photo {
+      width: 200px;
+      height: 200px;
+      background-color: #eee;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .title {
+      display: inline-block;
     }
   }
 }
@@ -163,6 +192,7 @@
       a {
         margin: 5px 0;
         display: block;
+        cursor: pointer;
       }
     }
   }

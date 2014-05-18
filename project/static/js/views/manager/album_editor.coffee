@@ -1,12 +1,12 @@
 define [
-  'views/manager/photo_edit_view'
-  'models/user_photo'
+  'cs!views/manager/photo_edit_view'
+  'cs!models/user_photo'
 ], (PhotoEditView, UserPhoto) ->
   class AlbumEditor extends Backbone.View
     el: '#album-editor'
 
     events:
-      'click': 'close_editor'
+      'click .close-button': 'close_editor'
 
     initialize: ->
       @$('.title').text @model.get('title')
