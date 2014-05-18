@@ -9,7 +9,6 @@ define [], ->
       'click': 'toggle_selected'
 
     initialize: ->
-      console.log @model
       img_url = @model.get('thumbnail_url')
       # Load image before showing it in view
       $('<img>', src: img_url).on 'load', => @$el.removeClass('hidden')
