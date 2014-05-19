@@ -19,7 +19,7 @@ define ['cs!views/manager/album_editor'], (AlbumEditor) ->
       @$('.albums').prepend(title)
 
     edit_album: (model) ->
-      new AlbumEditor({model})
+      @album_editor = new AlbumEditor({model})
 
     open_new_album_form: ->
       @$('form').toggleClass('hidden')
@@ -30,3 +30,7 @@ define ['cs!views/manager/album_editor'], (AlbumEditor) ->
       @$('form').addClass('hidden')
       @collection.create title: input.val()
       input.val('')
+
+    close: ->
+      @album_editor.close()
+      @$el.removeClass('open')

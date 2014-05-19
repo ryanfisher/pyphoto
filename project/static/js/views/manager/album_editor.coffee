@@ -6,14 +6,13 @@ define [
     el: '#album-editor'
 
     events:
-      'click .close-button': 'close_editor'
+      'click .close-button': 'close'
 
     initialize: ->
       @$('.title').text @model.get('title')
       @set_photos()
       @$el.addClass('open')
       @$('.photos').sortable(
-        revert: true
         scroll: false
         placeholder: 'sortable-placeholder'
         cursor: 'move'
@@ -26,5 +25,5 @@ define [
         view = new PhotoEditView({model})
         @$('.photos').append view.$el
 
-    close_editor: ->
+    close: ->
       @$el.removeClass('open')

@@ -23,11 +23,11 @@ define [
       @photo_feed = new PhotoManagerFeed({@collection})
 
     open_uploader: ->
-      @albums_editor.$el.removeClass('open')
+      @albums_editor.close()
       @uploader.$el.addClass('open')
 
     open_albums_editor: ->
-      @uploader.$el.removeClass('open')
+      @uploader.close()
       @albums_editor.$el.addClass('open')
 
     add_photos_to_album: (event) ->

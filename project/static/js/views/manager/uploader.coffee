@@ -10,6 +10,9 @@ define ['cs!views/manager/progress_info'], (ProgressInfo) ->
       $('#id_file').hide()
       @uploading = false
 
+    close: ->
+      @$el.removeClass('open')
+
     toggle_open: ->
       @$('form').toggleClass('hidden')
 
