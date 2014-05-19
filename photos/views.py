@@ -3,12 +3,10 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 from photos.forms import PhotoUploadForm
 from photos.models import Photo, Album, SortedPhoto
@@ -106,12 +104,17 @@ class AlbumList(APIView):
             if type(photo) is int:
                 continue
             photo = Photo.objects.filter(user=request.user, id=photo['id'])[0]
-            SortedPhoto.objects.create(
+            sorted_photo_count = SortedPhoto.objects.filter(
                 album=album,
-                photo=photo,
-                position=position
-            )
-            position += 1
+                photo=photo
+            ).count()
+            if sorted_photo_count == 0:
+                SortedPhoto.objects.create(
+                    album=album,
+                    photo=photo,
+                    position=position
+                )
+                position += 1
         serializer = AlbumSerializer(album)
         return Response(serializer.data)
 
