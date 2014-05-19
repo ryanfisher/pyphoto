@@ -17,6 +17,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'lens_model',
         )
 
+
 class AlbumSerializer(serializers.ModelSerializer):
     photos = PhotoSerializer(many=True)
 
