@@ -7,6 +7,7 @@ define [
 
     events:
       'click .close-button': 'close'
+      'click .save-album': 'save'
 
     initialize: ->
       @$('.title').text @model.get('title')
@@ -27,3 +28,6 @@ define [
 
     close: ->
       @$el.removeClass('open')
+
+    save: ->
+      @model.save()
