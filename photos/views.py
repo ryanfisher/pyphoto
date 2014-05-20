@@ -104,10 +104,9 @@ class AlbumList(APIView):
             if type(photo) is int:
                 continue
             photo = Photo.objects.filter(user=request.user, id=photo['id'])[0]
-            sorted_photo_count = SortedPhoto.objects.filter(
-                album=album,
-                photo=photo
-            ).count()
+            sorted_photo_set = SortedPhoto.objects.filter(album=album,
+                                                          photo=photo)
+            sorted_photo_count = sorted_photo_set.count()
             if sorted_photo_count == 0:
                 SortedPhoto.objects.create(
                     album=album,
@@ -115,6 +114,10 @@ class AlbumList(APIView):
                     position=position
                 )
                 position += 1
+            else:
+                # TODO set photo position on front end after sorting
+                # sorted_photo_set[0].position = photo['position']
+                sorted_photo_set[0].save()
         serializer = AlbumSerializer(album)
         return Response(serializer.data)
 
