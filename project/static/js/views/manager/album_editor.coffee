@@ -21,13 +21,18 @@ define [
 
     set_photos: ->
       @$('.photos').text ''
-      for photo in @model.get('photos')
-        model = new UserPhoto(photo)
+      @model.get('photos').each (model) ->
         view = new PhotoEditView({model})
+        view.$el.data('id', model.get('id'))
         @$('.photos').append view.$el
 
     close: ->
+      @undelegateEvents()
       @$el.removeClass('open')
 
     save: ->
+      photos = @model.get('photos')
+      @$('.photos .photo').each (index) ->
+        photo = photos.get($(this).data('id'))
+        photo.set('position', index + 1)
       @model.save()
