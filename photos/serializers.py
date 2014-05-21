@@ -19,8 +19,12 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 
 class AlbumSerializer(serializers.ModelSerializer):
-    photos = PhotoSerializer(many=True)
+    photos = serializers.SerializerMethodField('sorted_photos')
 
     class Meta:
         model = Album
         fields = ('id', 'title', 'photos')
+
+    def sorted_photos(self, obj):
+        photos_by_position = obj.photos.order_by('sortedphoto__position')
+        return [PhotoSerializer(photo).data for photo in photos_by_position]
