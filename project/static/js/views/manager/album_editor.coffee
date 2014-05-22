@@ -12,11 +12,13 @@ define [
     initialize: ->
       @$('.title').text @model.get('title')
       @set_photos()
+      @set_cover()
       @$el.addClass('open')
       @$('.photos').sortable(
         scroll: false
         placeholder: 'sortable-placeholder'
         cursor: 'move'
+        stop: => @set_cover()
       )
 
     set_photos: ->
@@ -25,6 +27,12 @@ define [
         view = new PhotoEditView({model})
         view.$el.data('id', model.get('id'))
         @$('.photos').append view.$el
+
+    set_cover: ->
+      @$('.cover-photo').css(
+        'background-image'
+        @$('.photo').css('background-image')
+      )
 
     close: ->
       @undelegateEvents()
