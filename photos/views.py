@@ -13,6 +13,7 @@ from photos.models import Photo, Album, SortedPhoto
 from photos.services import PhotoService
 from photos.serializers import PhotoSerializer, AlbumSerializer
 
+import json
 
 @login_required
 def manage(request):
@@ -27,12 +28,16 @@ def manage(request):
 @login_required
 def index(request):
     photos = Photo.objects.filter(user=request.user)
+    serializer = PhotoSerializer(photos, many=True)
+    photos = json.dumps(serializer.data)
     return render_to_response('photos/index.html', {'photos': photos})
 
 
 @login_required
 def edit(request):
     photos = Photo.objects.filter(user=request.user)
+    serializer = PhotoSerializer(photos, many=True)
+    photos = json.dumps(serializer.data)
     return render_to_response('photos/edit.html', {'photos': photos})
 
 
@@ -51,7 +56,11 @@ def show(request, id):
 def album_show(request, id):
     album = get_object_or_404(Album, id=id)
     serializer = AlbumSerializer(album)
-    return render_to_response('photos/album_show.html', serializer.data)
+    photos = json.dumps(serializer.data['photos'])
+    return render_to_response(
+        'photos/album_show.html',
+        {'photos': photos, 'title': album.title}
+    )
 
 
 # TODO Make sure login is required for these methods

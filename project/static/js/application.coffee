@@ -18,13 +18,15 @@ define [
   class App extends Backbone.View
 
     initialize: ->
-      collection = new UserPhotos
-      new PhotoFeed({collection}) if $('#photo-feed').length
+      if bootstrapped_photos? and $('#photo-feed').length
+        collection = new UserPhotos(bootstrapped_photos)
+        new PhotoFeed({collection})
       if $('#photo-manager').length
+        collection = new UserPhotos
         new PhotoManager({collection})
+        collection.fetch()
         router = new ManagerRouter
         Backbone.history.start()
-      collection.fetch()
 
   jQuery('document').ready ->
     App = new App()

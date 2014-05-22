@@ -10,7 +10,7 @@ define [
 
     initialize: ->
       @set_up_columns() if USE_COLUMNS
-      @collection.on 'add', (model) =>
+      @collection.each (model) =>
         photo_view = new PhotoView({model})
         if USE_COLUMNS
           photo_view.set_width(@columns[0].get_width())

@@ -32,5 +32,5 @@ define ['cs!views/manager/album_editor'], (AlbumEditor) ->
       input.val('')
 
     close: ->
-      @album_editor.close()
+      @album_editor?.close()
       @$el.removeClass('open')
