@@ -64,8 +64,8 @@
   .feed { clear: both; }
 
   .photo {
-    height: 180px;
-    width: 180px;
+    height: 130px;
+    width: 130px;
     margin: 10px;
     background-size: cover;
     display: inline-block;
@@ -85,7 +85,7 @@
 
     &.selected {
       margin: 5px;
-      border: 5px solid yellow;
+      border: 5px solid @accent-color;
     }
   }
 }
@@ -129,19 +129,19 @@
 
     .photo {
       display: inline-block;
-      height: 200px;
-      width: 200px;
+      height: 130px;
+      width: 130px;
       margin: 10px;
       background-size: cover;
     }
 
     .sortable-placeholder {
-      position: absolute;
       display: inline-block;
-      margin: 10px 0 0 -2.5px;
-      height: 200px;
-      width: 5px;
-      background-color: #ef5030;
+      margin: 10px;
+      height: 124px;
+      width: 124px;
+      border: 3px solid @accent-color;
+      background-color: white;
     }
   }
 
