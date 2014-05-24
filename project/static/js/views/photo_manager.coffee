@@ -39,3 +39,4 @@ define [
         photos.push view.model
         album.set('photos', photos)
       album.save()
+      @photo_feed.clear_selections()

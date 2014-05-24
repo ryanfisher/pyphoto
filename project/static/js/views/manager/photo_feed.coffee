@@ -31,6 +31,10 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
       @delete_selected_photos()
       @update_selected_count()
 
+    clear_selections: ->
+      @$('.selected').removeClass('selected')
+      @update_selected_count()
+
     update_selected_count: ->
       selected_count = @$('.selected').length
       if selected_count > 0
