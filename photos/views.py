@@ -15,6 +15,7 @@ from photos.serializers import PhotoSerializer, AlbumSerializer
 
 import json
 
+
 @login_required
 def manage(request):
     photo_form = PhotoUploadForm()
@@ -109,6 +110,9 @@ class AlbumList(APIView):
     def put(self, request, pk, format=None):
         album = get_object_or_404(Album, id=pk)
         position = album.photos.count() + 1
+        # Remove photos from album that are not included in request
+        photo_ids = [photo['id'] for photo in request.DATA['photos']]
+        album.sortedphoto_set.exclude(photo__id__in=photo_ids).delete()
         for photo in request.DATA['photos']:
             try:
                 sorted_photo = album.sortedphoto_set.get(

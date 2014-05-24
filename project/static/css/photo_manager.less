@@ -114,6 +114,8 @@
     .icon-background('x-mark-close-l.png');
   }
 
+  .controls { clear: both; }
+
   .photos {
     padding: 20px 10px 10px;
     clear: both;
@@ -124,6 +126,11 @@
       width: 130px;
       margin: 10px;
       background-size: cover;
+
+      &.selected {
+        margin: 5px;
+        border: 5px solid @accent-color;
+      }
     }
 
     .sortable-placeholder {

@@ -8,6 +8,7 @@ define [
     events:
       'click .close-button': 'close'
       'click .save-album': 'save'
+      'click .remove-selected': 'remove_selected'
 
     initialize: ->
       @$('.title').text @model.get('title')
@@ -33,6 +34,14 @@ define [
         'background-image'
         @$('.photo').css('background-image')
       )
+
+    remove_selected: ->
+      selected_photos = @$('.photo.selected')
+      photos_in_album = @model.get('photos')
+      ids_to_remove = ($(photo).data('id') for photo in selected_photos)
+      photos_to_remove = (photos_in_album.get(id) for id in ids_to_remove)
+      selected_photos.remove()
+      photos_in_album.remove(photos_to_remove)
 
     close: ->
       @undelegateEvents()
