@@ -44,6 +44,7 @@ define [
       photos_in_album.remove(photos_to_remove)
 
     close: ->
+      @$('.cover-photo').css('background-image', 'none')
       @undelegateEvents()
       @$el.removeClass('open')
 
