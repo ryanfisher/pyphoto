@@ -13,7 +13,9 @@ define [
   'cs!views/photo_manager'
   'cs!routers/manager_router'
   'cs!views/photo_feed'
-], (UserPhotos, PhotoManager, ManagerRouter, PhotoFeed) ->
+  'cs!views/photo_page'
+  'cs!models/user_photo'
+], (UserPhotos, PhotoManager, ManagerRouter, PhotoFeed, PhotoPage, UserPhoto) ->
 
   class App extends Backbone.View
 
@@ -27,6 +29,9 @@ define [
         collection.fetch()
         router = new ManagerRouter
         Backbone.history.start()
+      if bootstrapped_photo?
+        model = new UserPhoto(bootstrapped_photo)
+        new PhotoPage({model})
 
   jQuery('document').ready ->
     App = new App()

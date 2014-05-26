@@ -35,6 +35,18 @@
   background-repeat: no-repeat;
 }
 
+.image-in-transition {
+  img {
+    height: 100%;
+    .opacity(1);
+    .transition(opacity 0.3s ease-in-out);
+
+    &.hidden {
+      .opacity(0);
+    }
+  }
+}
+
 @main-color: #29c3cb;
 @accent-color: #ef5030;
 @main-nav-width: 80px;
