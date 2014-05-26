@@ -50,6 +50,7 @@ def show(request, id):
         'f_stop': photo.f_stop(),
         'shutter_speed': photo.shutter_speed(),
         'focal_length': photo.focal_length(),
+        'photo_data': json.dumps(PhotoSerializer(photo).data),
     }
     return render_to_response('photos/show.html', photo_hash)
 

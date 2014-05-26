@@ -20,6 +20,12 @@
       var bootstrapped_photos = {{ photos|safe }};
     </script>
   {% endif %}
+  {% if photo %}
+    <script>
+      var bootstrapped_photo = {{ photo_data|safe }}
+    </script>
+  {% endif %}
+
   {% load require %}
   {% require_module 'main' %}
 </head>
