@@ -16,23 +16,24 @@
     color: white;
     text-decoration: none;
     padding: 10px 0;
+    border-right: 0 solid @main-color;
+    border-left: 0 solid black;
+
+    .transition(all 0.3s ease-in-out);
   }
 
   a:hover {
     @border-width: 5px;
     border-right: @border-width solid @main-color;
     border-left: @border-width solid black;
-    &:before {
-      width: @main-nav-width - (2 * @border-width);
-    }
   }
 
   a:before {
     display: block;
     content: '';
     height: 20px;
-    width: @main-nav-width;
-    margin-right: 5px;
+    width: 40px;
+    margin: 0 auto;
   }
 }
 
