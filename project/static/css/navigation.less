@@ -19,7 +19,12 @@
   }
 
   a:hover {
-    background-color: @main-color;
+    @border-width: 5px;
+    border-right: @border-width solid @main-color;
+    border-left: @border-width solid black;
+    &:before {
+      width: @main-nav-width - (2 * @border-width);
+    }
   }
 
   a:before {
