@@ -32,6 +32,11 @@ define [
       if bootstrapped_photo?
         model = new UserPhoto(bootstrapped_photo)
         new PhotoPage({model})
+      if $('#login-background').length
+        bg_path = '/static/images/barcelona_background.jpg'
+        $('<img>', src: bg_path).load ->
+          $('#login-background img').attr('src', bg_path).
+            addClass('loaded')
 
   jQuery('document').ready ->
     App = new App()

@@ -55,3 +55,51 @@
 @import 'photo_feed';
 @import 'photo_manager';
 @import 'photo_show';
+
+html {
+  background-image: url('/static/images/folder.png');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .transition(background-image 0.6s ease-in-out);
+}
+
+// http://css-tricks.com/perfect-full-page-background-image/
+#login-background {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 0;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-height: 50%;
+    min-width: 50%;
+
+    opacity: 0;
+    .transition(opacity 0.3s ease-in-out);
+
+    &.loaded {
+      opacity: 1;
+    }
+  }
+}
+
+#login-form {
+  display: inline-block;
+  position: relative;
+  padding: 20px;
+  .border-radius(15px);
+  top: 100px;
+  z-index: 2;
+  background-color: white;
+}
