@@ -37,9 +37,15 @@
   }
 }
 
-nav a.logout {
+#main-nav a.logout {
   position: absolute;
   bottom: 20px;
+  border: none;
+  width: @main-nav-width;
+
+  &:hover {
+    border: none;
+  }
 }
 
 nav a.upload:before { .icon-background('upload.png'); }
