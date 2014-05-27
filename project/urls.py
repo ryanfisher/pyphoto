@@ -36,6 +36,11 @@ urlpatterns += patterns(
 )
 
 urlpatterns += patterns(
+    'profiles.views',
+    url(r'^profile/(?P<username>\w+)$', 'show'),
+)
+
+urlpatterns += patterns(
     '',
     url(r'^api/photos$', PhotoList.as_view()),
 )
