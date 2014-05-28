@@ -6,18 +6,15 @@
   <img src="/static/images/barcelona_background.jpg">
 </div>
 <div id="login-form">
-<h1>User Login</h1>
 <form method="POST">{% csrf_token %}
   <p>
-    <label for="username">Username:</label>
-    {{ form.username }}
+    <input id="id_username" maxlength="254" name="username" placeholder="username" type="text">
   </p>
   <p>
-    <label for="password">Password:</label>
-    {{ form.password }}
+    <input id="id_password" name="password" type="password" placeholder="password">
   </p>
   <input type="hidden" name="next" value="/" />
-  <input type="submit" value="Login" />
+  <input type="submit" value="Sign In" />
 </form>
 </div>
 

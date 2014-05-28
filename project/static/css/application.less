@@ -15,6 +15,12 @@
   background-clip:         padding-box;
 }
 
+.box-shadow(@argument) {
+  -moz-box-shadow: @argument;
+  -webkit-box-shadow: @argument;
+  box-shadow: @argument;
+}
+
 .opacity (@opacity: 0.5) {
   -webkit-opacity:  @opacity;
   -moz-opacity:     @opacity;
@@ -97,9 +103,41 @@ html {
 #login-form {
   display: inline-block;
   position: relative;
-  padding: 20px;
+  padding: 0;
   .border-radius(15px);
   top: 100px;
   z-index: 2;
   background-color: white;
+  .box-shadow(1px 2px 10px #555);
+
+  p {
+    margin: 0;
+    &:first {
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+
+  input {
+    @horizontal-padding: 25px;
+    padding: 10px @horizontal-padding;
+    border: 1px solid #ccc;
+    border-bottom: 0;
+
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+      padding-left: @horizontal-padding - 2px;
+      border-left: 3px solid @main-color;
+    }
+  }
+
+  input[type="submit"] {
+    background-color: @accent-color;
+    border: none;
+    width: 100%;
+    color: white;
+    text-transform: uppercase;
+    text-align: left;
+  }
 }
