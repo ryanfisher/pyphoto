@@ -103,17 +103,13 @@ html {
 #login-form {
   display: inline-block;
   position: relative;
-  padding: 0;
-  .border-radius(15px);
   top: 100px;
   z-index: 2;
-  background-color: white;
-  .box-shadow(1px 2px 10px #555);
 
   p {
     margin: 0;
-    &:first {
-      border-top: 1px solid #ccc;
+
+    &.username-input {
       border-bottom: 1px solid #ccc;
     }
   }
@@ -121,22 +117,22 @@ html {
   input {
     @horizontal-padding: 25px;
     padding: 10px @horizontal-padding;
-    border: 1px solid #ccc;
-    border-bottom: 0;
+    border: none;
+    border-left: 4px solid white;
+
+    &[type="submit"] {
+      background-color: @accent-color;
+      width: 100%;
+      border-left: 4px solid @accent-color;
+      color: white;
+      text-transform: uppercase;
+      text-align: left;
+    }
 
     &:focus {
       outline: 0;
       box-shadow: none;
-      padding-left: @horizontal-padding - 2px;
-      border-left: 3px solid @main-color;
+      border-left: 4px solid @main-color;
     }
-  }
-
-  input[type="submit"] {
-    background-color: @accent-color;
-    width: 100%;
-    color: white;
-    text-transform: uppercase;
-    text-align: left;
   }
 }
