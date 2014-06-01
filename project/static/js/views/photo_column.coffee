@@ -7,6 +7,7 @@ define [], ->
       margin_widths = 4
       @width = width - margin_widths
       @$el.width(@width)
+      this
 
     get_width: -> @width
 

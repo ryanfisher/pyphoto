@@ -6,9 +6,14 @@ define [
     el: '#photo-feed'
 
     PHOTO_HEIGHT = 250
+    PHOTO_WIDTH_MIN = 300
     USE_COLUMNS = true
 
     initialize: ->
+      @render()
+      $(window).on 'resize', => @render()
+
+    render: ->
       @set_up_columns() if USE_COLUMNS
       @collection.each (model) =>
         photo_view = new PhotoView({model})
@@ -22,12 +27,9 @@ define [
           @$el.append(photo_view.$el)
 
     set_up_columns: ->
+      @$el.text('')
       @current_col = 0
-      column_count = 4
+      column_count = Math.floor(@$el.width() / PHOTO_WIDTH_MIN)
       width = @$el.width() / column_count
-      @columns = []
-      for i in [1..column_count]
-        col = new PhotoColumn
-        col.set_width(width)
-        @columns.push(col)
-        @$el.append(col.$el)
+      @columns = (new PhotoColumn for i in [1..column_count])
+      @$el.append(col.set_width(width).$el) for col in @columns
