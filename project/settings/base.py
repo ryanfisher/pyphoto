@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photos',
+    'profiles',
     'south',
     'compressor',
     'rest_framework',
@@ -101,6 +102,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+AUTH_USER_MODEL = 'profiles.User'
 
 
 # Static files (CSS, JavaScript, Images)

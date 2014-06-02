@@ -22,7 +22,7 @@ class Photo(TimeStampedModel):
     width = models.PositiveSmallIntegerField()
     height = models.PositiveSmallIntegerField()
     size = models.PositiveIntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     camera_make = models.CharField(max_length=32, null=True)
     camera_model = models.CharField(max_length=128, null=True)
     lens_model = models.CharField(max_length=128, null=True)
@@ -90,7 +90,7 @@ class Album(TimeStampedModel):
     A user's photo album
     """
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     photos = models.ManyToManyField(Photo, through='SortedPhoto')
 
     def __unicode__(self):

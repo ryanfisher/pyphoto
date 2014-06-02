@@ -127,7 +127,7 @@ class PhotoServiceTest(TestCase):
         class Object(object):
             pass
         user = Object()
-        user.username = 'Ryan'
+        user.profile_name = 'Ryan'
         self.photo_service = PhotoService(file, user)
 
     def test_instance(self):

@@ -104,8 +104,8 @@ class PhotoService(object):
     def get_key(self, file_prefix=''):
         return os.path.join(
             'images',
-            self.user.username[0],
-            self.user.username[1:],
+            self.user.profile_name[0],
+            self.user.profile_name[1:],
             self.random_folder_name,
             file_prefix + self.uploaded_file.name
         )
