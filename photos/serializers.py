@@ -3,6 +3,8 @@ from photos.models import Photo, Album
 
 
 class PhotoSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField('profile_user')
+
     class Meta:
         model = Photo
         fields = (
@@ -15,7 +17,11 @@ class PhotoSerializer(serializers.ModelSerializer):
             'camera_make',
             'camera_model',
             'lens_model',
+            'username',
         )
+
+    def profile_user(self, obj):
+        return obj.user.profile_name
 
 
 class AlbumSerializer(serializers.ModelSerializer):

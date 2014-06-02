@@ -4,6 +4,7 @@
 
 <div class="photo-container">
   <div class="photo-description">
+    <div class="username">Photographer: <a href="{% url 'profiles.views.show' photo.user.profile_name %}">{{ photo.user.profile_name }}</a></div>
     {% if photo.camera_model %}<div class="iso">Camera Model: {{ photo.camera_model }}</div>{% endif %}
     {% if photo.lens_model %}<div class="iso">Lens Model: {{ photo.lens_model }}</div>{% endif %}
     {% if photo.iso %}<div class="iso">ISO: {{ photo.iso }}</div>{% endif %}
