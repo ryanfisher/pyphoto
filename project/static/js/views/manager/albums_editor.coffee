@@ -16,6 +16,7 @@ define ['cs!views/manager/album_editor'], (AlbumEditor) ->
     add_album: (album) ->
       title = $('<a>', text: album.get('title'))
       title.on 'click', => @edit_album(album)
+      album.on 'destroy', => title.remove()
       @$('.albums').prepend(title)
 
     edit_album: (model) ->

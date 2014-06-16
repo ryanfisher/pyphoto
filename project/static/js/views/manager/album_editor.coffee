@@ -9,6 +9,7 @@ define [
       'click .close-button': 'close'
       'click .save-album': 'save'
       'click .remove-selected': 'remove_selected'
+      'click .delete-album': 'delete_album'
 
     initialize: ->
       @$('.title').text @model.get('title')
@@ -42,6 +43,12 @@ define [
       photos_to_remove = (photos_in_album.get(id) for id in ids_to_remove)
       selected_photos.remove()
       photos_in_album.remove(photos_to_remove)
+
+    delete_album: ->
+      confirm_text = 'Are you sure you want to delete this album?'
+      return unless window.confirm(confirm_text)
+      @model.destroy()
+      @close()
 
     close: ->
       @$('.cover-photo').css('background-image', 'none')

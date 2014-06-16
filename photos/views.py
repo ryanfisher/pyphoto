@@ -133,6 +133,11 @@ class AlbumList(APIView):
         serializer = AlbumSerializer(Album.objects.get(id=pk))
         return Response(serializer.data)
 
+    def delete(self, request, pk, format=None):
+        albums = Album.objects.filter(user=request.user)
+        albums.get(id=pk).delete()
+        return HttpResponse(status=204)
+
 
 @login_required
 def photo_delete(request, id):
