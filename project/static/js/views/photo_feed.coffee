@@ -11,7 +11,13 @@ define [
 
     initialize: ->
       @render()
-      $(window).on 'resize', => @render()
+      @window_width = $(window).width()
+      $(window).on 'resize', =>
+        width = $(window).width()
+        # We only need to reset the photo feed when window width changes
+        return if width == @window_width
+        @window_width = width
+        @render()
 
     render: ->
       @set_up_columns() if USE_COLUMNS
