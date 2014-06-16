@@ -16,8 +16,14 @@ define [
       @uploader = new Uploader({@collection})
       collection = new UserAlbums
       collection.on 'add', (model) ->
-        select = $('<option>', val: model.get('id'), text: model.get('title'))
-        $('#album-dropdown').append(select)
+        set_up_album = ->
+          select = $('<option>', val: model.get('id'), text: model.get('title'))
+          model.on 'destroy', -> select.remove()
+          $('#album-dropdown').append(select)
+        if model.get('id')
+          set_up_album()
+        else
+          model.on 'change:id', set_up_album
       @user_albums = collection
       @albums_editor = new AlbumsEditor({collection})
       @photo_feed = new PhotoManagerFeed({@collection})
