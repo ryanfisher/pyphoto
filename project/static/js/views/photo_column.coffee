@@ -2,6 +2,9 @@ define [], ->
   class PhotoColumn extends Backbone.View
     className: 'column'
 
+    initialize: ->
+      @height = 0
+
     set_width: (width) ->
       # TODO Get the margin widths before appending to photo feed
       margin_widths = 4
@@ -11,4 +14,6 @@ define [], ->
 
     get_width: -> @width
 
-    append: (view) -> @$el.append(view.$el)
+    append: (view) ->
+      @height += view.$el.height()
+      @$el.append(view.$el)

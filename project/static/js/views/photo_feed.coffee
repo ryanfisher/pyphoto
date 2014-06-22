@@ -25,16 +25,14 @@ define [
         photo_view = new PhotoView({model})
         if USE_COLUMNS
           photo_view.set_width(@columns[0].get_width())
-          @columns[@current_col].append(photo_view)
-          @current_col++
-          @current_col = 0 if @current_col == @columns.length
+          column = _.min @columns, (col) -> col.height
+          column.append(photo_view)
         else
           photo_view.set_height(PHOTO_HEIGHT)
           @$el.append(photo_view.$el)
 
     set_up_columns: ->
       @$el.text('')
-      @current_col = 0
       column_count = Math.floor(@$el.width() / PHOTO_WIDTH_MIN)
       width = @$el.width() / column_count
       @columns = (new PhotoColumn for i in [1..column_count])
