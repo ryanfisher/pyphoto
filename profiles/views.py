@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 
-from photos.models import Photo
+from photos.models import Photo, Album
 from profiles.models import User
 from photos.serializers import PhotoSerializer
 
@@ -16,6 +16,7 @@ def show(request, username):
     serializer = PhotoSerializer(photos, many=True)
     photos_hash = {
         'photos': json.dumps(serializer.data),
+        'albums': Album.objects.filter(user=user),
         'username': username,
         'gravatar': hashlib.md5(user.email.lower()).hexdigest()
     }

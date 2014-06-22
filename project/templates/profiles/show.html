@@ -4,6 +4,12 @@
 <div id="profile-info">
   <img src="http://www.gravatar.com/avatar/{{ gravatar }}?s=150" />
   <h1>Profile of {{username}}</h1>
+  <select onChange="self.location=this.options[this.selectedIndex].value">
+    <option>Go to an Album</option>
+  {% for album in albums %}
+    <option value="{% url 'photos.views.album_show' album.id %}">{{ album.title }}</option>
+  {% endfor %}
+  </select>
 </div>
 <div id="photo-feed"></div>
 {% endblock %}
