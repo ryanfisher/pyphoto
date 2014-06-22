@@ -8,6 +8,9 @@ from cStringIO import StringIO
 import os
 import binascii
 
+import time
+from datetime import datetime
+
 from photos.models import Photo
 
 THUMBNAIL_SIZE = 600
@@ -38,7 +41,12 @@ class ExifInfo(object):
         return self.exif_info.get('ISOSpeedRatings')
 
     def date_taken(self):
-        return self.exif_info.get('DateTimeOriginal')
+        """
+        '2013:10:19 21:42:54'
+        """
+        time_string = self.exif_info.get('DateTimeOriginal')
+        strp_time = time.strptime(time_string, "%Y:%m:%d %H:%M:%S")
+        return datetime.fromtimestamp(time.mktime(strp_time))
 
     def focal_length_numerator(self):
         try:
@@ -201,6 +209,7 @@ class PhotoService(object):
             height=img.size[1],
             size=self.uploaded_file.size,
             iso=exifinfo.iso(),
+            date_taken=exifinfo.date_taken(),
             user=self.user,
             camera_make=exifinfo.make(),
             camera_model=exifinfo.model(),
