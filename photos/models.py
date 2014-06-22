@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
 
 from boto.s3.connection import S3Connection, Key
@@ -18,6 +17,7 @@ class Photo(TimeStampedModel):
     optimized_url = models.URLField()
     thumbnail_url = models.URLField()
     original_filename = models.CharField(max_length=255)
+    date_taken = models.DateTimeField(null=True)
     iso = models.IntegerField(null=True)
     width = models.PositiveSmallIntegerField()
     height = models.PositiveSmallIntegerField()

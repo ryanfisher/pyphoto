@@ -37,6 +37,9 @@ class ExifInfo(object):
     def iso(self):
         return self.exif_info.get('ISOSpeedRatings')
 
+    def date_taken(self):
+        return self.exif_info.get('DateTimeOriginal')
+
     def focal_length_numerator(self):
         try:
             return self.exif_info.get('FocalLength')[0]

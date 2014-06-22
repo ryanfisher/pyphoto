@@ -16,6 +16,7 @@ class ExifInfoTest(TestCase):
             'photos/tests/fixtures/blake-small.jpg'
         )
         img = Image.open(path)
+        self.maxDiff = None
         self.exif_info = ExifInfo(img)
 
     def test_model(self):
@@ -38,6 +39,10 @@ class ExifInfoTest(TestCase):
 
     def test_iso(self):
         self.assertEqual(self.exif_info.iso(), 800)
+
+    def test_date_taken(self):
+        result = self.exif_info.date_taken()
+        self.assertEqual(result, u'2013:10:19 21:42:54')
 
     def test_focal_length_numerator(self):
         self.assertEqual(self.exif_info.focal_length_numerator(), 55)
