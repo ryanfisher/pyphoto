@@ -17,10 +17,31 @@ img.photo-page {
   text-align: left;
 
   .photo {
+    position: relative;
     display: inline-block;
     height: 250px;
     width: 375px;
     cursor: pointer;
+    overflow: hidden;
+    color: white;
+
+    @info_height: 30px;
+    @info_padding: 10px;
+    .info {
+      position: relative;
+      .opacity(0.9);
+      background-color: black;
+      height: @info_height;
+      padding: @info_padding;
+      line-height: @info_height;
+      top: 0;
+
+      .transition(top 0.2s);
+    }
+
+    &:hover .info {
+      top: -(@info_height + 2 * @info_padding);
+    }
   }
 
   .column {
