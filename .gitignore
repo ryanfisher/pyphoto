@@ -51,6 +51,8 @@ docs/_build/
 
 # Project specific
 private.py
+settings.json
+aws.cfg
 
 # Test coverage reports
 htmlcov

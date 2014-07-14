@@ -1,0 +1,9 @@
+aws_access_key_id: <YOUR KEY HERE>
+aws_secret_access_key: <YOUR SECRET KEY HERE>
+region: <YOUR REGION HERE>
+key_name: <YOUR EC2 KEY NAME>
+key_dir: "~/.ec2"
+group_name: <YOUR SECURITY GROUP NAME>
+ssh_port: 22
+instance_type: "t1.micro"
+ubuntu_lts_ami: "ami-76817c1e"
