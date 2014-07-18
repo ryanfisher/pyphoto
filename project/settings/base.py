@@ -116,6 +116,5 @@ LOGIN_URL = '/login/'
 
 AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY']
 AWS_SECRET_KEY = os.environ['AWS_SECRET_KEY']
-AWS_IMAGE_BUCKET = "development.images.ryanfisher.io"
 
 LOG_PATH = os.path.join(BASE_DIR, 'tmp', 'log', 'debug.log')

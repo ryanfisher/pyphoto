@@ -16,3 +16,5 @@ DATABASES = {
     "PORT": os.environ['RDS_PORT'],
   }
 }
+
+AWS_IMAGE_BUCKET = "production.images.ryanfisher.io"
