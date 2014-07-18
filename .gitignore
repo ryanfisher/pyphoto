@@ -60,4 +60,4 @@ htmlcov
 # Compiled static files
 CACHE/
 .elasticbeanstalk/
-photo.config
+project.config
