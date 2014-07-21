@@ -1,9 +1,9 @@
 from django.conf import settings
 
-from boto.s3.connection import S3Connection
+import tinys3
 from PIL import Image
 from PIL.ExifTags import TAGS
-from cStringIO import StringIO
+import io
 
 import os
 import binascii
@@ -106,118 +106,114 @@ class PhotoService(object):
         self.uploaded_file = uploaded_file
         self.user = user
         self.set_random_folder()
-        conn = S3Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        self.bucket = conn.get_bucket(
-            settings.AWS_IMAGE_BUCKET,
-            validate=False
-        )
+        self.conn = tinys3.Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
 
-    def get_key(self, file_prefix=''):
-        return os.path.join(
-            'images',
-            self.user.profile_name[0],
-            self.user.profile_name[1:],
-            self.random_folder_name,
-            file_prefix + self.uploaded_file.name
-        )
+    # def get_key(self, file_prefix=''):
+    #     return os.path.join(
+    #         'images',
+    #         self.user.profile_name[0],
+    #         self.user.profile_name[1:],
+    #         self.random_folder_name,
+    #         file_prefix + self.uploaded_file.name
+    #     )
 
-    def set_random_folder(self):
-        '''Creates a unique folder name for the new photo. Only call once.
-        '''
-        while True:
-            self.random_folder_name = binascii.hexlify(os.urandom(10))
-            if Photo.objects.filter(key=self.get_key()).count() == 0:
-                break
+    # def set_random_folder(self):
+    #     '''Creates a unique folder name for the new photo. Only call once.
+    #     '''
+    #     while True:
+    #         self.random_folder_name = binascii.hexlify(os.urandom(10))
+    #         if Photo.objects.filter(key=self.get_key()).count() == 0:
+    #             break
 
-    def photo_exists(self):
-        '''Checks to see if a file exists. Currently only uses file size
-        '''
-        count = Photo.objects.filter(user=self.user,
-                                     size=self.uploaded_file.size).count()
-        return count > 0
+    # def photo_exists(self):
+    #     '''Checks to see if a file exists. Currently only uses file size
+    #     '''
+    #     count = Photo.objects.filter(user=self.user,
+    #                                  size=self.uploaded_file.size).count()
+    #     return count > 0
 
-    def send_to_s3(self, file, file_prefix=""):
-        k = self.bucket.new_key(self.get_key(file_prefix))
-        k.set_contents_from_file(file, replace=False)
-        return k.key
+    # def send_to_s3(self, file, file_prefix=""):
+    #     k = self.bucket.new_key(self.get_key(file_prefix))
+    #     k.set_contents_from_file(file, replace=False)
+    #     return k.key
 
-    def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
-        k = self.bucket.new_key(self.get_key(file_prefix))
-        k.set_contents_from_string(
-            string_file,
-            headers={"Content-Type": "image/jpeg"},
-            replace=False
-        )
-        return k.key
+    # def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
+    #     k = self.bucket.new_key(self.get_key(file_prefix))
+    #     k.set_contents_from_string(
+    #         string_file,
+    #         headers={"Content-Type": "image/jpeg"},
+    #         replace=False
+    #     )
+    #     return k.key
 
-    def create_and_store_thumbnail(self, img):
-        width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
-        img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
+    # def create_and_store_thumbnail(self, img):
+    #     width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
+    #     img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
 
-        image_string = StringIO()
-        img.save(image_string, 'JPEG')
+    #     image_string = io.StringIO()
+    #     img.save(image_string, 'JPEG')
 
-        thumbnail_url = self.send_string_to_s3(image_string.getvalue())
+    #     thumbnail_url = self.send_string_to_s3(image_string.getvalue())
 
-        image_string.close()
+    #     image_string.close()
 
-        return thumbnail_url
+    #     return thumbnail_url
 
-    def create_and_store_optimized(self, img):
-        width = OPTIMIZED_HEIGHT * img.size[0] / img.size[0]
-        if width < OPTIMIZED_WIDTH:
-            height = OPTIMIZED_HEIGHT
-        else:
-            width = OPTIMIZED_WIDTH
-            height = OPTIMIZED_WIDTH * img.size[1] / img.size[1]
-        img.thumbnail((width, height), Image.ANTIALIAS)
+    # def create_and_store_optimized(self, img):
+    #     width = OPTIMIZED_HEIGHT * img.size[0] / img.size[0]
+    #     if width < OPTIMIZED_WIDTH:
+    #         height = OPTIMIZED_HEIGHT
+    #     else:
+    #         width = OPTIMIZED_WIDTH
+    #         height = OPTIMIZED_WIDTH * img.size[1] / img.size[1]
+    #     img.thumbnail((width, height), Image.ANTIALIAS)
 
-        image_string = StringIO()
-        img.save(image_string, 'JPEG')
+    #     image_string = io.StringIO()
+    #     img.save(image_string, 'JPEG')
 
-        key = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
+    #     key = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
 
-        image_string.close()
+    #     image_string.close()
 
-        return key
+    #     return key
 
-    def store_and_save_photos(self):
-        key = self.send_to_s3(self.uploaded_file)
-        original_file_path = os.path.join(settings.AWS_IMAGE_BUCKET, key)
+    # def store_and_save_photos(self):
+    #     key = self.send_to_s3(self.uploaded_file)
+    #     original_file_path = os.path.join(settings.AWS_IMAGE_BUCKET, key)
 
-        tmp_image = TemporaryImageFile(self.uploaded_file)
-        img = Image.open(tmp_image.path)
+    #     tmp_image = TemporaryImageFile(self.uploaded_file)
+    #     img = Image.open(tmp_image.path)
 
-        exifinfo = ExifInfo(img)
+    #     exifinfo = ExifInfo(img)
 
-        optimized_key = self.create_and_store_optimized(img)
-        optimized_url = os.path.join(settings.AWS_IMAGE_BUCKET, optimized_key)
-        thumbnail_key = self.create_and_store_thumbnail(img)
-        thumbnail_url = os.path.join(settings.AWS_IMAGE_BUCKET, thumbnail_key)
+    #     optimized_key = self.create_and_store_optimized(img)
+    #     optimized_url = os.path.join(settings.AWS_IMAGE_BUCKET, optimized_key)
+    #     thumbnail_key = self.create_and_store_thumbnail(img)
+    #     thumbnail_url = os.path.join(settings.AWS_IMAGE_BUCKET, thumbnail_key)
 
-        tmp_image.delete()
+    #     tmp_image.delete()
 
-        return Photo.objects.create(
-            original_filename=self.uploaded_file.name,
-            key=key,
-            optimized_key=optimized_key,
-            thumbnail_key=thumbnail_key,
-            url='//s3.amazonaws.com/' + original_file_path,
-            optimized_url='//s3.amazonaws.com/' + optimized_url,
-            thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
-            width=img.size[0],
-            height=img.size[1],
-            size=self.uploaded_file.size,
-            iso=exifinfo.iso(),
-            date_taken=exifinfo.date_taken(),
-            user=self.user,
-            camera_make=exifinfo.make(),
-            camera_model=exifinfo.model(),
-            lens_model=exifinfo.lens_model(),
-            f_stop_numerator=exifinfo.f_stop_numerator(),
-            f_stop_denominator=exifinfo.f_stop_denominator(),
-            exposure_numerator=exifinfo.exposure_numerator(),
-            exposure_denominator=exifinfo.exposure_denominator(),
-            focal_length_numerator=exifinfo.focal_length_numerator(),
-            focal_length_denominator=exifinfo.focal_length_denominator()
-        )
+    #     return Photo.objects.create(
+    #         original_filename=self.uploaded_file.name,
+    #         key=key,
+    #         optimized_key=optimized_key,
+    #         thumbnail_key=thumbnail_key,
+    #         url='//s3.amazonaws.com/' + original_file_path,
+    #         optimized_url='//s3.amazonaws.com/' + optimized_url,
+    #         thumbnail_url='//s3.amazonaws.com/' + thumbnail_url,
+    #         width=img.size[0],
+    #         height=img.size[1],
+    #         size=self.uploaded_file.size,
+    #         iso=exifinfo.iso(),
+    #         date_taken=exifinfo.date_taken(),
+    #         user=self.user,
+    #         camera_make=exifinfo.make(),
+    #         camera_model=exifinfo.model(),
+    #         lens_model=exifinfo.lens_model(),
+    #         f_stop_numerator=exifinfo.f_stop_numerator(),
+    #         f_stop_denominator=exifinfo.f_stop_denominator(),
+    #         exposure_numerator=exifinfo.exposure_numerator(),
+    #         exposure_denominator=exifinfo.exposure_denominator(),
+    #         focal_length_numerator=exifinfo.focal_length_numerator(),
+    #         focal_length_denominator=exifinfo.focal_length_denominator()
+    #     )
