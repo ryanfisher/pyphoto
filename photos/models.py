@@ -69,7 +69,7 @@ class Photo(TimeStampedModel):
     def delete(self):
         conn = tinys3.Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
         thumbnail_key = self.thumbnail_key
-        optimized_key = self.thumbnail_key
+        optimized_key = self.optimized_key
         key = self.key
         super(Photo, self).delete()
         conn.delete(thumbnail_key, settings.AWS_IMAGE_BUCKET)
