@@ -5,6 +5,7 @@ Photography Albums and Storage
 Setup
 -----
 sudo apt-get install node-less
+sudo apt-get build-dep pillow
 
 Other Photo Web Apps and Relevant Links
 --------------------
