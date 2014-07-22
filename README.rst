@@ -4,9 +4,16 @@ Photography Albums and Storage
 
 Setup
 -----
-sudo apt-get install node-less
-sudo apt-get build-dep pillow
-sudo apt-get install postgresql-libs python-psycopg2 postgresql-devel
+- sudo apt-get install node-less
+- sudo apt-get build-dep pillow
+- sudo apt-get install postgresql-libs python-psycopg2 postgresql-devel
+
+- sudo apt-get install nginx
+- sudo /etc/init.d/niginx start
+- sudo ln -s ~/path/to/your/mysite/mysite_nginx.conf /etc/nginx/sites-enabled/
+
+- sudo yum install make automake gcc gcc-c++ kernel-devel git-core -y
+- sudo yum install python-devel
 
 Other Photo Web Apps and Relevant Links
 --------------------
