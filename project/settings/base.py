@@ -114,7 +114,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
 
-AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_KEY = os.environ['AWS_SECRET_KEY']
+import project.settings.private as private
+AWS_ACCESS_KEY = private.AWS_ACCESS_KEY
+AWS_SECRET_KEY = private.AWS_SECRET_KEY
 
 LOG_PATH = os.path.join(BASE_DIR, 'tmp', 'log', 'debug.log')
