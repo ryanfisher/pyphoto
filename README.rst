@@ -5,6 +5,8 @@ Photography Albums and Storage
 Setup
 -----
 sudo apt-get install node-less
+sudo apt-get build-dep pillow
+sudo apt-get install postgresql-libs python-psycopg2 postgresql-devel
 
 Other Photo Web Apps and Relevant Links
 --------------------
