@@ -17,8 +17,6 @@ DATABASES = {
   }
 }
 
-INSTALLED_APPS += ("debug_toolbar", )
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
