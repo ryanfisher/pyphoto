@@ -45,8 +45,12 @@ class ExifInfo(object):
         '2013:10:19 21:42:54'
         """
         time_string = self.exif_info.get('DateTimeOriginal')
-        strp_time = time.strptime(time_string, "%Y:%m:%d %H:%M:%S")
-        return datetime.fromtimestamp(time.mktime(strp_time))
+        try:
+            strp_time = time.strptime(time_string, "%Y:%m:%d %H:%M:%S")
+            date_taken = datetime.fromtimestamp(time.mktime(strp_time))
+        except TypeError:
+            date_taken = None
+        return date_taken
 
     def focal_length_numerator(self):
         try:
