@@ -15,6 +15,8 @@ Setup
 - sudo yum install make automake gcc gcc-c++ kernel-devel git-core -y
 - sudo yum install python-devel
 
+- sudo yum install libjpeg-devel
+
 - sudo yum install postgresql postgresql-server postgresql-devel
 - sudo service postgresql status
 - sudo service postgresql initdb
