@@ -19,6 +19,8 @@ Setup
 - sudo service postgresql status
 - sudo service postgresql initdb
 - sudo service postgresql start
+- sudo su - postgres
+- psql -t -P format=unaligned -c 'show hba_file';
 
 Other Photo Web Apps and Relevant Links
 --------------------
