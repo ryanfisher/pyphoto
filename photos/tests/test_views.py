@@ -50,4 +50,4 @@ class PhotosIndexViewsTests(TestCase):
 
     def test_index(self):
         response = self.client.get('/photos')
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 200)

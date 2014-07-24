@@ -11,3 +11,5 @@ DATABASES = {
     "PORT": "",
   }
 }
+
+AWS_IMAGE_BUCKET = ''
