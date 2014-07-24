@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+from django.conf.global_settings import STATICFILES_FINDERS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -24,7 +25,7 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 
 COMPRESS_ENABLED = False
 
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
 
 STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
