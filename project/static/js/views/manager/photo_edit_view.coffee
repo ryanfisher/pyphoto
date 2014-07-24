@@ -4,6 +4,8 @@ define [], ->
 
     events:
       'click': 'toggle_selected'
+      # 'mouseenter': 'expand_size'
+      # 'mouseleave': 'restore_size'
 
     initialize: ->
       img_url = @model.get('thumbnail_url')
@@ -21,6 +23,31 @@ define [], ->
     toggle_selected: ->
       @$el.toggleClass('selected')
       @trigger 'selected_toggle'
+
+    expand_size: ->
+      top = @$el.position().top
+      left = @$el.position().left
+      far_right = left + @model.get('width')
+      @$el.css('position', 'absolute')
+      @placeholder = $('<div>', class: 'photo')
+      @placeholder.insertAfter @$el
+      if far_right > @$el.parent().width()
+        @$el.css('right', 10)
+      else
+        @$el.css('left', left)
+      @$el.css('top', top)
+      @$el.css('z-index', 2)
+      width = _.min([@model.get('width'), @$el.parent().width() - 40])
+      height = @model.height_from(width)
+      @$el.width(width)
+      @$el.height(height)
+
+    restore_size: ->
+      @placeholder.remove()
+      @$el.css('z-index', '')
+      @$el.height('')
+      @$el.width('')
+      @$el.css('position', '')
 
     delete_photo: ->
       @model.destroy()
