@@ -40,15 +40,12 @@
 
 <div id="photo-manager-feed">
   <nav>
-    <p>
+    <div class="info">
       <span class="selected-count">0</span>
       photos selected
-    </p>
-    <div class="photos-selected hidden">
-      bulk actions:
-      <a class="delete-link">delete</a>
-      <a class="add-to-albums">add to <select id="album-dropdown"><option></option></select> album</a>
     </div>
+    <div class="delete-link photos-selected hidden">delete selected</div>
+    <div class="add-to-albums photos-selected hidden">add to <select id="album-dropdown"><option></option></select> album</div>
   </nav>
   <div class="feed"></div>
 </div>
