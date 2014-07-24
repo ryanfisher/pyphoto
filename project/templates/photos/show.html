@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block additional_meta %}
+  <meta property="twitter:card" content="photo">
+  <meta property="twitter:image" content="{{ photo.thumbnail_url }}">
+  <meta property="twitter:url" content="{{ request.get_full_path }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="photo-container">

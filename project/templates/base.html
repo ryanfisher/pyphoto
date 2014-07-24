@@ -5,6 +5,7 @@
 <head>
   <title>{% block title %}Photo Application{% endblock %}</title>
   <meta name="csrf-token" content="{{csrf_token}}">
+  {% block additional_meta %}{% endblock %}
   {% load staticfiles %}
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
   {% compress css %}

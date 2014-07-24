@@ -51,7 +51,11 @@ def show(request, id):
         'focal_length': photo.focal_length(),
         'photo_data': json.dumps(PhotoSerializer(photo).data),
     }
-    return render_to_response('photos/show.html', photo_hash)
+    return render_to_response(
+        'photos/show.html',
+        photo_hash,
+        context_instance=RequestContext(request)
+    )
 
 
 def album_show(request, id):
