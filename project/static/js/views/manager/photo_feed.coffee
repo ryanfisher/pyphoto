@@ -3,6 +3,7 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
     el: '#photo-manager-feed'
 
     events:
+      'click':              'clear_selections'
       'click .delete-link': 'delete_photos'
 
     initialize: ->
