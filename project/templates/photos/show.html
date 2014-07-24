@@ -3,7 +3,7 @@
 {% block additional_meta %}
   <meta property="twitter:card" content="photo">
   <meta property="twitter:image" content="{{ photo.thumbnail_url }}">
-  <meta property="twitter:url" content="{{ request.get_full_path }}">
+  <meta property="twitter:url" content="http://{{ request.META.HTTP_HOST }}{% url 'photos.views.show' photo.id %}">
 {% endblock %}
 
 {% block content %}
