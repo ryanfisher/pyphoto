@@ -5,12 +5,26 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
     events:
       'click':              'clear_selections'
       'click .delete-link': 'delete_photos'
+      'click .sort-by li':  'sort_by'
 
     initialize: ->
-      @photo_edit_views = []
       @render()
 
+    sort_by: (event) ->
+      sort_type = $(event.currentTarget).data('sort-type')
+      @collection.sort_by(sort_type)
+      @reset()
+
+    reset: ->
+      @photo_edit_views = []
+      @$('.feed').empty()
+      @collection.each (model) =>
+        console.log model.attributes
+        @new_photo_view model
+        @$('.feed').append @last_photo_view_el()
+
     render: ->
+      @photo_edit_views = []
       @collection.on 'add', (model) =>
         @new_photo_view model
         @$('.feed').append @last_photo_view_el()

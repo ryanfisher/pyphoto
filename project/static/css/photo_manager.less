@@ -60,6 +60,37 @@
     }
   }
 
+  .sort-by {
+    height: 40px;
+    padding: 0 11px 0 10px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover {
+      .dropdown {
+        display: block;
+      }
+    }
+
+    .dropdown {
+      display: none;
+      padding: 0;
+      margin-top: 1px;
+      margin-left: -10px;
+      z-index: 1;
+      position: absolute;
+
+      li {
+        display: block;
+        border: 1px solid #333;
+        border-top: 0px;
+        background-color: white;
+        padding: 0 10px;
+        margin-left: -1px;
+      }
+    }
+  }
+
   .feed { clear: both; }
 
   .photo {
