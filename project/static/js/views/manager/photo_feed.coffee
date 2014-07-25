@@ -3,7 +3,7 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
     el: '#photo-manager-feed'
 
     events:
-      'click':              'clear_selections'
+      'click .feed':        'clear_selections'
       'click .delete-link': 'delete_photos'
       'click .sort-by li':  'sort_by'
 
@@ -19,7 +19,6 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
       @photo_edit_views = []
       @$('.feed').empty()
       @collection.each (model) =>
-        console.log model.attributes
         @new_photo_view model
         @$('.feed').append @last_photo_view_el()
 
