@@ -18,13 +18,17 @@
   left: @manager-side-bar-width + @main-nav-width;
   right: 0;
   bottom: 0;
-  overflow-y: auto;
+  overflow-y: hidden;
   text-align: left;
   border-left: 1px solid #333;
+  height: 100%;
 
   nav {
-    position: static;
-    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 401px;
+    right: 0;
+    background-color: white;
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #333;
@@ -87,11 +91,32 @@
         background-color: white;
         padding: 0 10px;
         margin-left: -1px;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          height: 20px;
+          width: 20px;
+        }
+
+        &.selected {
+          &:before {
+            content: "\2714";
+          }
+        }
       }
     }
   }
 
-  .feed { clear: both; }
+  .feed {
+    overflow-y: scroll;
+    position: absolute;
+    top: 41px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
 
   .photo {
     height: 130px;

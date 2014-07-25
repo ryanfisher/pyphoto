@@ -11,7 +11,8 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
       @render()
 
     sort_by: (event) ->
-      sort_type = $(event.currentTarget).data('sort-type')
+      @$('.sort-by li').removeClass('selected')
+      sort_type = $(event.currentTarget).addClass('selected').data('sort-type')
       @collection.sort_by(sort_type)
       @reset()
 

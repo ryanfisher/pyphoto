@@ -20,6 +20,9 @@ define [
         @render()
 
     render: ->
+      # We set the scrollbar here so the width doesn't change when photos
+      # overflow from view and scroll is automatically added
+      $('html').css('overflow-y', 'scroll')
       @set_up_columns() if USE_COLUMNS
       @collection.each (model) =>
         photo_view = new PhotoView({model})
