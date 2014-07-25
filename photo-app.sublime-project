@@ -1,0 +1,9 @@
+{
+	"folders":
+	[
+		{
+			"path": "/home/ryan/Dev/ryanfisher/photo",
+      "file_exclude_patterns": ["/static/*"]
+		}
+	]
+}
