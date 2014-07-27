@@ -21,22 +21,47 @@ STATIC_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-COMPRESS_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
+# COMPRESS_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
 
-COMPRESS_ENABLED = False
+# COMPRESS_ENABLED = False
 
-STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
+# STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
 
-STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
-COMPRESS_PRECOMPILERS = (
-    ('text/coffeescript', 'coffee --compile --stdio'),
-    ('text/less', 'lessc {infile} {outfile}'),
-    ('text/x-sass', 'sass {infile} {outfile}'),
-    ('text/x-scss', 'sass --scss {infile} {outfile}'),
-    ('text/stylus', 'stylus < {infile} > {outfile}'),
-    ('text/foobar', 'path.to.MyPrecompilerFilter'),
+PIPELINE_CSS = {
+    'app': {
+        'source_filenames': {
+            'css/normalize.css',
+            'less/application.less',
+        },
+        'output_filename': 'app.css',
+    }
+}
+
+PIPELINE_JS = {
+    'app': {
+        'source_filenames': {
+            'coffee/models/*.coffee',
+            'coffee/collections/*.coffee',
+            'coffee/routers/*.coffee',
+            'coffee/views/*.coffee',
+            'coffee/views/manager/*.coffee',
+            'coffee/application.coffee',
+        },
+        'output_filename': 'app.js',
+    }
+}
+
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+
+PIPELINE_COMPILERS = (
+  'pipeline.compilers.coffee.CoffeeScriptCompiler',
+  'pipeline.compilers.less.LessCompiler'
 )
+
+PIPELINE_COFFEE_SCRIPT_ARGUMENTS = '-b'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -64,7 +89,7 @@ INSTALLED_APPS = (
     'photos',
     'profiles',
     'south',
-    'compressor',
+    'pipeline',
     'rest_framework',
     'require',
 )
@@ -81,7 +106,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'project.urls'
 
 WSGI_APPLICATION = 'project.wsgi.application'
-
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',

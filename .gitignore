@@ -62,5 +62,6 @@ htmlcov
 CACHE/
 .elasticbeanstalk/
 project.config
-
+**/coffee/**/*.js
+**/less/**/*.css
 node_modules/

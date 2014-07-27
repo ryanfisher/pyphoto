@@ -1,17 +1,12 @@
-{% load compress %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>{% block title %}Photo Application{% endblock %}</title>
   <meta name="csrf-token" content="{{csrf_token}}">
   {% block additional_meta %}{% endblock %}
-  {% load static from staticfiles %}
+  {% load compressed %}
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
-  {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
-    <link rel="stylesheet" type="text/less" href="{% static "css/application.less" %}">
-  {% endcompress %}
+  {% compressed_css 'app' %}
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -49,7 +44,6 @@
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-  {% load require %}
-  {% require_module 'main' %}
+  {% compressed_js 'app' %}
 </body>
 </html>
