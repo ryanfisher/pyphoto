@@ -57,7 +57,7 @@ LOGGING = {
 INSTALLED_APPS += ('storages',)
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = 'project.storage.CachedS3BotoStorage'
 COMPRESS_STORAGE = STATICFILES_STORAGE
 AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY
 AWS_SECRET_ACCESS_KEY = AWS_SECRET_KEY

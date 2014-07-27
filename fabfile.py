@@ -20,6 +20,8 @@ def deploy_prod():
         print(red('pushing master to production'))
         local('git push production master')
         sudo('git --work-tree=/mnt/current checkout -f master')
+        run('source /opt/apps/photo-env/bin/activate')
+        run('cd /mnt/current && pip install -r requirements.txt')
         print(green('master pushed to production'))
         print(red('NEED TO GET COLLECTSTATIC WORKING'))
         sudo('restart uwsgi')
