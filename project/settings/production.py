@@ -3,6 +3,8 @@ from .base import *
 
 import os
 
+from boto.s3.connection import OrdinaryCallingFormat
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -62,6 +64,9 @@ COMPRESS_STORAGE = STATICFILES_STORAGE
 AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY
 AWS_SECRET_ACCESS_KEY = AWS_SECRET_KEY
 AWS_STORAGE_BUCKET_NAME = 'static.ryanfisher.io'
+AWS_CALLING_FORMAT = OrdinaryCallingFormat()
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
+AWS_IS_GZIPPED = True
 
 COMPRESS_URL = 'http://s3.amazonaws.com/'+ AWS_STORAGE_BUCKET_NAME + '/'
 COMPRESS_ENABLED = True
