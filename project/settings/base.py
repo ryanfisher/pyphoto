@@ -91,7 +91,6 @@ INSTALLED_APPS = (
     'south',
     'pipeline',
     'rest_framework',
-    'require',
 )
 
 MIDDLEWARE_CLASSES = (
