@@ -31,24 +31,24 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 PIPELINE_CSS = {
     'app': {
-        'source_filenames': {
+        'source_filenames': (
             'css/normalize.css',
             'less/application.less',
-        },
+        ),
         'output_filename': 'app.css',
     }
 }
 
 PIPELINE_JS = {
     'app': {
-        'source_filenames': {
+        'source_filenames': (
             'coffee/models/*.coffee',
             'coffee/collections/*.coffee',
             'coffee/routers/*.coffee',
             'coffee/views/*.coffee',
             'coffee/views/manager/*.coffee',
             'coffee/application.coffee',
-        },
+        ),
         'output_filename': 'app.js',
     }
 }
