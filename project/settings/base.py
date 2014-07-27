@@ -21,7 +21,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
+COMPRESS_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
 
 COMPRESS_ENABLED = False
 
