@@ -15,6 +15,7 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
       sort_type = $(event.currentTarget).addClass('selected').data('sort-type')
       @collection.sort_by(sort_type)
       @reset()
+      @update_selected_count()
 
     reset: ->
       @photo_edit_views = []
@@ -47,11 +48,11 @@ define ['cs!views/manager/photo_edit_view'], (PhotoManagerEditView) ->
       @update_selected_count()
 
     clear_selections: ->
-      @$('.selected').removeClass('selected')
+      @$('.feed .selected').removeClass('selected')
       @update_selected_count()
 
     update_selected_count: ->
-      selected_count = @$('.selected').length
+      selected_count = @$('.feed .selected').length
       if selected_count > 0
         @$('.photos-selected').removeClass('hidden')
       else
