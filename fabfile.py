@@ -1,6 +1,9 @@
 from fabric.api import *
-from fabric.contrib import django
+from fabric.contrib import django, project
 from fabric.colors import green, red
+
+# django.settings_module('photos.project.settings.production')
+# from django.conf import settings
 
 def prod():
     '''The production server'''
@@ -20,9 +23,14 @@ def deploy_prod():
         print(red('pushing master to production'))
         local('git push production master')
         sudo('git --work-tree=/mnt/current checkout -f master')
-    with cd('/mnt/current'):
         run('source /opt/apps/photo-env/bin/activate')
-        run('pip install -r requirements.txt')
-        sudo('python manage.py collectstatic')
+        run('cd /mnt/current && pip install -r requirements.txt')
         print(green('master pushed to production'))
+        # local('python /home/ryan/Dev/ryanfisher/photo/manage.py collectstatic --noinput --settings=project.settings.production')
+        project.upload_project(
+            remote_dir = '/mnt/current',
+            local_dir = '/home/ryan/Dev/ryanfisher/photo/static',
+            use_sudo = True
+        )
+        print(red('updating static files'))
         sudo('restart uwsgi')

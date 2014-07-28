@@ -56,9 +56,7 @@ LOGGING = {
     }
 }
 
-PIPELINE_LESS_BINARY = '/usr/local/bin/lessc'
-
-INSTALLED_APPS += ('storages',)
+# INSTALLED_APPS += ('storages',)
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # STATICFILES_STORAGE = 'project.storage.CachedS3BotoStorage'
