@@ -142,14 +142,18 @@ class PhotoService(object):
 
     def send_to_s3(self, file, file_prefix=""):
         k = self.bucket.new_key(self.get_key(file_prefix))
-        k.set_contents_from_file(file, replace=False)
+        headers={"Cache-Control": "max-age=31536000,public"}
+        k.set_contents_from_file(file, headers=headers, replace=False)
         return k.key
 
     def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
         k = self.bucket.new_key(self.get_key(file_prefix))
         k.set_contents_from_string(
             string_file,
-            headers={"Content-Type": "image/jpeg"},
+            headers={
+                "Content-Type": "image/jpeg",
+                "Cache-Control": "max-age=31536000,public"
+            },
             replace=False
         )
         return k.key
