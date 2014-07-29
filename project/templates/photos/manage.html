@@ -51,8 +51,13 @@
         <li data-sort-type="date-taken">taken date</li>
       </ul>
     </div>
-    <div class="delete-link photos-selected hidden">delete selected</div>
-    <div class="add-to-albums photos-selected hidden">add to <select id="album-dropdown"><option></option></select> album</div>
+    <div class="bulk-actions photos-selected hidden">
+      bulk actions
+      <ul class="dropdown">
+        <li class="delete-link">delete selected</li>
+        <li class="add-to-albums">add to <select id="album-dropdown"><option></option></select> album</li>
+      </ul>
+    </div>
   </nav>
   <div class="feed"></div>
 </div>
