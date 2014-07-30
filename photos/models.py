@@ -7,17 +7,10 @@ from core.models import TimeStampedModel
 
 
 class Tag(models.Model):
-    text = models.CharField(max_length=255)
+    text = models.CharField(max_length=255, unique=True)
 
-
-class PublicTag(models.Model):
-    photo = models.ForeignKey('Photo')
-    tag = models.ForeignKey(Tag)
-
-
-class PrivateTag(models.Model):
-    photo = models.ForeignKey('Photo')
-    tag = models.ForeignKey(Tag)
+    def __unicode__(self):
+        return text
 
 
 class Photo(TimeStampedModel):
@@ -46,12 +39,8 @@ class Photo(TimeStampedModel):
     exposure_numerator = models.IntegerField(null=True)
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
-    private_tags = models.ManyToManyField(Tag,
-                                          related_name='private_tags',
-                                          through=PrivateTag)
-    public_tags = models.ManyToManyField(Tag,
-                                         related_name='public_tags',
-                                         through=PublicTag)
+    private_tags = models.ManyToManyField(Tag, related_name='private_tags')
+    public_tags = models.ManyToManyField(Tag, related_name='public_tags')
 
     def display_url(self):
         """

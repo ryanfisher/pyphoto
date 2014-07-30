@@ -1,10 +1,17 @@
 from rest_framework import serializers
-from photos.models import Photo, Album
+from photos.models import Photo, Album, Tag
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('text',)
 
 
 class PhotoSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('profile_user')
     taken = serializers.SerializerMethodField('date_taken')
+    public_tags = TagSerializer(many=True)
 
     class Meta:
         model = Photo
@@ -20,6 +27,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'taken',
             'lens_model',
             'username',
+            'public_tags',
         )
 
     def date_taken(self, obj):
