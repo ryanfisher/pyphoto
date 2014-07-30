@@ -33,3 +33,5 @@ Other Photo Web Apps and Relevant Links
 - Pics.io http://pics.io
 
 - https://news.ycombinator.com/item?id=7744554 In-browser RAW Processing: How We Did It pics.io
+
+- http://en.wikipedia.org/wiki/List_of_photo-sharing_websites
