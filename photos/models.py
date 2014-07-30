@@ -6,6 +6,20 @@ from boto.s3.connection import S3Connection, Key
 from core.models import TimeStampedModel
 
 
+class Tag(models.Model):
+    text = models.CharField(max_length=255)
+
+
+class PublicTag(models.Model):
+    photo = models.ForeignKey('Photo')
+    tag = models.ForeignKey(Tag)
+
+
+class PrivateTag(models.Model):
+    photo = models.ForeignKey('Photo')
+    tag = models.ForeignKey(Tag)
+
+
 class Photo(TimeStampedModel):
     """
     A user's photo
@@ -32,6 +46,12 @@ class Photo(TimeStampedModel):
     exposure_numerator = models.IntegerField(null=True)
     focal_length_denominator = models.IntegerField(null=True)
     focal_length_numerator = models.IntegerField(null=True)
+    private_tags = models.ManyToManyField(Tag,
+                                          related_name='private_tags',
+                                          through=PrivateTag)
+    public_tags = models.ManyToManyField(Tag,
+                                         related_name='public_tags',
+                                         through=PublicTag)
 
     def display_url(self):
         """
