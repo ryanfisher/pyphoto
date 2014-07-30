@@ -25,6 +25,7 @@ def deploy_prod():
         sudo('git --work-tree=/mnt/current checkout -f master')
         run('source /opt/apps/photo-env/bin/activate')
         run('cd /mnt/current && pip install -r requirements.txt')
+        sudo('python /mnt/current/manage.py migrate')
         print(green('master pushed to production'))
         # local('python /home/ryan/Dev/ryanfisher/photo/manage.py collectstatic --noinput --settings=project.settings.production')
         project.upload_project(
