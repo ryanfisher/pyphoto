@@ -4,16 +4,18 @@ class PhotoManager extends Backbone.View
   events:
     'open_uploader': 'open_uploader'
     'open_albums_editor': 'open_albums_editor'
-    'change #album-dropdown': 'add_photos_to_album'
+    'click .add-to-albums li': 'add_photos_to_album'
 
   initialize: ->
     @uploader = new Uploader({@collection})
     collection = new UserAlbums
+    no_albums_notice = @$('.no-albums-notice')
     collection.on 'add', (model) ->
+      no_albums_notice.remove()
       set_up_album = ->
-        select = $('<option>', val: model.get('id'), text: model.get('title'))
-        model.on 'destroy', -> select.remove()
-        $('#album-dropdown').append(select)
+        li = $('<li>', data: {id: model.get('id')}, text: model.get('title'))
+        model.on 'destroy', -> li.remove()
+        @$('.add-to-albums .inner-dropdown').append(li)
       if model.get('id')
         set_up_album()
       else
@@ -31,9 +33,8 @@ class PhotoManager extends Backbone.View
     @albums_editor.$el.addClass('open')
 
   add_photos_to_album: (event) ->
-    option = $(event.target).find('option:selected')
-    $('#album-dropdown')[0].selectedIndex = 0
-    album = @user_albums.get(option.val())
+    album_id = $(event.currentTarget).data('id')
+    album = @user_albums.get(album_id)
     _.each @photo_feed.selected_photos(), (view) ->
       photos = album.get('photos') or []
       photos.push view.model

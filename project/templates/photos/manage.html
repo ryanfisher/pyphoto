@@ -45,17 +45,22 @@
       photos selected
     </div>
     <div class="sort-by">
-      sort by
+      sort by <span>&#9663;</span>
       <ul class="dropdown">
         <li data-sort-type="upload-date">upload date</li>
         <li data-sort-type="date-taken">taken date</li>
       </ul>
     </div>
     <div class="bulk-actions photos-selected hidden">
-      bulk actions
+      bulk actions <span>&#9663;</span>
       <ul class="dropdown">
         <li class="delete-link">delete selected</li>
-        <li class="add-to-albums">add to <select id="album-dropdown"><option></option></select> album</li>
+        <li class="add-to-albums">
+          add to album &#9657;
+          <ul class="inner-dropdown">
+            <li class="no-albums-notice">no albums</li>
+          </ul>
+        </li>
       </ul>
     </div>
   </nav>

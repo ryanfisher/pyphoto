@@ -63,6 +63,19 @@
       &.add-to-albums:before { .icon-background('add-folder.png'); }
 
       &.delete-link:hover { background-color: #777; }
+
+      .add-to-albums {
+        .inner-dropdown {
+          display: none;
+          position: absolute;
+          top: 40px;
+          padding-left: 100%;
+          margin-left: -10px;
+          border-top: 1px solid #333;
+        }
+
+        &:hover .inner-dropdown { display: block; }
+      }
     }
   }
 
@@ -75,6 +88,21 @@
     &:hover {
       .dropdown {
         display: block;
+      }
+    }
+  }
+
+  .sort-by li {
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+    }
+
+    &.selected {
+      &:before {
+        content: "\2714";
       }
     }
   }
@@ -95,19 +123,7 @@
       background-color: white;
       padding: 0 10px;
       margin-left: -1px;
-
-      &:before {
-        content: '';
-        display: inline-block;
-        height: 20px;
-        width: 20px;
-      }
-
-      &.selected {
-        &:before {
-          content: "\2714";
-        }
-      }
+      margin-right: 0;
     }
   }
 
