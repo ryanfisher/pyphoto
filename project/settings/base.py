@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'south',
     'pipeline',
     'rest_framework',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
