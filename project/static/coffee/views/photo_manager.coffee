@@ -5,6 +5,8 @@ class PhotoManager extends Backbone.View
     'open_uploader': 'open_uploader'
     'open_albums_editor': 'open_albums_editor'
     'click .add-to-albums li': 'add_photos_to_album'
+    'click .add-tags': 'open_bulk_editor'
+    'click .bulk-editor button': 'add_tags'
 
   initialize: ->
     @uploader = new Uploader({@collection})
@@ -41,3 +43,15 @@ class PhotoManager extends Backbone.View
       album.set('photos', photos)
     album.save()
     @photo_feed.clear_selections()
+
+  add_tags: ->
+    tags = @$('.bulk-editor input').val().split(' ')
+    _.each @photo_feed.selected_photos(), (view) ->
+      photo = view.model
+      photo_tags = _.union(photo.get('public_tags'), tags)
+      photo.set('public_tags', photo_tags)
+      photo.save()
+    @$('.bulk-editor').removeClass('open')
+
+  open_bulk_editor: ->
+    @$('.bulk-editor').addClass('open')

@@ -55,6 +55,7 @@
       bulk actions <span>&#9663;</span>
       <ul class="dropdown">
         <li class="delete-link">delete selected</li>
+        <li class="add-tags">add tags</li>
         <li class="add-to-albums">
           add to album &#9657;
           <ul class="inner-dropdown">
@@ -64,7 +65,12 @@
       </ul>
     </div>
   </nav>
-  <div class="feed"></div>
+  <div class="feed-container">
+    <div class="bulk-editor">
+      <input placeholder="separate tags with space" type="text" name="tags" /><button>add tags</button>
+    </div>
+    <div class="feed"></div>
+  </div>
 </div>
 
 </div>

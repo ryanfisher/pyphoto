@@ -127,7 +127,7 @@
     }
   }
 
-  .feed {
+  .feed-container {
     overflow-y: scroll;
     position: absolute;
     top: 41px;
@@ -159,6 +159,17 @@
     &.selected {
       margin: 5px;
       border: 5px solid @accent-color;
+    }
+  }
+
+  .bulk-editor {
+    margin-top: -50px;
+    height: 30px;
+    padding: 10px;
+    .transition(margin-top 0.3s ease-in-out);
+
+    &.open {
+      margin-top: 0;
     }
   }
 }

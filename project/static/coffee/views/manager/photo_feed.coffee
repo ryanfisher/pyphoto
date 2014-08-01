@@ -2,9 +2,9 @@ class PhotoManagerFeed extends Backbone.View
   el: '#photo-manager-feed'
 
   events:
-    'click .feed':        'clear_selections'
-    'click .delete-link': 'delete_photos'
-    'click .sort-by li':  'sort_by'
+    'click .feed-container': 'clear_selections'
+    'click .delete-link':    'delete_photos'
+    'click .sort-by li':     'sort_by'
 
   initialize: ->
     @render()
@@ -46,7 +46,9 @@ class PhotoManagerFeed extends Backbone.View
     @delete_selected_photos()
     @update_selected_count()
 
-  clear_selections: ->
+  clear_selections: (event) ->
+    target = $(event.target)
+    return unless target.attr('class')?.match(/feed|feed-container/)
     @$('.feed .selected').removeClass('selected')
     @update_selected_count()
 
@@ -56,8 +58,14 @@ class PhotoManagerFeed extends Backbone.View
       @$('.photos-selected').removeClass('hidden')
     else
       @$('.photos-selected').addClass('hidden')
+      @$('.bulk-editor').removeClass('open')
     @$('.selected-count').text selected_count
 
+  # A list of photo views currently selected in the photo manager feed
+  #
+  # @todo I might want to make this return the models of those views instead
+  #
+  # @return [Array<PhotoEditView>]
   selected_photos: ->
     _.filter @photo_edit_views, (view) -> view.is_selected()
 
