@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db import IntegrityError
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from rest_framework import status
@@ -9,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from photos.forms import PhotoUploadForm
-from photos.models import Photo, Album, SortedPhoto
+from photos.models import Photo, Album, SortedPhoto, Tag
 from photos.services import PhotoService
 from photos.serializers import PhotoSerializer, AlbumSerializer
 
@@ -89,6 +90,16 @@ class PhotoList(APIView):
                 photo = service.store_and_save_photos()
             except IntegrityError:
                 return HttpResponse(status=409)
+        serializer = PhotoSerializer(photo)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        photo = Photo.objects.get(id=pk, user=request.user)
+        query = Q()
+        for tag in request.DATA['public_tags']:
+            query = query | Q(text=tag)
+        photo.public_tags = Tag.objects.filter(query)
+        photo.save()
         serializer = PhotoSerializer(photo)
         return Response(serializer.data)
 
