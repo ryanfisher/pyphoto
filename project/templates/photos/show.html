@@ -12,7 +12,7 @@
   <div class="photo-description">
     <div class="username">Photographer: <a href="{% url 'profiles.views.show' photo.user.profile_name %}">{{ photo.user.profile_name }}</a></div>
     {% if public_tags %}<div class="tags">
-      Tags: {% for tag in public_tags %}{{ tag }}{% endfor %}
+      Tags: {{ public_tags|join:", " }}
     </div>{% endif %}
     {% if photo.date_taken %}<div class="date-taken">Taken: {{ photo.date_taken }}</div>{% endif %}
     {% if photo.camera_model %}<div class="camera-model">Camera Model: {{ photo.camera_model }}</div>{% endif %}

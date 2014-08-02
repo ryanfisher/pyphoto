@@ -45,7 +45,7 @@ class PhotoManager extends Backbone.View
     @photo_feed.clear_selections()
 
   add_tags: ->
-    tags = @$('.bulk-editor input').val().split(' ')
+    tags = @$('.bulk-editor input').val().split(',')
     _.each @photo_feed.selected_photos(), (view) ->
       photo = view.model
       photo_tags = _.union(photo.get('public_tags'), tags)
