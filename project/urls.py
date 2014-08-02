@@ -32,7 +32,6 @@ urlpatterns += patterns(
     url(r'^photos/edit$', 'edit'),
     url(r'^photos/(?P<id>\d+)$', 'show'),
     url(r'^albums/(?P<id>\d+)$', 'album_show'),
-    url(r'^api/photos/(?P<id>\d+)$', 'photo_delete'),
 )
 
 urlpatterns += patterns(
@@ -43,6 +42,7 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^api/photos$', PhotoList.as_view()),
+    url(r'^api/photos/(?P<pk>[0-9]+)$', PhotoList.as_view())
 )
 
 urlpatterns += patterns(

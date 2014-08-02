@@ -92,6 +92,11 @@ class PhotoList(APIView):
         serializer = PhotoSerializer(photo)
         return Response(serializer.data)
 
+    def delete(self, request, pk, format=None):
+        photo = Photo.objects.filter(user=request.user).get(id=pk)
+        photo.delete()
+        return HttpResponse(status=200)
+
 
 class AlbumList(APIView):
     def get(self, request, format=None):
@@ -140,12 +145,3 @@ class AlbumList(APIView):
         albums = Album.objects.filter(user=request.user)
         albums.get(id=pk).delete()
         return HttpResponse(status=204)
-
-
-@login_required
-def photo_delete(request, id):
-    if request.method != 'DELETE':
-        raise Http404
-    photo = Photo.objects.filter(user=request.user).get(id=id)
-    photo.delete()
-    return HttpResponse(status=200)
