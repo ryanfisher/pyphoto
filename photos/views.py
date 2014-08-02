@@ -44,13 +44,15 @@ def edit(request):
 
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
+    photo_data = PhotoSerializer(photo).data
     photo_hash = {
         'photo': photo,
         'display_url': photo.display_url(),
         'f_stop': photo.f_stop(),
         'shutter_speed': photo.shutter_speed(),
         'focal_length': photo.focal_length(),
-        'photo_data': json.dumps(PhotoSerializer(photo).data),
+        'public_tags': photo_data['public_tags'],
+        'photo_data': json.dumps(photo_data),
     }
     return render_to_response(
         'photos/show.html',

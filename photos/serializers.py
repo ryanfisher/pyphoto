@@ -11,7 +11,7 @@ class TagSerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('profile_user')
     taken = serializers.SerializerMethodField('date_taken')
-    public_tags = TagSerializer(many=True)
+    public_tags = serializers.SerializerMethodField('public_tags_list')
 
     class Meta:
         model = Photo
@@ -29,6 +29,9 @@ class PhotoSerializer(serializers.ModelSerializer):
             'username',
             'public_tags',
         )
+
+    def public_tags_list(self, obj):
+        return [tag.text for tag in obj.public_tags.all()]
 
     def date_taken(self, obj):
         return str(obj.date_taken)
