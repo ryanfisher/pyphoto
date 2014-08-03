@@ -331,18 +331,12 @@
   height: 14px;
   margin: 15px 0 0 5px;
   font-size: 14px;
-}
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
-.message.success {
-  color: green;
-}
-
-.message.failure {
-  color: red;
-}
-
-.message.error409 {
-  color: red;
+  &.success { color: green; }
+  &.failure, &.error409 { color: red; }
 }
 
 .progress-info {
