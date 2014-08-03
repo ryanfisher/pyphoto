@@ -12,12 +12,13 @@ class PhotoManager extends Backbone.View
     @uploader = new Uploader({@collection})
     collection = new UserAlbums
     no_albums_notice = @$('.no-albums-notice')
+    album_dropdown = @$('.add-to-albums .inner-dropdown')
     collection.on 'add', (model) ->
       no_albums_notice.remove()
       set_up_album = ->
         li = $('<li>', data: {id: model.get('id')}, text: model.get('title'))
         model.on 'destroy', -> li.remove()
-        @$('.add-to-albums .inner-dropdown').append(li)
+        album_dropdown.append(li)
       if model.get('id')
         set_up_album()
       else
