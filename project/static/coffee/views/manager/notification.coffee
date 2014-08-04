@@ -5,6 +5,8 @@ class Notification extends Backbone.View
 
   default_delay: 3000 # in milliseconds
 
+  @show: (text) -> (new Notification).show(text)
+
   show: (text) ->
     @$el.text(text).addClass('open')
     setTimeout (=> @hide_notification()), @default_delay
