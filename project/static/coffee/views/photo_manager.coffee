@@ -43,6 +43,9 @@ class PhotoManager extends Backbone.View
       photos.push view.model
       album.set('photos', photos)
     album.save()
+    (new Notification).show(
+      "The selected photos have been added to #{album.get('title')}."
+    )
     @photo_feed.clear_selections()
 
   add_tags: ->

@@ -3,6 +3,8 @@
 {% block content %}
 <div id="photo-manager">
 
+<div id="notification"></div>
+
 <div id="uploader">
   <h4 class="upload">uploader</h4>
   <form class="" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}

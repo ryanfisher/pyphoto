@@ -11,6 +11,26 @@
 
 @manager-side-bar-width: 320px;
 
+#notification {
+  @notification-height: 20px;
+  position: fixed;
+  top: -(@notification-height + 2px + 10px);
+  left: 50%;
+  height: @notification-height;
+  line-height: @notification-height;
+  padding: 5px 14px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  z-index: 1;
+  .border-radius(0 0 4px 4px);
+  .transition(top 0.3s);
+
+  &.open {
+    top: 0;
+  }
+}
+
 #photo-manager-feed {
   width: auto;
   position: fixed;
