@@ -59,4 +59,5 @@ class PhotoManager extends Backbone.View
     @$('.bulk-editor').removeClass('open')
 
   open_bulk_editor: ->
+    @$('.bulk-editor input').val('')
     @$('.bulk-editor').addClass('open')
