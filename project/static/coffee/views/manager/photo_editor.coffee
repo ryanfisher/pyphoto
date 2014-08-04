@@ -19,8 +19,11 @@ class PhotoEditor extends Backbone.View
 
   close_editor: ->
     @$el.removeClass('open')
+    @$el.removeData().unbind()
+    @undelegateEvents()
 
   save_photo: ->
     public_tags = @$('input[name="public-tags"]').val().split(',')
+    console.log @model
     @model.save {public_tags: public_tags}, success: ->
       Notification.show('Photo saved successfully!')

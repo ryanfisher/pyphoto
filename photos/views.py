@@ -97,11 +97,10 @@ class PhotoList(APIView):
 
     def put(self, request, pk, format=None):
         photo = Photo.objects.get(id=pk, user=request.user)
-        photo.public_tags = []
+        photo.public_tags.clear()
         for tag in request.DATA['public_tags']:
             t, _ = Tag.objects.get_or_create(text=tag.strip())
             photo.public_tags.add(t)
-        photo.save()
         serializer = PhotoSerializer(photo)
         return Response(serializer.data)
 
