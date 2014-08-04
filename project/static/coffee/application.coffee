@@ -12,7 +12,10 @@ class App extends Backbone.View
 
   initialize: ->
     if bootstrapped_photos? and $('#photo-feed').length
-      collection = new UserPhotos(bootstrapped_photos)
+      if $('#photo-feed').hasClass('album')
+        collection = new AlbumPhotos(bootstrapped_photos)
+      else
+        collection = new UserPhotos(bootstrapped_photos)
       new PhotoFeed({collection})
     if $('#photo-manager').length
       collection = new UserPhotos
