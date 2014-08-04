@@ -56,4 +56,4 @@ class AlbumEditor extends Backbone.View
     @$('.photos .photo').each (index) ->
       photo = photos.get($(this).data('id'))
       photo.set('position', index + 1)
-    @model.save()
+    @model.save {}, success: -> Notification.show('Album saved successfully!')
