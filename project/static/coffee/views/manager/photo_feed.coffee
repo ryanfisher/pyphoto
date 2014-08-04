@@ -48,7 +48,7 @@ class PhotoManagerFeed extends Backbone.View
 
   clear_selections: (event) ->
     target = $(event?.target)
-    return unless target.attr('class')?.match(/feed|feed-container/)
+    return if event? and not target.attr('class')?.match(/feed|feed-container/)
     @$('.feed .selected').removeClass('selected')
     @update_selected_count()
 

@@ -3,6 +3,7 @@ class PhotoEditView extends Backbone.View
 
   events:
     'click': 'toggle_selected'
+    'click .edit': 'open_photo_editor'
     # 'mouseenter': 'expand_size'
     # 'mouseleave': 'restore_size'
 
@@ -12,6 +13,7 @@ class PhotoEditView extends Backbone.View
     $('<img>', src: img_url).on 'load', => @$el.removeClass('hidden')
     thumbnail_url = "url(#{img_url})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
+    @$el.append($('<div>', class: 'edit', text: 'edit'))
 
   # Checks if photo is selected
   #
@@ -24,6 +26,9 @@ class PhotoEditView extends Backbone.View
     event.stopPropagation()
     @$el.toggleClass('selected')
     @trigger 'selected_toggle'
+
+  open_photo_editor: (event) ->
+    event.stopPropagation()
 
   expand_size: ->
     top = @$el.position().top
