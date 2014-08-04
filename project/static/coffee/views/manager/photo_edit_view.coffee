@@ -29,6 +29,7 @@ class PhotoEditView extends Backbone.View
 
   open_photo_editor: (event) ->
     event.stopPropagation()
+    new PhotoEditor({@model})
 
   expand_size: ->
     top = @$el.position().top
