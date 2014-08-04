@@ -30,7 +30,7 @@ def deploy_prod():
         # local('python /home/ryan/Dev/ryanfisher/photo/manage.py collectstatic --noinput --settings=project.settings.production')
         project.upload_project(
             remote_dir = '/mnt/current',
-            local_dir = '/home/ryan/Dev/ryanfisher/photo/static',
+            local_dir = '/home/ryan/Dev/ryanfisher/photo/static_root',
             use_sudo = True
         )
         print(red('updating static files'))

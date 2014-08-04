@@ -3,7 +3,7 @@
 	[
 		{
 			"path": "/home/ryan/Dev/ryanfisher/photo",
-      "file_exclude_patterns": ["/static/*"]
+      "folder_exclude_patterns": ["static_root"]
 		}
 	]
 }

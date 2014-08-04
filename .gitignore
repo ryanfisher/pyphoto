@@ -58,7 +58,7 @@ aws.cfg
 htmlcov
 
 # Compiled static files
-/static/
+static_root/
 CACHE/
 .elasticbeanstalk/
 project.config
