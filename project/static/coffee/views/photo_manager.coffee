@@ -43,18 +43,19 @@ class PhotoManager extends Backbone.View
       photos.push view.model
       album.set('photos', photos)
     album.save()
-    Notification.show(
-      "The selected photos have been added to #{album.get('title')}."
-    )
+    text = "The selected photos have been added to #{album.get('title')}."
+    Notification.show(text)
     @photo_feed.clear_selections()
 
   add_tags: ->
-    tags = @$('.bulk-editor input').val().split(',')
+    input_value = @$('.bulk-editor input').val()
+    tags = input_value.split(',')
     _.each @photo_feed.selected_photos(), (view) ->
       photo = view.model
       photo_tags = _.union(photo.get('public_tags'), tags)
       photo.set('public_tags', photo_tags)
-      photo.save()
+      text = "Added tags #{input_value} to selected photos."
+      photo.save {}, success: -> Notification.show(text)
     @$('.bulk-editor').removeClass('open')
 
   open_bulk_editor: ->
