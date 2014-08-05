@@ -286,22 +286,25 @@
     a { cursor: pointer; }
   }
 
+  .photo {
+    display: inline-block;
+    height: 130px;
+    width: 130px;
+    margin: 10px;
+    background-size: cover;
+    cursor: pointer;
+
+    &.selected {
+      margin: 5px;
+      border: 5px solid @accent-color;
+    }
+  }
+
+  .edit { display: none; }
+
   .photos {
     padding: 10px;
     clear: both;
-
-    .photo {
-      display: inline-block;
-      height: 130px;
-      width: 130px;
-      margin: 10px;
-      background-size: cover;
-
-      &.selected {
-        margin: 5px;
-        border: 5px solid @accent-color;
-      }
-    }
 
     .sortable-placeholder {
       display: inline-block;
