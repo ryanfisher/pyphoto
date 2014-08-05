@@ -21,7 +21,7 @@ class AlbumEditor extends Backbone.View
 
   set_photos: ->
     @$('.photos').text ''
-    @model.get('photos').each (model) ->
+    @model.get('photos').each (model) =>
       view = new PhotoEditView({model})
       view.$el.data('id', model.get('id'))
       @$('.photos').append view.$el
