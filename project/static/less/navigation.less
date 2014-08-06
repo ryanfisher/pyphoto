@@ -20,20 +20,55 @@
     border-left: 0 solid black;
 
     .transition(all 0.3s ease-in-out);
-  }
 
-  a:hover {
-    @border-width: 5px;
-    border-right: @border-width solid @main-color;
-    border-left: @border-width solid black;
+    &:hover {
+      @border-width: 5px;
+      border-right: @border-width solid @main-color;
+      border-left: @border-width solid black;
+    }
+    &:before {
+      display: block;
+      content: '';
+      height: 20px;
+      width: 40px;
+      margin: 0 auto;
+    }
   }
+}
 
-  a:before {
-    display: block;
-    content: '';
-    height: 20px;
-    width: 40px;
-    margin: 0 auto;
+.top-nav #main-nav {
+  height: @main-nav-height;
+  line-height: @main-nav-height - 10px;
+  width: 100%;
+  padding-top: 0;
+  text-align: left;
+  z-index: 3;
+
+  a {
+    display: inline-block;
+    padding: 5px 10px;
+
+    &:before {
+      display: inline-block;
+      position: relative;
+      top: 3px;
+      width: 20px;
+      padding-right: 10px;
+    }
+
+    &:hover {
+      @border-width: 5px;
+      border-right: 0;
+      border-left: 0;
+      border-bottom: @border-width solid @main-color;
+      padding-bottom: 0;
+    }
+
+    &.logout {
+      top: 0;
+      right: 0;
+      bottom: inherit;
+    }
   }
 }
 

@@ -23,12 +23,22 @@
   color: #3a87ad;
   background-color: #d9edf7;
   border: 1px solid #bce8f1;
-  z-index: 3;
+  z-index: 4;
   .border-radius(0 0 4px 4px);
   .transition(top 0.3s);
 
   &.open {
     top: 0;
+  }
+}
+
+.top-nav #photo-manager-feed {
+  top: @main-nav-height;
+  left: @manager-side-bar-width;
+
+  nav {
+    top: @main-nav-height;
+    left: @manager-side-bar-width + 1px;
   }
 }
 
@@ -255,6 +265,14 @@
   }
 }
 
+.top-nav {
+  #album-editor, #photo-editor {
+    left: 0;
+
+    &.open { top: @main-nav-height; }
+  }
+}
+
 #album-editor {
   position: fixed;
   top: -100%;
@@ -341,6 +359,14 @@
 }
 
 #uploader { overflow-y: hidden; }
+
+.top-nav {
+  #uploader, #albums-editor {
+    top: @main-nav-height;
+
+    &.open { left: 0; }
+  }
+}
 
 #uploader, #albums-editor {
   position: fixed;
