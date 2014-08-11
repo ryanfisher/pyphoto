@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.db import IntegrityError
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -27,6 +28,7 @@ def manage(request):
     )
 
 
+@cache_page(60 * 15)
 def index(request):
     photos = Photo.objects.all()[:40]
     serializer = PhotoSerializer(photos, many=True)
