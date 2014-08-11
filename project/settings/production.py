@@ -55,20 +55,3 @@ LOGGING = {
         },
     }
 }
-
-# INSTALLED_APPS += ('storages',)
-
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-# STATICFILES_STORAGE = 'project.storage.CachedS3BotoStorage'
-# COMPRESS_STORAGE = STATICFILES_STORAGE
-# AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY
-# AWS_SECRET_ACCESS_KEY = AWS_SECRET_KEY
-# AWS_STORAGE_BUCKET_NAME = 'static.ryanfisher.io'
-# AWS_CALLING_FORMAT = OrdinaryCallingFormat()
-# AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
-# AWS_IS_GZIPPED = True
-
-# COMPRESS_URL = 'http://s3.amazonaws.com/'+ AWS_STORAGE_BUCKET_NAME + '/'
-# COMPRESS_ENABLED = True
-# STATIC_URL = COMPRESS_URL
-# S3_URL = STATIC_URL
