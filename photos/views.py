@@ -44,6 +44,7 @@ def edit(request):
     return render_to_response('photos/edit.html', {'photos': photos})
 
 
+@cache_page(60 * 15)
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
     photo_data = PhotoSerializer(photo).data
