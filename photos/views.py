@@ -37,14 +37,6 @@ def index(request):
     return render_to_response('photos/index.html', {'photos': photos})
 
 
-@login_required
-def edit(request):
-    photos = Photo.objects.filter(user=request.user)
-    serializer = PhotoSerializer(photos, many=True)
-    photos = json.dumps(serializer.data)
-    return render_to_response('photos/edit.html', {'photos': photos})
-
-
 @cache_page(60 * 15)
 def show(request, id):
     photo = get_object_or_404(Photo, id=id)
