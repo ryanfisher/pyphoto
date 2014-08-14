@@ -6,6 +6,7 @@
   <img src="/static/images/barcelona_background.jpg">
 </div>
 <div id="login-form">
+  <div class="login-overlay"></div>
 <form method="POST">{% csrf_token %}
   <p class="username-input">
     <input id="id_username" maxlength="254" name="username" placeholder="email" type="text" tabindex="1">
