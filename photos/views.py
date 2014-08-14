@@ -19,6 +19,7 @@ import json
 
 
 @login_required
+@cache_page(60 * 15)
 def manage(request):
     photo_form = PhotoUploadForm()
     return render_to_response(
@@ -64,6 +65,7 @@ def show(request, id):
     )
 
 
+@cache_page(60 * 15)
 def album_show(request, id):
     album = get_object_or_404(Album, id=id)
     serializer = AlbumSerializer(album)
