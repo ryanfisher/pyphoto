@@ -12,3 +12,10 @@ class PhotosInfo extends Backbone.View
 
   close: ->
     @$el.removeClass('open')
+
+  update: (photos) ->
+    count = photos.length
+    if count == 1
+      @set_photo(photos[0])
+    else
+      @unset_photo()

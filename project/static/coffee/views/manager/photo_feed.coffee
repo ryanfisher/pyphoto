@@ -3,7 +3,7 @@ class PhotoManagerFeed extends Backbone.View
 
   events:
     'click .feed-container': 'clear_selections'
-    'click .delete-link':    'delete_photos'
+    'click .delete-link':    'delete_selected_photos'
     'click .sort-by li':     'sort_by'
 
   initialize: ->
@@ -49,17 +49,15 @@ class PhotoManagerFeed extends Backbone.View
   last_photo_view_el: ->
     @photo_edit_views[@photo_edit_views.length - 1].$el
 
-  delete_photos: ->
-    @delete_selected_photos()
-    @update_selected_count()
-
   clear_selections: (event) ->
     target = $(event?.target)
     return if event? and not target.attr('class')?.match(/feed|feed-container/)
     @$('.feed .selected').removeClass('selected')
     @update_selected_count()
 
-  update_selected_count: ->
+  update_selected_count: (selected_photos = null) ->
+    selected_photos ?= @selected_photos()
+    @photos_info.update(selected_photos)
     selected_count = @$('.feed .selected').length
     if selected_count > 0
       @$('.photos-selected').removeClass('hidden')
@@ -83,3 +81,4 @@ class PhotoManagerFeed extends Backbone.View
                    "\n\n#{delete_count} selected"
     if window.confirm(confirm_text)
       _.each to_delete, (model) -> model.destroy()
+    @update_selected_count(to_delete)
