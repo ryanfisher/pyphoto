@@ -6,3 +6,9 @@ class PhotosInfo extends Backbone.View
 
   unset_photo: ->
     @$('img').prop('src', '')
+
+  open: ->
+    @$el.addClass('open')
+
+  close: ->
+    @$el.removeClass('open')

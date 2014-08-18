@@ -32,12 +32,14 @@ class PhotoManager extends Backbone.View
     @$('nav a').removeClass('selected')
     @$('nav .upload').addClass('selected')
     @albums_editor.close()
+    @photo_feed.close_photos_info()
     @uploader.$el.addClass('open')
 
   open_albums_editor: ->
     @$('nav a').removeClass('selected')
     @$('nav .edit-albums').addClass('selected')
     @uploader.close()
+    @photo_feed.close_photos_info()
     @albums_editor.$el.addClass('open')
 
   open_photos_editor: ->
@@ -45,6 +47,7 @@ class PhotoManager extends Backbone.View
     @$('nav .edit-photos').addClass('selected')
     @uploader.close()
     @albums_editor.close()
+    @photo_feed.open_photos_info()
 
   add_photos_to_album: (event) ->
     album_id = $(event.currentTarget).data('id')

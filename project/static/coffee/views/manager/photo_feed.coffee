@@ -35,6 +35,12 @@ class PhotoManagerFeed extends Backbone.View
         @new_photo_view model
         @$('.feed').prepend @last_photo_view_el()
 
+  open_photos_info: ->
+    @photos_info.open()
+
+  close_photos_info: ->
+    @photos_info.close()
+
   new_photo_view: (model) ->
     photo_edit_view = new PhotoEditView({model})
     photo_edit_view.on 'selected_toggle', => @update_selected_count()
