@@ -12,6 +12,7 @@ class PhotoEditView extends Backbone.View
     thumbnail_url = "url(#{img_url})".replace /\s/, "%20"
     @$el.css('background-image', thumbnail_url)
     @$el.append($('<div>', class: 'edit', text: 'edit'))
+    @model.on 'destroy', => @remove()
 
   # Checks if photo is selected
   #
@@ -28,7 +29,3 @@ class PhotoEditView extends Backbone.View
   open_photo_editor: (event) ->
     event.stopPropagation()
     new PhotoEditor({@model})
-
-  delete_photo: ->
-    @model.destroy()
-    @remove()

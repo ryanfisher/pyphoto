@@ -68,13 +68,12 @@ class PhotoManagerFeed extends Backbone.View
       @$('.bulk-editor').removeClass('open')
     @$('.selected-count').text selected_count
 
-  # A list of photo views currently selected in the photo manager feed
+  # A list of photo models currently selected in the photo manager feed
   #
-  # @todo I might want to make this return the models of those views instead
-  #
-  # @return [Array<PhotoEditView>]
+  # @return [Array<Photo>]
   selected_photos: ->
-    _.filter @photo_edit_views, (view) -> view.is_selected()
+    views = _.filter @photo_edit_views, (view) -> view.is_selected()
+    _.map views, (view) -> view.model
 
   delete_selected_photos: ->
     to_delete = @selected_photos()
@@ -83,4 +82,4 @@ class PhotoManagerFeed extends Backbone.View
     confirm_text = "Are you sure you want to delete the selected photo(s)?" +
                    "\n\n#{delete_count} selected"
     if window.confirm(confirm_text)
-      _.each to_delete, (view) -> view.delete_photo()
+      _.each to_delete, (model) -> model.destroy()
