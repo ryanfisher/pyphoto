@@ -273,6 +273,11 @@
   }
 }
 
+#meta-manager {
+  position: fixed;
+  top: 0;
+}
+
 #album-editor {
   position: fixed;
   top: -100%;
@@ -368,8 +373,40 @@
   }
 }
 
-#uploader, #albums-editor {
+#meta-manager {
   position: fixed;
+  width: @manager-side-bar-width;
+  top: @main-nav-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  nav {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+    text-align: left;
+
+    a:link, a:visited {
+      display: inline-block;
+      color: @main-color;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    a:hover, a:active {
+      text-decoration: underline;
+    }
+    a.selected {
+      cursor: default;
+      text-decoration: underline;
+    }
+  }
+}
+
+#uploader, #albums-editor {
+  position: absolute;
   width: @manager-side-bar-width - 35px;
   left: -(@manager-side-bar-width);
   top: 0;
@@ -384,7 +421,7 @@
   }
 
   h4 {
-    margin-bottom: 5px;
+    margin-left: 5px 0;
     cursor: pointer;
   }
 

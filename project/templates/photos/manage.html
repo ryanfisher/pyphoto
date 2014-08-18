@@ -5,24 +5,31 @@
 
 <div id="notification"></div>
 
-<div id="uploader">
-  <h4 class="upload">uploader</h4>
-  <form class="" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {{ form }}
-    <input type="file" class="multiple-photos" accept="image/jpeg" multiple>
-    <div id="progress-bars" data-success="Successfully uploaded " data-failure="Failed to upload " data-error409="Duplicate file: " data-uploading-message="Uploading file "></div>
-  </form>
-</div>
-
-<div id="albums-editor">
-  <h4 class="edit-albums">album editor</h4>
-  <div class="albums-editor">
-    <button id="new-album">Create new album</button>
-    <form class="hidden">
-      <input type="text" name="title" autocomplete="off">
-      <input type="submit" value="Save">
+<div id="meta-manager">
+  <nav>
+    <a href="#upload">upload</a> |&nbsp;
+    <a href="#albums">edit albums</a> |&nbsp;
+    <a href="#upload">edit photos</a>
+  </nav>
+  <div id="uploader">
+    <h4 class="upload">uploader</h4>
+    <form class="" action="/api/photos" method="POST" enctype="multipart/form-data">{% csrf_token %}
+      {{ form }}
+      <input type="file" class="multiple-photos" accept="image/jpeg" multiple>
+      <div id="progress-bars" data-success="Successfully uploaded " data-failure="Failed to upload " data-error409="Duplicate file: " data-uploading-message="Uploading file "></div>
     </form>
-    <div class="albums"></div>
+  </div>
+
+  <div id="albums-editor">
+    <h4 class="edit-albums">album editor</h4>
+    <div class="albums-editor">
+      <button id="new-album">Create new album</button>
+      <form class="hidden">
+        <input type="text" name="title" autocomplete="off">
+        <input type="submit" value="Save">
+      </form>
+      <div class="albums"></div>
+    </div>
   </div>
 </div>
 
