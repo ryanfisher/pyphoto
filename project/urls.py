@@ -13,7 +13,7 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'django.contrib.auth.views',
     url(r'^login/$', 'login'),
-    url(r'^logout/$', 'logout'),
+    url(r'^logout/$', 'logout', {'next_page': '/photos'}),
 )
 
 urlpatterns += patterns(
