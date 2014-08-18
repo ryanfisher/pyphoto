@@ -52,9 +52,9 @@ class PhotoManager extends Backbone.View
   add_photos_to_album: (event) ->
     album_id = $(event.currentTarget).data('id')
     album = @user_albums.get(album_id)
-    _.each @photo_feed.selected_photos(), (view) ->
+    _.each @photo_feed.selected_photos(), (model) ->
       photos = album.get('photos') or []
-      photos.push view.model
+      photos.push model
       album.set('photos', photos)
     album.save()
     text = "The selected photos have been added to #{album.get('title')}."
@@ -64,8 +64,7 @@ class PhotoManager extends Backbone.View
   add_tags: ->
     input_value = @$('.bulk-editor input').val()
     tags = input_value.split(',')
-    _.each @photo_feed.selected_photos(), (view) ->
-      photo = view.model
+    _.each @photo_feed.selected_photos(), (photo) ->
       photo_tags = _.union(photo.get('public_tags'), tags)
       photo.set('public_tags', photo_tags)
       text = "Added tags #{input_value} to selected photos."
