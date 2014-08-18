@@ -4,6 +4,7 @@ class PhotoManager extends Backbone.View
   events:
     'open_uploader': 'open_uploader'
     'open_albums_editor': 'open_albums_editor'
+    'open_photos_editor': 'open_photos_editor'
     'click .add-to-albums li': 'add_photos_to_album'
     'click .add-tags': 'open_bulk_editor'
     'click .bulk-editor button': 'add_tags'
@@ -28,12 +29,22 @@ class PhotoManager extends Backbone.View
     @photo_feed = new PhotoManagerFeed({@collection})
 
   open_uploader: ->
+    @$('nav a').removeClass('selected')
+    @$('nav .upload').addClass('selected')
     @albums_editor.close()
     @uploader.$el.addClass('open')
 
   open_albums_editor: ->
+    @$('nav a').removeClass('selected')
+    @$('nav .edit-albums').addClass('selected')
     @uploader.close()
     @albums_editor.$el.addClass('open')
+
+  open_photos_editor: ->
+    @$('nav a').removeClass('selected')
+    @$('nav .edit-photos').addClass('selected')
+    @uploader.close()
+    @albums_editor.close()
 
   add_photos_to_album: (event) ->
     album_id = $(event.currentTarget).data('id')
