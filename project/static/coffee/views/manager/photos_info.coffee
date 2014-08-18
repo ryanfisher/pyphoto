@@ -13,9 +13,18 @@ class PhotosInfo extends Backbone.View
   close: ->
     @$el.removeClass('open')
 
+  set_info: (photos) ->
+    tags = _.map photos, (photo) -> photo.get('public_tags')
+    common_tags = _.intersection tags...
+    @$('.tags').text common_tags
+    @set_photo(photos[0])
+
+  unset_info: ->
+    @$('.tags').text ''
+    @unset_photo()
+
   update: (photos) ->
-    count = photos.length
-    if count == 1
-      @set_photo(photos[0])
+    if photos.length > 0
+      @set_info photos
     else
-      @unset_photo()
+      @unset_info()
