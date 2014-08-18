@@ -7,6 +7,7 @@ class PhotoManagerFeed extends Backbone.View
     'click .sort-by li':     'sort_by'
 
   initialize: ->
+    @photos_info = new PhotosInfo
     @render()
 
   sort_by: (event) ->
