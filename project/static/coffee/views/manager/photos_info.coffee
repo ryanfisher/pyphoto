@@ -14,7 +14,7 @@ class PhotosInfo extends Backbone.View
     @$el.removeClass('open')
 
   set_info: (photos) ->
-    tags = _.map photos, (photo) -> photo.get('public_tags')
+    tags = _.invoke photos, 'get', 'public_tags'
     common_tags = _.intersection tags...
     @$('.tags').text common_tags
     @set_photo(photos[0])
