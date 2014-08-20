@@ -27,7 +27,7 @@ class App extends Backbone.View
       model = new UserPhoto(bootstrapped_photo)
       new PhotoPage({model})
     if $('#login-background').length
-      bg_path = '/static/images/barcelona_background.jpg'
+      bg_path = '/static/images/grainy-beach.jpg'
       $('<img>', src: bg_path).load ->
         $('#login-background img').attr('src', bg_path).
           addClass('loaded')
