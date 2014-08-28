@@ -100,3 +100,18 @@ nav a.photos:before { .icon-background('slr-camera.png'); }
 nav a.home:before { .icon-background('home.png'); }
 nav a.albums:before { .icon-background('folder.png'); }
 nav a.logout:before { .icon-background('logout.png'); }
+
+@media (max-width: 480px) {
+  #main-nav {
+    position: absolute;
+    a {
+      width: 0 !important;
+      margin-right: 15%;
+
+      &:hover {
+        padding-bottom: inherit;
+        border-bottom: 0 !important;
+      }
+    }
+  }
+}
