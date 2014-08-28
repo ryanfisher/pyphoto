@@ -65,3 +65,5 @@ project.config
 **/coffee/**/*.js
 **/less/**/*.css
 node_modules/
+
+photo-app.sublime-workspace
