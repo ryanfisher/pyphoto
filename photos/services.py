@@ -3,7 +3,7 @@ from django.conf import settings
 from boto.s3.connection import S3Connection
 from PIL import Image
 from PIL.ExifTags import TAGS
-from cStringIO import StringIO
+from io import StringIO
 
 import os
 import binascii
