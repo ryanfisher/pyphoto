@@ -88,7 +88,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'photos',
     'profiles',
-    'south',
     'pipeline',
     'rest_framework',
     'django_extensions',
