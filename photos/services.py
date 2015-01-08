@@ -23,7 +23,7 @@ class ExifInfo(object):
         exifinfo = img._getexif()
         exif_dict = {}
         if exifinfo:
-            for tag, value in exifinfo.items():
+            for tag, value in list(exifinfo.items()):
                 decoded = TAGS.get(tag, tag)
                 exif_dict[decoded] = value
         self.exif_info = exif_dict
