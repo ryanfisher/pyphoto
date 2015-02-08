@@ -29,15 +29,19 @@ class ExifInfo(object):
         self.exif_info = exif_dict
 
     def model(self):
+        """Return the model of the camera"""
         return self.exif_info.get('Model')
 
     def make(self):
+        """Return the make of the camera"""
         return self.exif_info.get('Make')
 
     def lens_model(self):
+        """Return the lens model"""
         return self.exif_info.get('LensModel')
 
     def iso(self):
+        """Return the iso value"""
         return self.exif_info.get('ISOSpeedRatings')
 
     def date_taken(self):
@@ -53,36 +57,42 @@ class ExifInfo(object):
         return date_taken
 
     def focal_length_numerator(self):
+        """Return the top number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[0]
         except:
             return None
 
     def focal_length_denominator(self):
+        """Return the bottom number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[1]
         except:
             return None
 
     def exposure_numerator(self):
+        """Return the top number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[0]
         except:
             return None
 
     def exposure_denominator(self):
+        """Return the bottom number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[1]
         except:
             return None
 
     def f_stop_numerator(self):
+        """Return the top number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[0]
         except:
             return None
 
     def f_stop_denominator(self):
+        """Return the bottom number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[1]
         except:
@@ -142,7 +152,7 @@ class PhotoService(object):
 
     def send_to_s3(self, file, file_prefix=""):
         k = self.bucket.new_key(self.get_key(file_prefix))
-        headers={"Cache-Control": "max-age=31536000,public"}
+        headers = {"Cache-Control": "max-age=31536000,public"}
         k.set_contents_from_file(file, headers=headers, replace=False)
         return k.key
 
