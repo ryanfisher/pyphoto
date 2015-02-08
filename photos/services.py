@@ -60,42 +60,42 @@ class ExifInfo(object):
         """Return the top number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[0]
-        except:
+        except TypeError:
             return None
 
     def focal_length_denominator(self):
         """Return the bottom number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[1]
-        except:
+        except TypeError:
             return None
 
     def exposure_numerator(self):
         """Return the top number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[0]
-        except:
+        except TypeError:
             return None
 
     def exposure_denominator(self):
         """Return the bottom number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[1]
-        except:
+        except TypeError:
             return None
 
     def f_stop_numerator(self):
         """Return the top number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[0]
-        except:
+        except TypeError:
             return None
 
     def f_stop_denominator(self):
         """Return the bottom number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[1]
-        except:
+        except TypeError:
             return None
 
     def get_dictionary(self):
