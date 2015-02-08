@@ -3,7 +3,7 @@ from django.conf import settings
 from boto.s3.connection import S3Connection
 from PIL import Image
 from PIL.ExifTags import TAGS
-from io import StringIO
+from io import BytesIO
 
 import os
 import binascii
@@ -94,7 +94,7 @@ class ExifInfo(object):
 
 class TemporaryImageFile(object):
     def __init__(self, uploaded_file):
-        random_string = binascii.hexlify(os.urandom(10))
+        random_string = binascii.hexlify(os.urandom(10)).decode('utf-8')
         self.path = 'tmp/' + random_string + uploaded_file.name
         with open(self.path, 'wb+') as destination:
             for chunk in uploaded_file.chunks():
@@ -121,7 +121,7 @@ class PhotoService(object):
             'images',
             self.user.profile_name[0],
             self.user.profile_name[1:],
-            self.random_folder_name,
+            self.random_folder_name.decode('utf-8'),
             file_prefix + self.uploaded_file.name
         )
 
@@ -162,7 +162,8 @@ class PhotoService(object):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
 
-        image_string = StringIO()
+        image_string = BytesIO()
+        image_string.seek(0)
         img.save(image_string, 'JPEG')
 
         thumbnail_url = self.send_string_to_s3(image_string.getvalue())
@@ -180,7 +181,8 @@ class PhotoService(object):
             height = OPTIMIZED_WIDTH * img.size[1] / img.size[1]
         img.thumbnail((width, height), Image.ANTIALIAS)
 
-        image_string = StringIO()
+        image_string = BytesIO()
+        image_string.seek(0)
         img.save(image_string, 'JPEG')
 
         key = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
