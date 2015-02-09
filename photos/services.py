@@ -1,3 +1,5 @@
+"""Services for photos
+"""
 from django.conf import settings
 
 from boto.s3.connection import S3Connection
@@ -19,6 +21,8 @@ OPTIMIZED_HEIGHT = 1200
 
 
 class ExifInfo(object):
+    """Class to access the exif info of a photo
+    """
     def __init__(self, img):
         exifinfo = img._getexif()
         exif_dict = {}
@@ -99,10 +103,13 @@ class ExifInfo(object):
             return None
 
     def get_dictionary(self):
+        """Get the dictionary of exif info"""
         return self.exif_info
 
 
 class TemporaryImageFile(object):
+    """The temporary image file
+    """
     def __init__(self, uploaded_file):
         random_string = binascii.hexlify(os.urandom(10)).decode('utf-8')
         self.path = 'tmp/' + random_string + uploaded_file.name
@@ -111,11 +118,13 @@ class TemporaryImageFile(object):
                 destination.write(chunk)
 
     def delete(self):
+        """Delete the temporary image file"""
         os.remove(self.path)
 
 
 class PhotoService(object):
-
+    """Photo service to handle uploading and resizing of photos.
+    """
     def __init__(self, uploaded_file, user):
         self.uploaded_file = uploaded_file
         self.user = user
@@ -127,6 +136,7 @@ class PhotoService(object):
         )
 
     def get_key(self, file_prefix=''):
+        """Get the key for the photo on s3"""
         return os.path.join(
             'images',
             self.user.profile_name[0],
@@ -136,27 +146,29 @@ class PhotoService(object):
         )
 
     def set_random_folder(self):
-        '''Creates a unique folder name for the new photo. Only call once.
-        '''
+        """Creates a unique folder name for the new photo. Only call once.
+        """
         while True:
             self.random_folder_name = binascii.hexlify(os.urandom(10))
             if Photo.objects.filter(key=self.get_key()).count() == 0:
                 break
 
     def photo_exists(self):
-        '''Checks to see if a file exists. Currently only uses file size
-        '''
+        """Checks to see if a file exists. Currently only uses file size
+        """
         count = Photo.objects.filter(user=self.user,
                                      size=self.uploaded_file.size).count()
         return count > 0
 
     def send_to_s3(self, file, file_prefix=""):
+        """Send file to s3"""
         k = self.bucket.new_key(self.get_key(file_prefix))
         headers = {"Cache-Control": "max-age=31536000,public"}
         k.set_contents_from_file(file, headers=headers, replace=False)
         return k.key
 
     def send_string_to_s3(self, string_file, file_prefix="thumbnail_"):
+        """Send string photo to s3"""
         k = self.bucket.new_key(self.get_key(file_prefix))
         k.set_contents_from_string(
             string_file,
@@ -169,6 +181,7 @@ class PhotoService(object):
         return k.key
 
     def create_and_store_thumbnail(self, img):
+        """Create thumbnail of photo and send to s3"""
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
 
@@ -183,6 +196,7 @@ class PhotoService(object):
         return thumbnail_url
 
     def create_and_store_optimized(self, img):
+        """Create optimized version of photo and send to s3"""
         width = OPTIMIZED_HEIGHT * img.size[0] / img.size[0]
         if width < OPTIMIZED_WIDTH:
             height = OPTIMIZED_HEIGHT
@@ -202,6 +216,7 @@ class PhotoService(object):
         return key
 
     def store_and_save_photos(self):
+        """Send photos to s3 and create record in database"""
         key = self.send_to_s3(self.uploaded_file)
         original_file_path = os.path.join(settings.AWS_IMAGE_BUCKET, key)
 
