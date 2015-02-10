@@ -3,7 +3,7 @@ from django.conf import settings
 from boto.s3.connection import S3Connection
 from PIL import Image
 from PIL.ExifTags import TAGS
-from cStringIO import StringIO
+from io import BytesIO
 
 import os
 import binascii
@@ -23,21 +23,25 @@ class ExifInfo(object):
         exifinfo = img._getexif()
         exif_dict = {}
         if exifinfo:
-            for tag, value in exifinfo.items():
+            for tag, value in list(exifinfo.items()):
                 decoded = TAGS.get(tag, tag)
                 exif_dict[decoded] = value
         self.exif_info = exif_dict
 
     def model(self):
+        """Return the model of the camera"""
         return self.exif_info.get('Model')
 
     def make(self):
+        """Return the make of the camera"""
         return self.exif_info.get('Make')
 
     def lens_model(self):
+        """Return the lens model"""
         return self.exif_info.get('LensModel')
 
     def iso(self):
+        """Return the iso value"""
         return self.exif_info.get('ISOSpeedRatings')
 
     def date_taken(self):
@@ -53,39 +57,45 @@ class ExifInfo(object):
         return date_taken
 
     def focal_length_numerator(self):
+        """Return the top number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[0]
-        except:
+        except TypeError:
             return None
 
     def focal_length_denominator(self):
+        """Return the bottom number in a focal length value"""
         try:
             return self.exif_info.get('FocalLength')[1]
-        except:
+        except TypeError:
             return None
 
     def exposure_numerator(self):
+        """Return the top number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[0]
-        except:
+        except TypeError:
             return None
 
     def exposure_denominator(self):
+        """Return the bottom number in an exposure time value"""
         try:
             return self.exif_info.get('ExposureTime')[1]
-        except:
+        except TypeError:
             return None
 
     def f_stop_numerator(self):
+        """Return the top number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[0]
-        except:
+        except TypeError:
             return None
 
     def f_stop_denominator(self):
+        """Return the bottom number in a F Stop value"""
         try:
             return self.exif_info.get('FNumber')[1]
-        except:
+        except TypeError:
             return None
 
     def get_dictionary(self):
@@ -94,7 +104,7 @@ class ExifInfo(object):
 
 class TemporaryImageFile(object):
     def __init__(self, uploaded_file):
-        random_string = binascii.hexlify(os.urandom(10))
+        random_string = binascii.hexlify(os.urandom(10)).decode('utf-8')
         self.path = 'tmp/' + random_string + uploaded_file.name
         with open(self.path, 'wb+') as destination:
             for chunk in uploaded_file.chunks():
@@ -121,7 +131,7 @@ class PhotoService(object):
             'images',
             self.user.profile_name[0],
             self.user.profile_name[1:],
-            self.random_folder_name,
+            self.random_folder_name.decode('utf-8'),
             file_prefix + self.uploaded_file.name
         )
 
@@ -142,7 +152,7 @@ class PhotoService(object):
 
     def send_to_s3(self, file, file_prefix=""):
         k = self.bucket.new_key(self.get_key(file_prefix))
-        headers={"Cache-Control": "max-age=31536000,public"}
+        headers = {"Cache-Control": "max-age=31536000,public"}
         k.set_contents_from_file(file, headers=headers, replace=False)
         return k.key
 
@@ -162,7 +172,8 @@ class PhotoService(object):
         width = THUMBNAIL_SIZE * img.size[0] / img.size[0]
         img.thumbnail((width, THUMBNAIL_SIZE), Image.ANTIALIAS)
 
-        image_string = StringIO()
+        image_string = BytesIO()
+        image_string.seek(0)
         img.save(image_string, 'JPEG')
 
         thumbnail_url = self.send_string_to_s3(image_string.getvalue())
@@ -180,7 +191,8 @@ class PhotoService(object):
             height = OPTIMIZED_WIDTH * img.size[1] / img.size[1]
         img.thumbnail((width, height), Image.ANTIALIAS)
 
-        image_string = StringIO()
+        image_string = BytesIO()
+        image_string.seek(0)
         img.save(image_string, 'JPEG')
 
         key = self.send_string_to_s3(image_string.getvalue(), 'optimized_')
