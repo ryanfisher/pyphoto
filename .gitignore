@@ -60,10 +60,14 @@ htmlcov
 # Compiled static files
 static_root/
 CACHE/
-.elasticbeanstalk/
 project.config
 **/coffee/**/*.js
 **/less/**/*.css
 node_modules/
 
 photo-app.sublime-workspace
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
